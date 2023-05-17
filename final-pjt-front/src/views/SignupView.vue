@@ -15,44 +15,57 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="text" id="form3Example1c" class="form-control" />
-                        <label class="form-label" for="form3Example1c">Your Name</label>
-                      </div>
-                    </div>
 
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <input type="email" id="form3Example3c" class="form-control" />
-                        <label class="form-label" for="form3Example3c">Your Email</label>
+                        <b-form-input id="input-username" :class="{ 'active': username }" class="form-control border" style="margin-bottom: 0px;" v-model="username" :state="nameState" aria-describedby="input-username-feedback" trim></b-form-input>
+                        <label class="form-label" for="input-username">Username</label>
+
+                        <b-form-invalid-feedback id="input-username-feedback" style="text-align: right;">
+                          알파벳/숫자 3글자 이상
+                        </b-form-invalid-feedback>
                       </div>
+
                     </div>
 
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="password" id="form3Example4c" class="form-control" />
-                        <label class="form-label" for="form3Example4c">Password</label>
+
+
+                        <b-form-input id="input-password" class="form-control border" style="margin-bottom: 0px;" :class="{ 'active': password1 }" type="password" placeholder="PASSWORD" v-model="password1" :state="pwState" aria-describedby="input-pw-feedback" trim></b-form-input>
+                        <label class="form-label" for="input-password">Password</label>
+
+                        <b-form-invalid-feedback id="input-pw-feedback" style="text-align: right;">
+                          비밀번호 10자 이상
+                        </b-form-invalid-feedback>
                       </div>
                     </div>
 
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                       <div class="form-outline flex-fill mb-0">
-                        <input type="password" id="form3Example4cd" class="form-control" />
-                        <label class="form-label" for="form3Example4cd">Repeat your password</label>
+
+
+                        <b-form-input id="input-password2" class="form-control border" style="margin-bottom: 0px;" :class="{ 'active': password2 }" type="password" placeholder="PASSWORD" v-model="password2" :state="pwCheckState" aria-describedby="input-pwCheck-feedback" trim></b-form-input>
+                        <label class="form-label" for="input-password2">Repeat your password</label>
+
+                        <b-form-invalid-feedback id="input-pwCheck-feedback" style="text-align: right;">
+                          비밀번호가 같지 않습니다
+                        </b-form-invalid-feedback>
+
                       </div>
                     </div>
 
                     <div class="form-check d-flex justify-content-center mb-5">
-                      <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                      <label class="form-check-label" for="form2Example3">
-                        I agree all statements in <a href="#!">Terms of service</a>
-                      </label>
+                      <b-form-checkbox
+                        id="checkSignUp"
+                        name="checkSignUp"
+                      >
+                      </b-form-checkbox>
+                      <label class="form-check-label" for="checkSignUp"> I agree all statements in <a href="#!">Terms of service</a> </label>
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="button" class="btn btn-primary btn-lg">Register</button>
+                      <button type="button" @click="signup" class="btn btn-primary btn-lg" >Register</button>
                     </div>
 
                   </form>
@@ -71,38 +84,6 @@
       </div>
     </div>
   </section>
-<!-- Section: Design Block -->
-  <!-- <b-container role="group" class="p-5 login-form">
-    <h1>회원가입</h1>
-    <b-row>
-      <label for="input-username">아이디</label>
-      <b-form-input id="input-username" placeholder="ID" v-model="username" :state="nameState" aria-describedby="input-username-feedback" trim></b-form-input>
-
-      <b-form-invalid-feedback id="input-username-feedback" class="text-right">
-        알파벳/숫자 3글자 이상
-      </b-form-invalid-feedback>
-    </b-row>
-    
-    <b-row>
-      <label for="input-password">비밀번호</label>
-      <b-form-input id="input-password" type="password" placeholder="PASSWORD" v-model="password1" :state="pwState" aria-describedby="input-pw-feedback" trim></b-form-input>
-
-      <b-form-invalid-feedback id="input-pw-feedback" class="text-right">
-        비밀번호 10자 이상
-      </b-form-invalid-feedback>
-    </b-row>
-
-    <b-row>
-      <label for="input-password">비밀번호 확인</label>
-      <b-form-input id="input-password" type="password" placeholder="PASSWORD" v-model="password2" :state="pwCheckState" aria-describedby="input-pwCheck-feedback" trim></b-form-input>
-
-      <b-form-invalid-feedback id="input-pwCheck-feedback" class="text-right">
-        비밀번호가 같지 않습니다
-      </b-form-invalid-feedback>
-    </b-row>
-    <br>
-    <b-button variant="success" @click="signup">로그인</b-button>
-  </b-container> -->
 </template>
 
 <script>
