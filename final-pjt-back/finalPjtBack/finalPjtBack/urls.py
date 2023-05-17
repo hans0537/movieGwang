@@ -27,10 +27,10 @@ urlpatterns = [
     path('articles/', include('articles.urls')),
 
     # 회원관리
-    path('accounts/', include('articles.urls')),
+    path('accounts/', include('accounts.urls')),
     path('auth/', include('dj_rest_auth.urls')),
     path('auth/signup/', include('dj_rest_auth.registration.urls')),
 
     # 영화정보
-    path('movies/', include('articles.urls')),
+    path('movies/', include('movies.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -8,7 +8,6 @@ class User(AbstractUser):
     followings = models.ManyToManyField('self', symmetrical=False, related_name='followers')
     
     # 초성 퀴즈 포인트 정보
-    cho_points = models.IntegerField()
+    cho_points = models.IntegerField(default=0)
     # 줄거리 퀴즈 포인트 정보
-    overview_points = models.IntegerField()
-    
+    overview_points = models.IntegerField(default=0)
