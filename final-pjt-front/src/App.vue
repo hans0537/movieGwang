@@ -9,7 +9,7 @@
         {{isLogin}}
         <!-- Float links to the right. Hide them on small screens -->
         <b-nav class="w3-right w3-hide-small">
-          <span >
+          <span>
             <b-nav-item><router-link to="/" class="w3-bar-item w3-button">Home</router-link></b-nav-item>
           </span>
           <span>
@@ -35,6 +35,7 @@
     <div style="margin-top: 60px;">
       <router-view/>
     </div>
+
   </div>
 </template>
 

@@ -57,3 +57,20 @@ def like(request,article_pk):
           article.like_users.add(user)
         serializer = ArticleSerializer(article)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST','GET'])
+@permission_classes([IsAuthenticated])
+def comment_comment_create_all(request,article_pk,comment_pk):
+    article = Article.objects.get(pk=article_pk)
+    parent_comment = Comment.objects.get(pk=comment_pk)
+    user = request.user
+
+    if request.method=='GET':
+        comment = Comment.objects.all()
+        serializer = CommentSerializer(comment, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        serializer = CommentCreateSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(article=article, user=user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

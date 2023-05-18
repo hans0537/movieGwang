@@ -6,6 +6,7 @@ import SignupView from '../views/SignupView.vue'
 import MovieView from '../views/MovieView.vue'
 import CommunityView from '../views/CommunityView.vue'
 import MyPageView from '../views/MyPageView.vue'
+import ArticlesView from '@/components/CommunityComponents/ArticlesView'
 
 Vue.use(VueRouter)
 
@@ -33,8 +34,16 @@ const routes = [
   {
     path: '/community',
     name: 'community',
-    component: CommunityView
+    component: CommunityView,
+    children: [
+      {
+        path: '/articles',
+        name: 'articles',
+        component: ArticlesView
+      },
+    ]
   },
+
   {
     path: '/mypage',
     name: 'mypage',
