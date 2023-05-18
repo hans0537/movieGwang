@@ -9,10 +9,10 @@
         </div>
         </div>
         <div class="trend_2im2 clearfix text-center position-absolute w-100 top-0">
-        <span class="fs-1"><a class="col_red" href="#"><i class="fa fa-youtube-play"></i></a></span>
+        <span class="fs-1"><a class="col_red" href="#"><i class="fa"></i></a></span>
         </div>
     </div>
-    <div class="trend_2ilast bg_grey p-3 clearfix">
+    <div class="trend_2ilast bg_grey p-3 clearfix" style="height:250px;">
         <h5><a class="col_red" href="#">{{movie.title}}</a></h5>
         <p class="mb-2">{{overview}}</p>
         <span class="col_red">

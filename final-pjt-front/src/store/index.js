@@ -17,6 +17,7 @@ export default new Vuex.Store({
     accessToken: null,
     latestList: null,
     upcomingList: null,
+    popularMovie:null,
   },
   getters: {
     isLogin(state) {
@@ -33,8 +34,11 @@ export default new Vuex.Store({
     },
     
     SAVE_ACCESS_TOKEN(state, access) {
-      state.access = access
+      state.accessToken = access
       router.push({name: 'home'})
+    },
+    GET_POPULAR(state,popular) {
+      state.popularMovie = popular
     }
   },
   actions: {
@@ -67,13 +71,24 @@ export default new Vuex.Store({
         url: `${TMDB_URL}/movie/upcoming?language=ko-KR&api_key=${API_KEY}`,
       })
       .then((res) => {
-        console.log(res)
         context.commit('GET_UPCOMING', res.data.results)
       })
       .catch((err) => {
         console.log(err)
       })
     },
+    popularMovie(context) {
+      axios({
+        method:'get',
+        url:'http://127.0.0.1:8000/movies/',
+        headers: {
+          Authorization : `Bearer ${this.state.accessToken}`
+        }
+      })
+      .then(res =>{
+        context.commit('GET_POPULAR',res.data)
+      })
+    }
   },
   modules: {
   }
