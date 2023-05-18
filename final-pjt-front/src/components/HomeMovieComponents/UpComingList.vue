@@ -25,7 +25,7 @@
         </div>
         
         <div class="carousel-inner"> 
-          <div class="carousel-item active" v-for="(movies, index) in upcomingList" :key="index">
+          <div class="carousel-item" v-for="(movies, index) in upcomingList" :key="index" :class="index===0 ? 'active' : ''">
             <div class="trend_2i row">
               <UpComingListItem 
               v-for="movie in movies" :key="movie.id" :movie="movie"/>

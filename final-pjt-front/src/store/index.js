@@ -77,13 +77,11 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+    // 인기영화
     popularMovie(context) {
       axios({
         method:'get',
         url:'http://127.0.0.1:8000/movies/',
-        headers: {
-          Authorization : `Bearer ${this.state.accessToken}`
-        }
       })
       .then(res =>{
         context.commit('GET_POPULAR',res.data)

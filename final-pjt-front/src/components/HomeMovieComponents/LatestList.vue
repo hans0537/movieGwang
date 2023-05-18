@@ -25,7 +25,7 @@
         </div>
         
         <div class="carousel-inner"> 
-          <div class="carousel-item active" v-for="(movies, index) in latestList" :key="index">
+          <div class="carousel-item" v-for="(movies, index) in latestList" :key="index" :class="index===0 ? 'active' : ''">
             <div class="trend_2i row">
               <LatestListItem 
               v-for="movie in movies" :key="movie.id" :movie="movie"/>
@@ -58,6 +58,7 @@ export default {
           temp = []
         }
       }
+      console.log(res)
       return res
     }
   }
