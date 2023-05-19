@@ -13,7 +13,9 @@ import WorldcupView from '@/components/CommunityComponents/WorldcupView'
 import ArticleCreateView from '@/components/CommunityComponents/ArticleCreateView'
 import ArticleDetailView from '@/components/CommunityComponents/ArticleDetailView'
 
+
 import store from '../store/index'
+
 Vue.use(VueRouter)
 
 const routes = [

@@ -37,21 +37,32 @@ export default new Vuex.Store({
     GET_ARTICLES(state, articles) {
       state.articles = articles
     },
-    
-    SAVE_ACCESS_TOKEN(state, access) {
+
+    SAVE_SIGNUP_TOKEN(state, access) {
+      state.accessToken = access
+      router.push({name: 'login'})
+    },
+    SAVE_LOGIN_TOKEN(state, access) {
       state.accessToken = access
       router.go(-1)
     },
+    
     GET_POPULAR(state,popular) {
       state.popularMovie = popular
+    },
+    LOGOUT(state) {
+      state.accessToken = null
     }
   },
   actions: {
     login(context, access) {
-      context.commit('SAVE_ACCESS_TOKEN', access)
+      context.commit('SAVE_LOGIN_TOKEN', access)
     },
     signup(context, access){
-      context.commit('SAVE_ACCESS_TOKEN', access)
+      context.commit('SAVE_SIGNUP_TOKEN', access)
+    },
+    logout(context){
+      context.commit('LOGOUT')
     },
 
     // 상영중인 최신 영화
