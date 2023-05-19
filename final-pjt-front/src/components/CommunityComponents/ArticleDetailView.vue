@@ -20,8 +20,8 @@
               </div>
 
               <div class="mt-3 mb-4 pb-2 border border-primary border-opacity-25 rounded text-start ps-3" style="margin-left: 70px; width: 80%">
-                <img style="width: 100%;" class="my-3" v-if="article.image_base64" :src="getImageSrc(article.image_base64)" alt="Article Image">
-                <hr v-if="article.image_base64">
+                <img style="width: 100%;" class="my-3" v-if="article?.image_base64" :src="getImageSrc(article.image_base64)" alt="Article Image">
+                <hr v-if="article?.image_base64">
                 <p class="mt-1">{{article?.content}}</p>
               </div>
 

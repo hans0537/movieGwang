@@ -42,6 +42,9 @@ export default {
   components: {
     AverageItems
   },
+  created(){
+    this.$store.dispatch('popularMovie')
+  },
   computed: {
     AverageMovie() {
       const tmp = this.$store.state.popularMovie;
