@@ -8,6 +8,7 @@ import CommunityView from '../views/CommunityView.vue'
 import MyPageView from '../views/MyPageView.vue'
 import ArticlesView from '@/components/CommunityComponents/ArticlesView'
 
+
 Vue.use(VueRouter)
 
 const routes = [
