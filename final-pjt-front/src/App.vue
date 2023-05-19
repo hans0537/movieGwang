@@ -6,7 +6,7 @@
       <div class="w3-bar w3-white w3-wide w3-padding w3-card">
         <!-- Logo -->
         <a href="#home" class="w3-bar-item w3-button"><b>BR</b> Architects</a>
-        {{isLogin}}
+
         <!-- Float links to the right. Hide them on small screens -->
         <b-nav class="w3-right w3-hide-small">
           <span>
@@ -15,7 +15,7 @@
           <span>
             <b-nav-item><router-link to="/movie" class="w3-bar-item w3-button">Movie</router-link></b-nav-item>
           </span>
-            <b-nav-item><router-link to="/community" class="w3-bar-item w3-button">Community</router-link></b-nav-item>
+            <b-nav-item><router-link to="/community/articles" class="w3-bar-item w3-button">Community</router-link></b-nav-item>
           <span v-if="isLogin">
             <b-nav-item><router-link to="/mypage" class="w3-bar-item w3-button">MyPage</router-link></b-nav-item>
           </span>
