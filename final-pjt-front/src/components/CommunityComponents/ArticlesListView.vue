@@ -1,6 +1,6 @@
 <template>
   <tr @click="articleDetail">
-    <th scope="row">{{index + 1}}</th>
+    <th scope="row">{{(index + 1) + numSelected * (page - 1)}}</th>
     <td class="fw-bold">{{article?.title}}</td>
     <td>{{ formatDate(article?.created_at)}}</td>
     <td>
@@ -23,10 +23,10 @@
     </td>
 
     <td>
-        <div class="action">
-            <a href="#" class="text-success mr-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"> <i class="fa fa-pencil h5 m-0"></i></a>
-            <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Close"> <i class="fa fa-remove h5 m-0"></i></a>
-        </div>
+      <div class="action" v-if="article.user===checkUser">
+        <a href="#" class="text-success mr-4" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil h5 m-0"></i></a>
+        <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Close"> <i class="fa fa-remove h5 m-0"></i></a>
+      </div>
     </td>
   </tr>
 </template>
@@ -38,6 +38,9 @@ export default {
   props: {
     article: Object,
     index: Number,
+    numSelected: Number,
+    page: Number,
+    checkUser: String,
   },
   methods: {
     formatDate(dateString) {
@@ -65,6 +68,7 @@ export default {
         this.$router.push({ name: 'articleDetail', params: { id: this.article.id } });
       })
       .catch((err) => {
+        alert('열람 권한이 없습니다. 로그인 하십시오')
         console.log(err)
       })
     },

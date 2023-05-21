@@ -20,6 +20,23 @@ def articles_list_create(request):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+@api_view(['GET'])
+def search(request):
+    search_value = request.GET.get('searchValue')  # searchValue 가져오기
+    search_selected = request.GET.get('searchSelected')  # searchSelected 가져오기
+
+    # 필터링된 게시글 검색
+    if search_selected == 'title':
+        articles = Article.objects.filter(title__icontains=search_value)
+    elif search_selected == 'content':
+        articles = Article.objects.filter(content__icontains=search_value)
+    elif search_selected == 'user':
+        articles = Article.objects.filter(user__username__icontains=search_value)
+    else:
+        articles = Article.objects.all() 
+    serializer = ArticleSerializer(articles, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

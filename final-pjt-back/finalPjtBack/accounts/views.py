@@ -34,6 +34,15 @@ def findPw(request):
         user[0].save()
         return Response({'message': '비밀번호가 성공적으로 변경되었습니다.'}, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getUser(request):
+    if request.method == "GET":
+        user = request.user
+        return Response({'username' : user.username}, status=status.HTTP_200_OK)
+    else:
+        return Response({'username' : ''}, status=status.HTTP_200_OK)
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def userdelete(request):

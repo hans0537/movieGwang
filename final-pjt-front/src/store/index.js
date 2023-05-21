@@ -46,9 +46,13 @@ export default new Vuex.Store({
       state.articles = articles
     },
 
+    SEARCH_ARTICLES(state, articles) {
+      state.articles = articles
+    },
+
     SAVE_SIGNUP_TOKEN(state, access) {
       state.accessToken = access
-      router.push({name: 'login'})
+      router.push({name: 'home'})
     },
     SAVE_LOGIN_TOKEN(state, access) {
       state.accessToken = access
@@ -146,6 +150,28 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+
+    // 검색 게시글 가져오기
+    searchArticles(context, obj) {
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/articles/search/',
+        params: {
+          'searchValue': obj.searchValue,
+          'searchSelected': obj.searchSelected
+        },
+      })
+      .then((res) => {
+        // console.log(res.data, context)
+        context.commit('SEARCH_ARTICLES', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+
+
+
     getall(context) {
       context.dispatch('getLatest').then(() => {
         context.dispatch('getUpComing').then(() => {
