@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
+import FindPwView from '../views/FindPwView.vue'
+import FindUsernameView from '../views/FindUsernameView.vue'
 import MovieView from '../views/MovieView.vue'
 import CommunityView from '../views/CommunityView.vue'
 import MyPageView from '../views/MyPageView.vue'
@@ -38,6 +40,16 @@ const routes = [
     path: '/movie',
     name: 'movie',
     component: MovieView
+  },  
+  {
+    path: '/findPw',
+    name: 'findPw',
+    component: FindPwView
+  },  
+  {
+    path: '/findUsername',
+    name: 'findUsername',
+    component: FindUsernameView
   },
   {
     path: '/community',

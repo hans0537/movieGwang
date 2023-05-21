@@ -8,15 +8,16 @@
     <div class="flex-grow-1 flex-shrink-1">
       <div>
         <div class="d-flex justify-content-between align-items-center">
-          <p class="mb-1 fw-bold">
+          <p class="mb-1 fs-5 fw-bold">
             {{cocomment?.user.username}}
           </p>
         </div>
-        <p class="small text-start"> {{formatDate(cocomment?.created_ats)}} </p>
-        <p class="small mb-0 border rounded ps-3 text-start">
+        <p class="small text-start"> {{formatDate(cocomment?.created_at)}} </p>
+        <p class="small mb-0 fs-6 text-start">
           {{cocomment?.content}}
         </p>
       </div>
+      <hr>
     </div>
   </div>
 </template>
@@ -29,6 +30,7 @@ export default {
   },
   methods: {
     formatDate(dateString) {
+      console.log(dateString)
       const date = new Date(dateString);
       const now = new Date();
 

@@ -4,7 +4,7 @@
     <div class="col">
       <div class="card">
         <div class="card-body d-flex justify-content-between">
-          <b-form-select v-model="numSelected" :options="numOptions" class="form-select" style="width: 100px"></b-form-select>
+          <b-form-select v-model="numSelected" :options="numOptions" class="form-select" style="width: 100px" @change="filterArticles"></b-form-select>
           <form>
             <div class="form-group mb-0">
               <div class="input-group mb-0 d-flex align-items-center">
@@ -39,7 +39,7 @@
                               </tr>
                           </thead>
                           <tbody>
-                            <ArticlesListView v-for="(article, index) in articles" :key="article.id" :article="article" :index="index"/>
+                            <ArticlesListView v-for="(article, index) in displayedArticles" :key="article.id" :article="article" :index="index"/>
                           </tbody>
                       </table>
                   </div>
@@ -56,6 +56,19 @@
                       <li class="page-item">
                           <a class="page-link" href="#">Next</a>
                       </li>
+                  </ul>
+                </div>
+                <div class="pt-3 d-flex justify-content-center">
+                  <ul class="pagination mb-0">
+                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true" @click="prevPage()">Previous</a>
+                    </li>
+                    <li class="page-item" :class="{ active: currentPage === page }" v-for="page in pageCount" :key="page">
+                      <a class="page-link" href="#" @click="changePage(page)">{{ page }}</a>
+                    </li>
+                    <li class="page-item" :class="{ disabled: currentPage === pageCount }">
+                      <a class="page-link" href="#" @click="nextPage()">Next</a>
+                    </li>
                   </ul>
                 </div>
                 <router-link :to="{ name: 'articlesCreate' }" class="btn btn-primary float-end" style="position: relative; top: -36px">글작성</router-link>
@@ -92,12 +105,23 @@ export default {
         { value: "content", text: '내용' },
         { value: "user", text: '작성자' },
       ],
+      currentPage: 1,
     }
   },
   computed: {
     articles() {
       return this.$store.state.articles
-    }
+    },
+    displayedArticles() {
+      const startIndex = (this.currentPage - 1) * this.numSelected;
+      const endIndex = startIndex + this.numSelected;
+      return this.articles.slice(startIndex, endIndex);
+    },
+
+    // 보여지는 갯수에 따른 총 페이지 수
+    pageCount() {
+      return Math.ceil(this.articles.length / this.numSelected);
+    },
   },
   mounted() {
     this.getArticles()
@@ -105,7 +129,29 @@ export default {
   methods: {
     getArticles(){
       this.$store.dispatch('getArticles')
-    }
+    },
+
+    filterArticles() {
+      console.log(this.numSelected)
+      // const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      // const endIndex = startIndex + this.itemsPerPage;
+      const currentArticleIndex = this.articles.indexOf(this.displayedArticles[0]);
+      const currentPage = Math.ceil((currentArticleIndex + 1) / this.numSelected);
+      this.currentPage = currentPage;
+    },
+
+    // 현재 페이지 선택
+    changePage(page) {
+      this.currentPage = page;
+    },
+    // 이전 페이지 선택
+    prevPage() {
+      this.currentPage --;
+    },
+    // 다음 페이지 선택
+    nextPage() {
+      this.currentPage ++;
+    },
   }
 }
 </script>

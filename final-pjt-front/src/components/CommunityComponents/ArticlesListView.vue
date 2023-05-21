@@ -1,25 +1,22 @@
 <template>
   <tr @click="articleDetail">
     <th scope="row">{{index + 1}}</th>
-    <td>{{article?.title}}</td>
+    <td class="fw-bold">{{article?.title}}</td>
     <td>{{ formatDate(article?.created_at)}}</td>
     <td>
-        <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> {{article?.user}}</span>
+      <div class="team">
+        <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Roger Drake">
+            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle avatar-xs" alt="" />
+        </a>
+        <span class="text-success fs-6 fw-bold ms-2"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> {{article?.user}}</span>
+      </div>
     </td>
     <td>
-        <div class="team">
-            <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Roger Drake">
-                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle avatar-xs" alt="" />
-            </a>
-
-            <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reggie James">
-                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="rounded-circle avatar-xs" alt="" />
-            </a>
-
-            <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Gerald Mayberry">
-                <img src="https://bootdey.com/img/Content/avatar/avatar8.png" class="rounded-circle avatar-xs" alt="" />
-            </a>
-        </div>
+      <div class="team">
+        <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Roger Drake">
+            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle avatar-xs" alt="" />
+        </a>
+      </div>
     </td>
     <td>
       <p>{{article?.hit}}</p>

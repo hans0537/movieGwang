@@ -40,10 +40,11 @@ export default new Vuex.Store({
 
     SAVE_SIGNUP_TOKEN(state, access) {
       state.accessToken = access
-      router.push({name: 'login'})
+      router.push({name: 'home'})
     },
     SAVE_LOGIN_TOKEN(state, access) {
       state.accessToken = access
+      alert("로그인 성공!!")
       router.go(-1)
     },
     
@@ -52,6 +53,14 @@ export default new Vuex.Store({
     },
     LOGOUT(state) {
       state.accessToken = null
+      alert('로그아웃 되셨습니다.')
+      // 중복 routing 오류 방지
+      const currentRoute = router.currentRoute;
+      console.log(currentRoute)
+      if (currentRoute.name != 'home') {
+        router.push({ name: 'home' });
+      }
+
     }
   },
   actions: {

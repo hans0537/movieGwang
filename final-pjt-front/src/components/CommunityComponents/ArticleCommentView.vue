@@ -6,13 +6,13 @@
   <div class="flex-grow-1 flex-shrink-1">
     <div>
       <div class="d-flex justify-content-between align-items-center">
-        <p class="mb-1 fw-bold">
+        <p class="mb-1 fs-5 fw-bold">
           {{comment?.user.username}} 
         </p>
         <div style="cursor: pointer; color: blue;" @click="cocommentToggle"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></div>
       </div>
-      <p class="small text-start"> {{formatDate(comment?.created_ats)}} </p>
-      <p class="small mb-0 border rounded ps-3 text-start">
+      <p class="small text-start"> {{formatDate(comment?.created_at)}} </p>
+      <p class="small mb-0 fs-6 text-start">
         {{comment?.content}}
       </p>
     </div>
@@ -39,6 +39,8 @@
         <button type="button" class="btn btn-outline-primary btn-sm" @click="cocommentCancel">취소</button>
       </div>
     </div>
+
+    <hr >
     <ArticleCoCommentView 
       :v-if="comment.child_comments"
       v-for="cocomment in comment.child_comments" :key="cocomment.id"
