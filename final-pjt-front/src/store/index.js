@@ -18,7 +18,8 @@ export default new Vuex.Store({
     accessToken: null,
     latestList: null,
     upcomingList: null,
-    popularMovie:null,
+    popularMovie: null,
+    allmovie: null,
   },
   getters: {
     isLogin(state) {
@@ -33,22 +34,25 @@ export default new Vuex.Store({
     GET_UPCOMING(state, upcoming) {
       state.upcomingList = upcoming
     },
-    
+    GET_POPULAR(state, popular) {
+      state.popularMovie = popular
+    },
+
+    GET_ALL(state) {
+      state.allmovie = [...new Set([...state.latestList, ...state.upcomingList, ...state.popularMovie])]
+    },
+
     GET_ARTICLES(state, articles) {
       state.articles = articles
     },
 
     SAVE_SIGNUP_TOKEN(state, access) {
       state.accessToken = access
-      router.push({name: 'login'})
+      router.push({ name: 'login' })
     },
     SAVE_LOGIN_TOKEN(state, access) {
       state.accessToken = access
       router.go(-1)
-    },
-    
-    GET_POPULAR(state,popular) {
-      state.popularMovie = popular
     },
     LOGOUT(state) {
       state.accessToken = null
@@ -58,51 +62,62 @@ export default new Vuex.Store({
     login(context, access) {
       context.commit('SAVE_LOGIN_TOKEN', access)
     },
-    signup(context, access){
+    signup(context, access) {
       context.commit('SAVE_SIGNUP_TOKEN', access)
     },
-    logout(context){
+    logout(context) {
       context.commit('LOGOUT')
     },
 
     // 상영중인 최신 영화
     getLatest(context) {
-      axios({
-        method: 'get',
-        url: `${TMDB_URL}/movie/now_playing?language=ko-KR&api_key=${API_KEY}`,
-      })
-      .then((res) => {
-        // console.log(res)
-        context.commit('GET_LATEST', res.data.results)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      const requests = []
+      for (let page = 1; page <= 5; page++) {
+        const request = axios({
+          method: 'get',
+          url: `${TMDB_URL}/movie/now_playing?language=ko-kr&page=${page}&region=kr&api_key=${API_KEY}`,
+        })
+        requests.push(request)
+      }
+
+      Promise.all(requests)
+        .then((responses) => {
+          const latest = []
+          for (const response of responses) {
+            latest.push(...response.data.results)
+          }
+          context.commit('GET_LATEST', latest)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
-    
+
     // 개봉 예정작
     getUpComing(context) {
       axios({
         method: 'get',
-        url: `${TMDB_URL}/movie/upcoming?language=ko-KR&api_key=${API_KEY}`,
+        url: `${TMDB_URL}/movie/upcoming?language=ko-kr&region=kr&api_key=${API_KEY}`,
       })
-      .then((res) => {
-        context.commit('GET_UPCOMING', res.data.results)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then((res) => {
+          // 제외 조건을 확인하여 유효한 개봉 예정작만 필터링
+          const upcoming = res.data.results.filter(movie => movie.poster_path !== null && movie.overview.trim() !== '');
+          context.commit('GET_UPCOMING', upcoming);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
     // 인기영화
     popularMovie(context) {
       axios({
-        method:'get',
-        url:'http://127.0.0.1:8000/movies/',
+        method: 'get',
+        url: 'http://127.0.0.1:8000/movies/',
       })
-      .then(res =>{
-        context.commit('GET_POPULAR',res.data)
-      })
+        .then(res => {
+          context.commit('GET_POPULAR', res.data)
+        })
     },
 
     // 게시글 가져오기
@@ -114,14 +129,23 @@ export default new Vuex.Store({
           Authorization: `Bearer ${context.state.accessToken}`
         }
       })
-      .then((res) => {
-        console.log(res.data, context)
-        context.commit('GET_ARTICLES', res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then((res) => {
+          console.log(res.data, context)
+          context.commit('GET_ARTICLES', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
+    getall(context) {
+      context.dispatch('getLatest').then(() => {
+        context.dispatch('getUpComing').then(() => {
+          context.dispatch('popularMovie').then(() => {
+            context.commit('GET_ALL')
+          })
+        })
+      })
+    }
   },
   modules: {
   }

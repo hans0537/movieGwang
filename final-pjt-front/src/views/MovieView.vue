@@ -29,11 +29,11 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-3">
 
             <!-- Link -->
-            <p class="me-3" :class="{ 'selected': select_cate === 'all' }" @click="allmovie" @mouseover="changeCursor('pointer')">전체</p>
-            <p class="me-3" :class="{ 'selected': select_cate === 'genre' }" @click="genremovie" @mouseover="changeCursor('pointer')">장르</p>
-            <p class="me-3" :class="{ 'selected': select_cate === 'average' }" @click="averagemovie" @mouseover="changeCursor('pointer')">최고 평정</p>
-            <p class="me-3" :class="{ 'selected': select_cate === 'now' }" @click="nowmovie" @mouseover="changeCursor('pointer')">현재 상영작</p>
-            <p :class="{ 'selected': select_cate === 'upcome' }" @click="upcomingmovie" @mouseover="changeCursor('pointer')">상영 예정작</p>
+            <p class="me-3" :class="{ 'selected': select_cate === 'all' }" @click="allmovie" @mouseover="changeCursor('pointer')" @mouseleave="changeCursor('auto')">전체</p>
+            <p class="me-3" :class="{ 'selected': select_cate === 'genre' }" @click="genremovie" @mouseover="changeCursor('pointer')" @mouseleave="changeCursor('auto')">장르</p>
+            <p class="me-3" :class="{ 'selected': select_cate === 'average' }" @click="averagemovie" @mouseover="changeCursor('pointer')" @mouseleave="changeCursor('auto')">인기 영화</p>
+            <p class="me-3" :class="{ 'selected': select_cate === 'now' }" @click="nowmovie" @mouseover="changeCursor('pointer')" @mouseleave="changeCursor('auto')">현재 상영작</p>
+            <p :class="{ 'selected': select_cate === 'upcome' }" @click="upcomingmovie" @mouseover="changeCursor('pointer')" @mouseleave="changeCursor('auto')">상영 예정작</p>
           </ul>
 
           <!-- Search -->

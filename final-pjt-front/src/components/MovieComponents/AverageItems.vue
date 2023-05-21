@@ -9,7 +9,7 @@
               <div class="image-details" v-if="showDetails">
                 <h6 class="col_red">{{ movie.title }}</h6>
                 <p class="mb-2">{{ movie.overview.slice(0, 20) + "..." }}</p>
-                <p>{{ movie.vote_average }}</p>
+                <p>인기도 : {{ movie.popularity }}</p>
                 <span class="col_red">
                   <i v-for="index in 5" :key="index" class="fa" :class="['fa-star', index <= fullStarCount ? 'filled' : 'fa-regular', index === halfStarIndex ? 'fa-duotone fa-star-half-stroke' : '']" :style="index === halfStarIndex ? 'color: red' : ''"></i>
                 </span>

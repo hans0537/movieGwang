@@ -46,6 +46,12 @@
         // isLogin: false,
       }
     },
+    // 서버에 저장된 최고평점 영화 가져오기(3500개 정도라 시간이 걸려서 처음 페이지 열리자마자 가져오기)
+    mounted() {
+    if (this.$store.state.popularMovie === null && this.$store.getters.isLogin) {
+      this.$store.dispatch('popularMovie');
+      }
+    },
     computed: {
       // 로그인 여부 확인
       isLogin() {
