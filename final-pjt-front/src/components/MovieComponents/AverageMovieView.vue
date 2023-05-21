@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>평정 영화</h1>
+    <h1>인기 영화</h1>
     <div class="container">
       <div v-for="(movies, index) in AverageMovie" :key="index">
         <div>
@@ -11,25 +11,18 @@
       </div>
     </div>
         <!-- Pagination -->
-        <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
-      <ul class="pagination">
-        <li class="page-item disabled">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>  
+        <div class="overflow-auto" style="display: flex; justify-content: center;">
+          <!-- Use text in props -->
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            first-text="First"
+            prev-text="Prev"
+            next-text="Next"
+            last-text="Last"
+          ></b-pagination>
+        </div>
     <!-- Pagination -->  
   </div>
 </template>
@@ -39,27 +32,40 @@ import AverageItems from './AverageItems.vue';
 
 export default {
   name: 'AverageMovieView',
+  data() {
+    return {
+      rows: 100,
+      perPage: 20,
+      currentPage: 1,
+      tmp:null,
+    }
+  },
   components: {
     AverageItems
   },
-  created(){
-    this.$store.dispatch('popularMovie')
-  },
   computed: {
     AverageMovie() {
-      const tmp = this.$store.state.popularMovie;
-      console.log(tmp);
+      const tmp1 = this.tmp.slice((this.currentPage-1)* 20,this.currentPage*20);
       let res = [];
       let temp = [];
-      for (let i = 1; i <= tmp.length; i++) {
-        temp.push(tmp[i - 1]);
+      for (let i = 1; i <= tmp1.length; i++) {
+        temp.push(tmp1[i - 1]);
         if (i % 4 === 0) {
           res.push(temp);
           temp = [];
+          }
         }
-      }
       return res;
+      }
+    },
+  methods: {
+    getPagelen() {
+      this.tmp = this.$store.state.popularMovie.sort((a, b) => -(a.popularity - b.popularity))
+      this.rows = this.$store.state.popularMovie.length
     }
+  },
+  created() {
+    this.getPagelen()
   }
 };
 </script>
