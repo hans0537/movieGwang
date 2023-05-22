@@ -6,7 +6,9 @@
         <h4 class="trend_1l" style="text-align:left;">UpComing <span class="col_red">Movies</span></h4>
       </div>
       <div class="col-md-6 col-6 text-end">
-        <h6 class="mb-0"><router-link to="/movie" class="button" style="text-decoration: none;"> View All</router-link></h6>
+        <h6 class="mb-0">
+          <router-link to="/movie/upcoming" class="button" style="text-decoration: none;">View All</router-link>
+        </h6>
       </div>
     </div>
 

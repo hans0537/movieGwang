@@ -39,8 +39,17 @@ export default new Vuex.Store({
     },
 
     GET_ALL(state) {
-      state.allmovie = [...new Set([...state.latestList, ...state.upcomingList, ...state.popularMovie])]
-    },
+      state.allmovie = [
+        ...state.latestList,
+        ...state.upcomingList,
+        ...state.popularMovie
+      ].reduce((uniqueMovies, movie) => {
+        const existingMovie = uniqueMovies.find((m) => m.title === movie.title);
+        if (!existingMovie) {
+          uniqueMovies.push(movie);
+        }
+        return uniqueMovies;
+      }, []);    },
 
     GET_ARTICLES(state, articles) {
       state.articles = articles
@@ -129,6 +138,7 @@ export default new Vuex.Store({
         url: 'http://127.0.0.1:8000/movies/',
       })
         .then(res => {
+          console.log(1)
           context.commit('GET_POPULAR', res.data)
         })
     },
@@ -170,16 +180,8 @@ export default new Vuex.Store({
       })
     },
 
-
-
     getall(context) {
-      context.dispatch('getLatest').then(() => {
-        context.dispatch('getUpComing').then(() => {
-          context.dispatch('popularMovie').then(() => {
-            context.commit('GET_ALL')
-          })
-        })
-      })
+      context.commit('GET_ALL')
     }
   },
   modules: {

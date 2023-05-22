@@ -30,6 +30,7 @@
 
 <script>
 export default {
+  name:'GenreMovieItems',
   props: {
     movie: Object,
   },

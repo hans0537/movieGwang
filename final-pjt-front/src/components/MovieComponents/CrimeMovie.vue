@@ -16,13 +16,13 @@
       <div v-for="(movies, index) in AverageMovie" :key="index">
         <div>
           <div class="row">
-            <UpcomingItems v-for="movie in movies" :key="movie.id" :movie="movie" class="col-2 mb-5"/>
+            <GenreMovieItems v-for="movie in movies" :key="movie.id" :movie="movie" class="col-2 mb-5"/>
           </div>
         </div>
       </div>
     </div>
-        <!-- Pagination -->
-        <div class="overflow-auto" style="display: flex; justify-content: center;">
+    <!-- Pagination -->
+    <div class="overflow-auto" style="display: flex; justify-content: center;">
       <!-- Use text in props -->
       <b-pagination
         v-model="currentPage"
@@ -39,20 +39,20 @@
 </template>
 
 <script>
-import UpcomingItems from './UpcomingItems.vue';
+import GenreMovieItems from './GenreMovieItems.vue';
 export default {
-  name:'NowMovieView',
+  name: 'CrimMovie',
   data() {
     return {
-      rows: 20,
+      rows: 100,
       perPage: 20,
       currentPage: 1,
-      tmp:null,
+      tmp: null,
       search_movie: null,
-    }
+    };
   },
   components: {
-    UpcomingItems
+    GenreMovieItems
   },
   computed: {
     AverageMovie() {
@@ -96,8 +96,8 @@ export default {
   },
   methods: {
     getPagelen() {
-      this.tmp = this.$store.state.upcomingList.sort((a, b) => -(a.popularity - b.popularity));
-      this.rows = this.$store.state.upcomingList.length;
+      this.tmp = this.$store.state.allmovie.filter(movie => movie.genre_ids.includes(80)).sort((a, b) => -(a.popularity - b.popularity));
+      this.rows = this.$store.state.allmovie.length;
     },
     searchmovie() {
       // 가장 가까운 form의 input 요소 찾기
@@ -115,9 +115,9 @@ export default {
   created() {
     this.getPagelen();
   }
-}
+};
 </script>
 
 <style>
-
+/* 스타일 작성 */
 </style>

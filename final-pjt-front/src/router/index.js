@@ -14,7 +14,13 @@ import OverQuizView from '@/components/CommunityComponents/OverQuizView'
 import WorldcupView from '@/components/CommunityComponents/WorldcupView'
 import ArticleCreateView from '@/components/CommunityComponents/ArticleCreateView'
 import ArticleDetailView from '@/components/CommunityComponents/ArticleDetailView'
-
+import AllMovieView from '@/components/MovieComponents/AllMovieView'
+import AverageMovieView from '@/components/MovieComponents/AverageMovieView'
+import GenreMovieView from '@/components/MovieComponents/GenreMovieView'
+import NowMovieView from '@/components/MovieComponents/NowMovieView'
+import UpcomingView from '@/components/MovieComponents/UpcomingView'
+import ActionMovieView from '@/components/MovieComponents/ActionMovieView'
+import AdventureMovieView from '@/components/MovieComponents/AdventureMovie'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -38,7 +44,46 @@ const routes = [
   {
     path: '/movie',
     name: 'movie',
-    component: MovieView
+    component: MovieView,
+    children: [
+      {
+        path:'/movie/all',
+        name:'allmovie',
+        component:AllMovieView
+      },
+      {
+        path:'/movie/genre',
+        name:'genremovie',
+        component:GenreMovieView,
+        children : [
+          {
+            path:'/movie/genre/action',
+            name:'actionmovie',
+            component:ActionMovieView,
+          },
+          {
+            path:'/movie/genre/adventure',
+            name:'adventuremovie',
+            component:AdventureMovieView,
+          },
+        ]
+      },
+      {
+        path:'/movie/average',
+        name:'averagemovie',
+        component:AverageMovieView
+      },
+      {
+        path:'/movie/now',
+        name:'nowmovie',
+        component:NowMovieView
+      },
+      {
+        path:'/movie/upcoming',
+        name:'upcomingmovie',
+        component:UpcomingView
+      },
+    ]
   },  
   {
     path: '/findPw',

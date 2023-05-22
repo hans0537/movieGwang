@@ -12,7 +12,7 @@
             <b-nav-item><router-link to="/" class="w3-bar-item w3-button">Home</router-link></b-nav-item>
           </span>
           <span>
-            <b-nav-item><router-link to="/movie" class="w3-bar-item w3-button">Movie</router-link></b-nav-item>
+            <b-nav-item><router-link to="/movie/all" class="w3-bar-item w3-button">Movie</router-link></b-nav-item>
           </span>
             <b-nav-item><router-link to="/community/articles" class="w3-bar-item w3-button">Community</router-link></b-nav-item>
           <span v-if="isLogin">
