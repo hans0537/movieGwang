@@ -14,6 +14,7 @@ import OverQuizView from '@/components/CommunityComponents/OverQuizView'
 import WorldcupView from '@/components/CommunityComponents/WorldcupView'
 import ArticleCreateView from '@/components/CommunityComponents/ArticleCreateView'
 import ArticleDetailView from '@/components/CommunityComponents/ArticleDetailView'
+import ArticleUpdateView from '@/components/CommunityComponents/ArticleUpdateView'
 
 import store from '../store/index'
 
@@ -64,6 +65,11 @@ const routes = [
         path: '/community/articles/create',
         name: 'articlesCreate',
         component: ArticleCreateView
+      },
+      {
+        path: '/community/articles/update/:id',
+        name: 'articleUpdate',
+        component: ArticleUpdateView,
       },
       {
         path: '/community/articles/:id',

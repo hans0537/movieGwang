@@ -39,7 +39,14 @@
                               </tr>
                           </thead>
                           <tbody>
-                            <ArticlesListView style="cursor: pointer;" v-for="(article, index) in displayedArticles" :key="article.id" :article="article" :index="index" :numSelected="numSelected" :page="currentPage" :checkUser="checkUser"/>
+                            <ArticlesListView style="cursor: pointer;" 
+                              v-for="(article, index) in displayedArticles" :key="article.id" 
+                              :article="article" 
+                              :index="index" 
+                              :numSelected="numSelected" 
+                              :page="currentPage" 
+                              :checkUser="checkUser"
+                              @delete-article="handleDeleteArticle"/>
                           </tbody>
                       </table>
                   </div>
@@ -74,7 +81,6 @@
 
 <script scoped>
 import ArticlesListView from '@/components/CommunityComponents/ArticlesListView.vue'
-import axios from 'axios'
 
 export default {
   name: 'ArticlesView',
@@ -101,7 +107,7 @@ export default {
       ],
       currentPage: 1,
 
-      checkUser: ''
+      checkUser: this.$store.state.user.username
     }
   },
   computed: {
@@ -119,9 +125,6 @@ export default {
       return Math.ceil(this.articles.length / this.numSelected);
     },
   },
-  created() {
-    this.getUser()
-  },
   mounted() {
     this.getArticles()
   },
@@ -134,19 +137,6 @@ export default {
       this.$store.dispatch('searchArticles', {'searchValue' : this.searchValue, 'searchSelected' : this.searchSelected})
     },
 
-    getUser(){
-      axios({
-        url: 'http://127.0.0.1:8000/accounts/getUser/',
-        headers: {
-          Authorization: `Bearer ${this.$store.state.accessToken}`,
-        }
-      })
-      .then((res) => {
-        this.checkUser = res.data.username
-      })
-      .catch((err) => {console.log(err)})
-    },
-    
     filterArticles() {
       // const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       // const endIndex = startIndex + this.itemsPerPage;
@@ -166,6 +156,11 @@ export default {
     // 다음 페이지 선택
     nextPage() {
       this.currentPage ++;
+    },
+
+    handleDeleteArticle() {
+      // 게시글 목록에서 삭제된 게시글 제거
+      this.getArticles()
     },
   }
 }

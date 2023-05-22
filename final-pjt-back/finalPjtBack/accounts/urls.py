@@ -6,6 +6,9 @@ urlpatterns = [
     path('findPw/', views.findPw),
 
     path('getUser/', views.getUser),
+    
+    path('update/', views.update),
+    
     path('userdelete/',views.userdelete),
     path('profile/<username>/', views.profile, name='profile'),
     path('<int:user_pk>/follow/', views.follow, name='follow'),
