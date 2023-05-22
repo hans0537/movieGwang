@@ -140,18 +140,29 @@ export default new Vuex.Store({
 
     // 개봉 예정작
     getUpComing(context) {
-      axios({
-        method: 'get',
-        url: `${TMDB_URL}/movie/upcoming?language=ko-kr&region=kr&api_key=${API_KEY}`,
-      })
-        .then((res) => {
+      
+      const requests = []
+      for (let page = 1; page <= 2; page++) {
+        const request = axios({
+          method: 'get',
+          url: `${TMDB_URL}/movie/upcoming?language=ko-kr&page=${page}&region=kr&api_key=${API_KEY}`,
+        })
+        requests.push(request)
+      }
+
+      Promise.all(requests)
+        .then((responses) => {
+          const latest = []
+          for (const response of responses) {
+            latest.push(...response.data.results)
+          }
           // 제외 조건을 확인하여 유효한 개봉 예정작만 필터링
-          const upcoming = res.data.results.filter(movie => movie.poster_path !== null && movie.overview.trim() !== '');
-          context.commit('GET_UPCOMING', upcoming);
+          const upcoming = latest.filter(movie => movie.poster_path !== null && movie.overview.trim() !== '');
+          context.commit('GET_UPCOMING', upcoming)
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
 
     // 인기영화
@@ -161,7 +172,6 @@ export default new Vuex.Store({
         url: 'http://127.0.0.1:8000/movies/',
       })
         .then(res => {
-          console.log(1)
           context.commit('GET_POPULAR', res.data)
         })
     },
