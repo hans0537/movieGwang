@@ -20,8 +20,28 @@ import AverageMovieView from '@/components/MovieComponents/AverageMovieView'
 import GenreMovieView from '@/components/MovieComponents/GenreMovieView'
 import NowMovieView from '@/components/MovieComponents/NowMovieView'
 import UpcomingView from '@/components/MovieComponents/UpcomingView'
+
+
 import ActionMovieView from '@/components/MovieComponents/ActionMovieView'
 import AdventureMovieView from '@/components/MovieComponents/AdventureMovie'
+import AnimationMovieView from '@/components/MovieComponents/AnimationMovie'
+import ComedyMovieView from '@/components/MovieComponents/ComedyMovie'
+import CrimeMovieView from '@/components/MovieComponents/CrimeMovie'
+import DocumentaryMovieView from '@/components/MovieComponents/DocumentaryMovie'
+import DramaMovieView from '@/components/MovieComponents/DramaMovie'
+import FamilyMovieView from '@/components/MovieComponents/FamilyMovie'
+import FantasyMovieView from '@/components/MovieComponents/FantasyMovie'
+import HistoryMovieView from '@/components/MovieComponents/HistoryMovie'
+import HorrorMovieView from '@/components/MovieComponents/HorrorMovie'
+import MusicMovieView from '@/components/MovieComponents/MusicMovie'
+import MysteryMovieView from '@/components/MovieComponents/MysteryMovie'
+import RomanceMovieView from '@/components/MovieComponents/RomanceMovie'
+import ScienceMovieView from '@/components/MovieComponents/ScienceMovie'
+import ThrillerMovieView from '@/components/MovieComponents/ThrillerMovie'
+import TVMovieView from '@/components/MovieComponents/TVMovie'
+import WarMovieView from '@/components/MovieComponents/WarMovie'
+import WesternMovieView from '@/components/MovieComponents/WesternMovie'
+
 
 import ArticleUpdateView from '@/components/CommunityComponents/ArticleUpdateView'
 
@@ -72,6 +92,91 @@ const routes = [
             path:'/movie/genre/adventure',
             name:'adventuremovie',
             component:AdventureMovieView,
+          },
+          {
+            path:'/movie/genre/animation',
+            name:'animationmovie',
+            component:AnimationMovieView,
+          },
+          {
+            path:'/movie/genre/comedy',
+            name:'comedymovie',
+            component:ComedyMovieView,
+          },
+          {
+            path:'/movie/genre/crime',
+            name:'crimemovie',
+            component:CrimeMovieView,
+          },
+          {
+            path:'/movie/genre/documentary',
+            name:'documentarymovie',
+            component:DocumentaryMovieView,
+          },
+          {
+            path:'/movie/genre/drama',
+            name:'dramamovie',
+            component:DramaMovieView,
+          },
+          {
+            path:'/movie/genre/family',
+            name:'familymovie',
+            component:FamilyMovieView,
+          },
+          {
+            path:'/movie/genre/fantasy',
+            name:'fantasymovie',
+            component:FantasyMovieView,
+          },
+          {
+            path:'/movie/genre/history',
+            name:'historymovie',
+            component:HistoryMovieView,
+          },
+          {
+            path:'/movie/genre/horror',
+            name:'horrormovie',
+            component:HorrorMovieView,
+          },
+          {
+            path:'/movie/genre/music',
+            name:'musicmovie',
+            component:MusicMovieView,
+          },
+          {
+            path:'/movie/genre/mystery',
+            name:'mysterymovie',
+            component:MysteryMovieView,
+          },
+          {
+            path:'/movie/genre/romance',
+            name:'romancemovie',
+            component:RomanceMovieView,
+          },
+          {
+            path:'/movie/genre/science',
+            name:'sciencemovie',
+            component:ScienceMovieView,
+          },
+          {
+            path:'/movie/genre/thriller',
+            name:'thrillermovie',
+            component:ThrillerMovieView,
+          },
+          {
+            path:'/movie/genre/tv',
+            name:'tvmovie',
+            component:TVMovieView,
+          },
+          {
+            path:'/movie/genre/war',
+            name:'warmovie',
+            component:WarMovieView,
+          },
+          {
+            path:'/movie/genre/western',
+            name:'westernmovie',
+            component:WesternMovieView,
           },
         ]
       },

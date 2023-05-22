@@ -68,6 +68,9 @@ export default {
             temp = [];
           }
         }
+        if (temp.length > 0) {
+          res.push(temp);
+        }
       } else {
         const searchKeyword = this.search_movie;
         for (let i = 1; i <= this.tmp.length; i++) {
