@@ -25,6 +25,9 @@ import AdventureMovieView from '@/components/MovieComponents/AdventureMovie'
 
 import ArticleUpdateView from '@/components/CommunityComponents/ArticleUpdateView'
 
+import UserProfileView from '../views/UserProfileView.vue'
+import FriendsListView from '../views/FriendsListView.vue'
+
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -147,6 +150,16 @@ const routes = [
     name: 'mypage',
     component: MyPageView
   },
+  {
+    path: '/userprofile/:id',
+    name: 'userprofile',
+    component: UserProfileView
+  },
+  {
+    path: '/friendslist/:id',
+    name: 'friendslist',
+    component: FriendsListView
+  }
 ]
 
 const router = new VueRouter({
@@ -160,7 +173,7 @@ router.beforeEach((to, from, next) => {
   const isLoggedIn = store.getters.isLogin
 
   // 로그인이 필요한 페이지 지정
-  const authPages = ['articlesCreate', 'articleDetail', 'choquiz', 'overquiz', 'worldcup', 'mypage']
+  const authPages = ['articlesCreate', 'articleDetail', 'choquiz', 'overquiz', 'worldcup', 'mypage', 'friendslist']
   
   // 앞으로 이동할 페이지(to)가 로그인이 필요한 페이지인지 확인
   const isAuthRequired = authPages.includes(to.name)

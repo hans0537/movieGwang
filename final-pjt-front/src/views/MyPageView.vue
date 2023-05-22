@@ -10,7 +10,7 @@
 
                   <div class="image-container" style="width: 150px; height: 180px;">
                     
-                    <img v-if="user?.image_base64" :src="getImageSrc(user.image_base64)"
+                    <img v-if="user?.image_base64" :src="getImageSrc(user?.image_base64)"
                       alt="프로필 이미지" class="img-fluid img-thumbnail mt-4 mb-2 py-3"
                       style="max-width: 100%; max-height: 100%; z-index: 2;">
                   
@@ -56,8 +56,8 @@
 
                 </div>
                 <div class="ms-3" style="margin-top: 130px;">
-                  <h4 class="text-start">{{user.username}}</h4>
-                  <p>{{user.email}}</p>
+                  <h4 class="text-start">{{user?.username}}</h4>
+                  <p>{{user?.email}}</p>
                 </div>
               </div>
               <div class="p-4 text-black" style="background-color: #f8f9fa;">
@@ -66,12 +66,12 @@
                     <p class="mb-1 h5">253</p>
                     <p class="small text-muted mb-0">Photos</p>
                   </div>
-                  <div class="px-3">
-                    <p class="mb-1 h5">{{user.followers_cnt}}</p>
+                  <div class="px-3" @click="goToFriendList" style="cursor: pointer;">
+                    <p class="mb-1 h5">{{user?.followers_cnt}}</p>
                     <p class="small text-muted mb-0">Followers</p>
                   </div>
-                  <div>
-                    <p class="mb-1 h5">{{user.followings_cnt}}</p>
+                  <div @click="goToFriendList" style="cursor: pointer;">
+                    <p class="mb-1 h5">{{user?.followings_cnt}}</p>
                     <p class="small text-muted mb-0">Following</p>
                   </div>
                 </div>
@@ -114,9 +114,9 @@
           </div>
         </div>
       </div>
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
-                style="width: 150px; z-index: 1">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+          alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+          style="width: 150px; z-index: 1">
     </section>
   </div>
 </template>
@@ -187,6 +187,11 @@ export default {
     getImageSrc(base64String) {
       return `data:image/png;base64, ${base64String}`; // Base64 데이터를 이미지 src 형식으로 변환
     },
+
+    goToFriendList(){
+      console.log(this.user.id)
+      this.$router.push({name : 'friendslist', params:{id: this.user.id}})
+    }
   }
 }
 </script>

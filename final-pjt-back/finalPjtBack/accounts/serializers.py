@@ -23,3 +23,17 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
       model=User
       fields=('id','username','email','profile','background','cho_points','groups','user_permissions','followings','followers', 'like_articles', 'like_movies', 'followers_cnt', 'followings_cnt', 'image_base64')
+
+class FriendListSerializer(serializers.ModelSerializer):
+    followers = serializers.SerializerMethodField()
+    followings = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['followers', 'followings',]
+
+    def get_followers(self, obj):
+        return UserSerializer(obj.followers.all(), many=True).data
+
+    def get_followings(self, obj):
+        return UserSerializer(obj.followings.all(), many=True).data

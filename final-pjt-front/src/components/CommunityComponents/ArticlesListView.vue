@@ -3,7 +3,7 @@
     <th scope="row" @click="articleDetail">{{(index + 1) + numSelected * (page - 1)}}</th>
     <td class="fw-bold"  @click="articleDetail">{{article?.title}}</td>
     <td @click="articleDetail">{{ formatDate(article?.created_at)}}</td>
-    <td @click="articleDetail">
+    <td @click="goToUserProfile">
       <div class="team">
         <a href="javascript: void(0);" class="team-member" data-toggle="tooltip" data-placement="top" title="" data-original-title="Roger Drake">
             <img v-if="article?.user.image_base64"  :src="getImageSrc(article?.user.image_base64)" class="rounded-circle avatar-xs" alt="" />
@@ -108,7 +108,15 @@ export default {
     goToUpdate() {
       this.$router.push({ name: 'articleUpdate', params: { id: this.article.id } });
     },
-    
+
+    goToUserProfile() {
+      if(this.article.user.username === this.checkUser){
+        this.$router.push({ name: 'mypage'})
+      }else {
+        this.$router.push({ name: 'userprofile', params: {id: this.article.user.id} })
+      }
+    },
+
     getImageSrc(base64String) {
       return `data:image/png;base64, ${base64String}`; // Base64 데이터를 이미지 src 형식으로 변환
     },

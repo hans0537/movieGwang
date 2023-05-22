@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer
+from .serializers import UserSerializer, FriendListSerializer
 from .models import User
 
 # Create your views here.
@@ -62,10 +62,9 @@ def update(request):
             return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def profile(request,username):
+def profile(request,user_pk):
     if request.method=='GET':
-        user = get_object_or_404(get_user_model(),username=username)
+        user = get_object_or_404(get_user_model(),pk=user_pk)
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
       
@@ -79,4 +78,12 @@ def follow(request,user_pk):
         else:
             user.followers.add(request.user)
         serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def friends(request,user_pk):
+    user = get_object_or_404(get_user_model(),pk=user_pk)
+    if request.method=='GET':
+        serializer = FriendListSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
