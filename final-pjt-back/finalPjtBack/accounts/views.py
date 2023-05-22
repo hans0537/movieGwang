@@ -39,15 +39,27 @@ def findPw(request):
 def getUser(request):
     if request.method == "GET":
         user = request.user
-        return Response({'username' : user.username}, status=status.HTTP_200_OK)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response({'username' : ''}, status=status.HTTP_200_OK)
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def userdelete(request):
-  request.user.delete()
-  return Response(status=status.HTTP_200_OK)
+    request.user.delete()
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update(request):
+    if request.method == "PUT":
+        user = request.user
+        serializer = UserSerializer(user, data=request.data)
+        
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

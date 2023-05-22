@@ -61,7 +61,14 @@
     methods: {
       logout() {
         this.$store.dispatch('logout')
+      },
+
+      getUser() {
+        this.$store.dispatch('getuser')
       }
+    },
+    created() { 
+      this.getUser()
     },
     // mounted() {
     //   this.isLogin = 

@@ -14,6 +14,7 @@ import OverQuizView from '@/components/CommunityComponents/OverQuizView'
 import WorldcupView from '@/components/CommunityComponents/WorldcupView'
 import ArticleCreateView from '@/components/CommunityComponents/ArticleCreateView'
 import ArticleDetailView from '@/components/CommunityComponents/ArticleDetailView'
+
 import AllMovieView from '@/components/MovieComponents/AllMovieView'
 import AverageMovieView from '@/components/MovieComponents/AverageMovieView'
 import GenreMovieView from '@/components/MovieComponents/GenreMovieView'
@@ -21,6 +22,9 @@ import NowMovieView from '@/components/MovieComponents/NowMovieView'
 import UpcomingView from '@/components/MovieComponents/UpcomingView'
 import ActionMovieView from '@/components/MovieComponents/ActionMovieView'
 import AdventureMovieView from '@/components/MovieComponents/AdventureMovie'
+
+import ArticleUpdateView from '@/components/CommunityComponents/ArticleUpdateView'
+
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -109,6 +113,11 @@ const routes = [
         path: '/community/articles/create',
         name: 'articlesCreate',
         component: ArticleCreateView
+      },
+      {
+        path: '/community/articles/update/:id',
+        name: 'articleUpdate',
+        component: ArticleUpdateView,
       },
       {
         path: '/community/articles/:id',

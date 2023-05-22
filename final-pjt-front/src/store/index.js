@@ -20,6 +20,7 @@ export default new Vuex.Store({
     upcomingList: null,
     popularMovie: null,
     allmovie: null,
+    user: null,
   },
   getters: {
     isLogin(state) {
@@ -66,10 +67,19 @@ export default new Vuex.Store({
     SAVE_LOGIN_TOKEN(state, access) {
       state.accessToken = access
       alert("로그인 성공!!")
-      router.go(-1)
+      const currentRoute = router.currentRoute;
+      if(currentRoute.name == 'login' || currentRoute.name == 'signup') {
+        router.push({ name: 'home' });
+      }else {
+        router.go(-1)
+      }
+    },
+    GET_USER(state, user) {
+      state.user = user
     },
     LOGOUT(state) {
       state.accessToken = null
+      state.user = null
       alert('로그아웃 되셨습니다.')
       // 중복 routing 오류 방지
       const currentRoute = router.currentRoute;
@@ -89,6 +99,19 @@ export default new Vuex.Store({
     },
     logout(context) {
       context.commit('LOGOUT')
+    },
+
+    getuser(context) {
+      axios({
+        url: 'http://127.0.0.1:8000/accounts/getUser/',
+        headers: {
+          Authorization: `Bearer ${context.state.accessToken}`,
+        }
+      })
+      .then((res) => {
+        context.commit('GET_USER', res.data)
+      })
+      .catch((err) => {console.log(err)})
     },
 
     // 상영중인 최신 영화
