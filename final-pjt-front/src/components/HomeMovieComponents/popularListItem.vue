@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-3 col-6">
-    <div class="trend_2im clearfix position-relative" @mouseover="showDetails = true" @mouseleave="showDetails = false" @click="openModal">
+    <div class="trend_2im clearfix position-relative" @mouseover="showDetails = true" @mouseleave="showDetails = false"  @click="openDetail">
       <div class="trend_2im1 clearfix">
         <div class="grid">
           <figure class="effect-jazz mb-0">
@@ -25,20 +25,18 @@
         </span>
       </div>
     </div>
-    <div class="modal-overlay" v-if="showModal" @click="closeModal"></div>
-    <MovieModal v-if="showModal" :movie="movie" @close="closeModal" />
   </div>
 </template>
 
 <script>
-import MovieModal from '../MovieComponents/MovieModal.vue';
+
 export default {
   name: "popularListItem",
   props: {
     movie: Object,
   },
   components: {
-    MovieModal
+
   },
   data() {
     return {
@@ -57,13 +55,12 @@ export default {
     },
   },
   methods: {
-    openModal() {
-      this.showModal = true;
-    },
-    closeModal() {
-      this.showModal = false;
-    }
+    openDetail() {
+      this.$store.commit('setSelectedMovie', this.movie);
+
+      this.$router.push({ name: 'moviedetail' });
   }
+}
 }
 </script>
 

@@ -28,9 +28,9 @@
 <script>
 export default {
   name: 'ChoQuizView',
-  methods: {
-    get
-  },
+  // methods: {
+  //   get
+  // },
   created() {
     console.log(this.$store.state.allmovie)
   }
