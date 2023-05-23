@@ -4,8 +4,6 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 import router from '../router'
-const API_KEY = 'a719d72e722ce5b82da9a04d59337764'
-const TMDB_URL = 'https://api.themoviedb.org/3'
 
 Vue.use(Vuex)
 
@@ -16,6 +14,7 @@ Vue.use(Vuex)
 //     accessToken: state.accessToken
 //   })
 // })
+
 export default new Vuex.Store({
   plugins: [
     createPersistedState()
@@ -28,6 +27,7 @@ export default new Vuex.Store({
     popularMovie: [],
     allmovie: [],
     user: null,
+    selectedmovie:null,
   },
   getters: {
     isLogin(state) {
@@ -46,18 +46,9 @@ export default new Vuex.Store({
       state.popularMovie = popular
     },
 
-    GET_ALL(state) {
-      state.allmovie = [
-        ...state.latestList,
-        ...state.upcomingList,
-        ...state.popularMovie
-      ].reduce((uniqueMovies, movie) => {
-        const existingMovie = uniqueMovies.find((m) => m.title === movie.title);
-        if (!existingMovie) {
-          uniqueMovies.push(movie);
-        }
-        return uniqueMovies;
-      }, []);    },
+    GET_ALL(state, allmovie) {
+      state.allmovie = allmovie
+    },
 
     GET_ARTICLES(state, articles) {
       state.articles = articles
@@ -95,6 +86,9 @@ export default new Vuex.Store({
         router.push({ name: 'home' });
       }
 
+    },
+    setSelectedMovie(state,movie) {
+      state.selectedmovie=movie
     }
   },
   actions: {
@@ -131,52 +125,23 @@ export default new Vuex.Store({
 
     // 상영중인 최신 영화
     getLatest(context) {
-      const requests = []
-      for (let page = 1; page <= 5; page++) {
-        const request = axios({
-          method: 'get',
-          url: `${TMDB_URL}/movie/now_playing?language=ko-kr&page=${page}&region=kr&api_key=${API_KEY}`,
-        })
-        requests.push(request)
-      }
-
-      Promise.all(requests)
-        .then((responses) => {
-          const latest = []
-          for (const response of responses) {
-            latest.push(...response.data.results)
-          }
-          context.commit('GET_LATEST', latest)
-        })
-        .catch((err) => {
-          console.log(err)
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/movies/nowmovie/',
+      })
+        .then(res => {
+          context.commit('GET_LATEST', res.data)
         })
     },
 
     // 개봉 예정작
     getUpComing(context) {
-      
-      const requests = []
-      for (let page = 1; page <= 2; page++) {
-        const request = axios({
-          method: 'get',
-          url: `${TMDB_URL}/movie/upcoming?language=ko-kr&page=${page}&region=kr&api_key=${API_KEY}`,
-        })
-        requests.push(request)
-      }
-
-      Promise.all(requests)
-        .then((responses) => {
-          const latest = []
-          for (const response of responses) {
-            latest.push(...response.data.results)
-          }
-          // 제외 조건을 확인하여 유효한 개봉 예정작만 필터링
-          const upcoming = latest.filter(movie => movie.poster_path !== null && movie.overview.trim() !== '');
-          context.commit('GET_UPCOMING', upcoming)
-        })
-        .catch((err) => {
-          console.log(err)
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/movies/upcommovie/',
+      })
+        .then(res => {
+          context.commit('GET_UPCOMING', res.data)
         })
     },
 
@@ -184,7 +149,7 @@ export default new Vuex.Store({
     popularMovie(context) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/',
+        url: 'http://127.0.0.1:8000/movies/popularmovie/',
       })
         .then(res => {
           context.commit('GET_POPULAR', res.data)
@@ -226,8 +191,15 @@ export default new Vuex.Store({
     },
 
     getall(context) {
-      context.commit('GET_ALL')
-    }
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/movies/',
+      })
+        .then(res => {
+          context.commit('GET_ALL', res.data)
+        })
+    },
+
   },
   modules: {
   }
