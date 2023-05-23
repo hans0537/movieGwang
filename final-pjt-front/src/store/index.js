@@ -9,16 +9,16 @@ const TMDB_URL = 'https://api.themoviedb.org/3'
 
 Vue.use(Vuex)
 
-const persistedState = createPersistedState({
-  storage: window.localStorage,
-  reducer: state => ({
-    user: state.user,
-    accessToken: state.accessToken
-  })
-})
+// const persistedState = createPersistedState({
+//   storage: window.localStorage,
+//   reducer: state => ({
+//     user: state.user,
+//     accessToken: state.accessToken
+//   })
+// })
 export default new Vuex.Store({
   plugins: [
-    persistedState
+    createPersistedState()
   ],
   state: {
     articles: [],

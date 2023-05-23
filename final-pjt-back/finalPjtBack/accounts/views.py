@@ -87,3 +87,13 @@ def friends(request,user_pk):
     if request.method=='GET':
         serializer = FriendListSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def choscore(request):
+    user = request.user
+    if request.method == "PUT":
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
