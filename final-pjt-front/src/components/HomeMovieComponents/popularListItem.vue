@@ -13,7 +13,7 @@
                 <span class="col_red">
                   <i v-for="index in 5" :key="index" class="fa" :class="['fa-star', index <= fullStarCount ? 'filled' : 'fa-regular', index === halfStarIndex ? 'fa-duotone fa-star-half-stroke' : '']" :style="index === halfStarIndex ? 'color: red' : ''"></i>
                 </span>
-                <p class="mb-0">1 Views</p>
+                <p class="mb-0">{{ movie2?.review_count }} Views</p>
               </div>
             </a>
           </figure>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   name: "popularListItem",
   props: {
@@ -43,7 +43,7 @@ export default {
       imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie.poster_path,
       overview: this.movie.overview.slice(0, 20) + "...",
       showDetails: false,
-      showModal:false,
+      movie2:null,
     }
   },
   computed: {
@@ -59,8 +59,24 @@ export default {
       this.$store.commit('setSelectedMovie', this.movie);
 
       this.$router.push({ name: 'moviedetail' });
+  },
+  getReviewcount() {
+        axios({
+          method: 'get',
+          url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
+          headers: {
+            Authorization: `Bearer ${this.$store.state.accessToken}`
+          }
+        })
+        .then((res) => {
+          this.movie2 = res.data
+        })
+        .catch((err) => console.log(err))
+      },
+  },
+  created() {
+    this.getReviewcount()
   }
-}
 }
 </script>
 

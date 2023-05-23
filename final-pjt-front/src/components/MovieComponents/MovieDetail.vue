@@ -1,6 +1,7 @@
 <template>
     <div class="container">
       <br>
+      <br>
       <div style="display: flex;">
         <img :src="imgSrc" class="w-30 img-height" alt="img25">
         <div style="text-align: start; margin: 20px;">
@@ -22,21 +23,38 @@
           </h5>
         </div>
       </div>
+      <br>
       <hr>
-      <div style="text-align:start">
-        <h4>줄거리</h4>
-        <p>{{ movie2?.overview }}</p>
+      <br>
+      <div class="row">
+        <div class="col-md-5">
+          <div style="text-align:start">
+            <h4 class="fw-bold fs-4">줄거리</h4>
+            <p class="fs-5">{{ movie2?.overview }}</p>
+          </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-5" style="text-align:start">
+          <h4 class="fw-bold fs-4">키워드</h4>
+          <div v-for="keyword in keywordsList" :key="keyword.id">
+          <li class="fs-5"> {{ keyword }}</li>
+          </div>
+        </div>
       </div>
       <br>
+      <br>
+      <br>
       <div style="text-align:start">
-        <h4>출연진</h4>
+        <h4 class="fw-bold fs-4">출연진</h4>
+        <br>
         <div class="container">
           <div class="row">
             <ActorViewVue v-for="actor in ActorsData" :key="actor.id" :actor="actor" class="col-2 mb-5"/>
           </div>
         </div>
       </div>
-      <!-- 추가적인 영화 정보를 표시하는 요소들을 추가합니다 -->
+      <!-- 영상가져오기 -->
       <div class="mt-3" v-if="isSelectedVideo" style="max-height: calc(100vh - 500px);">
         <div class="ratio ratio-16*9">
           <iframe :src="videoSrc" frameborder="0" style="height:500px"></iframe>
@@ -61,7 +79,7 @@
                 </div>
                 <div class="d-flex align-items-center me-3" @click="commentToggle" style="cursor: pointer;">
                   <i class="far fa-comment-dots me-2" style="color: blue;"></i>
-                  <p class="mb-0">Comment</p>
+                  <p class="mb-0">Review</p>
                   <span class="ms-1 fs-6">{{movie?.review_count}}</span>
                 </div>
             </div>
@@ -83,31 +101,31 @@
                     style="background: #fff;" :class="{'active' : comment}"
                     @keyup.enter="createComment"
                   ></b-form-textarea>
-                  <label class="form-label" for="comment">Comment</label>
+                  <label class="form-label" for="comment">Review</label>
                 </div>
               </div>
             </div>
             <div class="float-end mt-2 pt-1">
-              <button type="button" class="me-2 btn btn-primary btn-sm" @click="createComment">댓글 달기</button>
+              <button type="button" class="me-2 btn btn-primary btn-sm" @click="createComment">리뷰 등록</button>
               <button type="button" class="btn btn-outline-primary btn-sm" @click="commentCancel">취소</button>
             </div>
           </div>
         </div>
-        <div class="container">
+        <div>
           <div class="row d-flex justify-content-center">
             <div>
               <div class="card">
                 <div class="card-body p-4">
-                  <h4 class="text-center mb-4 pb-2 border rounded fw-bold">댓글 목록</h4>
+                  <h4 class="fw-bold" style="text-align:start;">리뷰</h4>
                   <div class="row">
-                <div class="col">
-                  <MovieCommentViewVue 
-                  v-for="comment in commentsList" :key="comment.id" 
-                  :comment="comment" :movieId="movie.id " 
-                  :checkUser="checkUser"
-                  @get-comments="getComments"/>
-                </div>
-              </div>
+                    <div class="col">
+                      <MovieCommentViewVue 
+                      v-for="comment in commentsList" :key="comment.id" 
+                      :comment="comment" :movieId="movie.id " 
+                      :checkUser="checkUser"
+                      @get-comments="getComments"/>
+                    </div>
+                  </div>
                 </div>
               </div>
                   </div>
@@ -125,8 +143,8 @@ import axios from "axios"
 import _ from "lodash"
 import MovieCommentViewVue from './MovieCommentView.vue';
 import ActorViewVue from './ActorView.vue';
-// const URL = "https://www.googleapis.com/youtube/v3/search"
-// const API_KEY = 'AIzaSyB4_Ve145IcMWtdgu865J-xRWXHBRdwau0'
+const URL = "https://www.googleapis.com/youtube/v3/search"
+const API_KEY = 'AIzaSyB4_Ve145IcMWtdgu865J-xRWXHBRdwau0'
 
 export default {
   name: 'MovieDetail',
@@ -144,6 +162,7 @@ export default {
       movie2:null,
       movie3:null,
       ActorsData: [],
+      keywords:null,
     }
   },
   components: {
@@ -193,6 +212,19 @@ export default {
       .then((res) => {
         this.movie3 = res.data
         this.ActorsData = _.take(this.movie3.cast, 6)
+      })
+      .catch((err) => console.log(err))
+    },
+    getKeywards() {
+      axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/movie/${this.movie.id}/keywords`,
+        headers: {
+          Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYjU2OWZjNjEwNTVkYzZhNjA3M2JiOTNlYjgxYmNiMSIsInN1YiI6IjY0MWQ0NTBlMzQ0YThlMDA5YjBiMDE2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bHKaUaJcO2JnSsD5myVc7n4CcFdrW6YE_879_00jYhw"
+        }
+      })
+      .then((res) => {
+        this.keywords = res.data.keywords
       })
       .catch((err) => console.log(err))
     },
@@ -283,6 +315,12 @@ export default {
       }
       return '';
     },
+    keywordsList() {
+      if (this.keywords) {
+        return this.keywords.map(keyword => keyword.name);
+      }
+      return '';
+    },
     Actors() {
     if (this.movie3 && this.movie3.cast) {
       let res = [];
@@ -303,26 +341,27 @@ export default {
     this.getMovie()
     this.getMovie2()
     this.getMovie3()
+    this.getKeywards()
     this.getComments()
   },
   created() {
     this.movie = this.$store.state.selectedmovie
     this.getComments()
-    // axios.get(URL, {
-    //   params:{
-    //     key:API_KEY,
-    //     type:'video',
-    //     part:'snippet',
-    //     q: this.movie.title + '예고편'
-    //   },
+     axios.get(URL, {
+       params:{
+         key:API_KEY,
+         type:'video',
+         part:'snippet',
+         q: this.movie.title + '예고편'
+       },
       
-    // }).then(res=>{
-    //   this.videos=res.data.items
-    //   this.selectedVideo=this.videos[0]
-    // })
-    // .catch(err => {
-    //   console.log(err)
-    // })
+     }).then(res=>{
+       this.videos=res.data.items
+       this.selectedVideo=this.videos[0]
+     })
+     .catch(err => {
+       console.log(err)
+     })
   }
 };
 </script>

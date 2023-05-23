@@ -1,16 +1,14 @@
 <template>
-  <div class="col-md-3 col-6">
-    <h1>배우</h1>
-    <div class="trend_2im clearfix position-relative">
+  <div class="col-md-2 col-6">
+    <div class="trend_2im clearfix position-relative" @mouseover="showDetails = true" @mouseleave="showDetails = false">
       <div class="trend_2im1 clearfix">
         <div class="grid">
           <figure class="effect-jazz mb-0">
-            <a href="#">
-              <img :src="imgSrc" class="w-100 img-height" alt="img25">
-              <div class="image-details" v-if="showDetails">
-                <h6 class="col_red">{{ actor.name }}</h6>
+              <img :src="imgSrc" class="w-100 img-height" alt="img25" style="height: 200px;">
+              <div class="image-details" v-if="showDetails" >
+                <p class="mb-2">Name : {{ actor.name }}</p>
+                <p class="mb-2">Character : {{ actor.character }}</p>
               </div>
-            </a>
           </figure>
         </div>
       </div>
@@ -20,7 +18,6 @@
         </span>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -36,16 +33,19 @@ export default {
   },
   data() {
     return {
-      imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie.poster_path,
-      overview: this.movie.overview.slice(0, 20) + "...",
+      imgSrc: this.actor.profile_path
+        ? `https://image.tmdb.org/t/p/w500${this.actor.profile_path}`
+        : require("../../assets/baseProfile.png"),
       showDetails: false,
+      
     }
   },
   computed: {
   },
   methods: {
-
   },
+  created() {
+  }
 }
 </script>
 
