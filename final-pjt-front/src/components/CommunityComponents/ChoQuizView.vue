@@ -1,11 +1,35 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col">
+      <div class="col-lg-3 d-flex align-items-center">
+        <div class="col static">
+          
+          <h1>유저 랭킹!!</h1>
+          <div class="profile-card" v-if="!rankUser">
+            <a href="#" class="text-white fs-6">아직 등록된 랭커가 없습니다. <br>가장 먼저 등록해보세요!</a>
+          </div>
+          <div class="profile-card" v-if="rankUser">
+            <img v-if="rankUser[0]?.image_base64" :src="getImageSrc(rankUser[0]?.image_base64)" alt="user" class="profile-photo">
+            <img v-else src="../../assets/baseProfile.png" alt="user" class="profile-photo">
+            <h3>1등</h3>
+            <a href="#" class="text-white fs-6"><i class="fa-solid fa-crown fa-beat" style="color: #fff700;"></i> {{rankUser[0]?.cho_points}} 점 | {{rankUser[0].username}}</a>
+          </div>
+
+          <ul class="nav-news-feed" v-if="rankUser">
+            <RankUserListView v-for="(user, index) in rank2users" :key="index"
+              :user="user"
+              :index="index"
+              :quiztype="'cho'"/>
+          </ul>
+
+        </div>
+      </div>
+
+      <div class="col-lg-9">
         <div class="card">
           <div class="card-body">
             <h2 class="card-title text-center fw-bold">초성 퀴즈</h2> 
-            <div>현재 {{user.username}}님의 최고 점수는 : {{user.cho_points}}점 입니다.</div>
+            <div>현재 {{user?.username}}님의 최고 점수는 : {{user?.cho_points ? user?.cho_points : 0}}점 입니다.</div>
             <hr>
             <div class="d-flex justify-content-center">
               <div class="col-4 form-group d-flex justify-content-start align-item-center">
@@ -77,11 +101,17 @@
 import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000'
 
+import RankUserListView from './RankUserListView.vue'
+
 export default {
   name: 'ChoQuizView',
+  components: {
+    RankUserListView
+  },
   data() {
     return {
-      user: this.$store.state.user,
+      user: null,
+      rankUser: null,
 
       genreSelected: 0,
 
@@ -137,11 +167,12 @@ export default {
         this.quizMovies = this.$store.state.allmovie;
       } else {
         this.quizMovies = this.$store.state.allmovie.filter(movie => movie.genre_ids.includes(this.genreSelected));
-
-        // 영문으로만 되어 있는 제목을 걸러내기 위해 한번더 필터링 한다.
-        let regex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-        this.quizMovies = this.quizMovies.filter(movie => regex.test(movie.title));
       }
+
+      // 영문으로만 되어 있는 제목을 걸러내기 위해 한번더 필터링 한다.
+      let regex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
+      this.quizMovies = this.quizMovies.filter(movie => regex.test(movie.title));
+
     },
 
     // 랜덤 문제 출제
@@ -179,6 +210,12 @@ export default {
         alert('게임이 시작되었습니다. 종료후에 다시 시도해주세요')
         return
       }
+
+      // 게임판 초기화
+      this.score = 0
+      this.answerCount = 0
+      this.myAnswer = ''
+
       this.startCheck = true;
       this.showStart = true;
       this.showCountdown = -1;
@@ -220,6 +257,7 @@ export default {
 
           // 첫번째 문제를 출제
           this.pickRandomMovie(); 
+          return;
         });
 
 
@@ -237,9 +275,16 @@ export default {
 
       if (myAnswer === answer){
         console.log('정답')
-        clearInterval(this.timerInterval); // 타이머 종료
+
         this.answerCount++
-        this.score++
+        this.score += 10
+
+        // 만약 연속 5개씩 이상 맞추면 추가점수 10, 20, 30점씩 부여
+        if (this.answerCount > 0 && this.answerCount % 5 == 0) {
+          this.score += 10 * parseInt((this.answerCount + 1) / 5)
+        }
+
+        clearInterval(this.timerInterval); // 타이머 재시작
         this.pickRandomMovie(); // 다음 문제 출제
       }else {
         console.log('오답')
@@ -250,10 +295,6 @@ export default {
 
         this.gameOver = true;
         this.startCheck = false;
-
-        this.score = 0
-        this.answerCount = 0
-
         this.cardShow = true
 
       }
@@ -284,14 +325,11 @@ export default {
           clearInterval(this.timerInterval); // 타이머 종료
           console.log('시간 초과');
           // 시간초과 문제 종료!!
-
           // 점수를 가장 먼저 등록
           this.setScore()
           
           this.gameOver = true;
           this.startCheck = false;
-          this.score = 0
-          this.answerCount = 0
           this.cardShow = true
 
         }
@@ -312,7 +350,7 @@ export default {
       if(this.user.cho_points < this.score){
         axios({
           method: 'put',
-          url: `${API_URL}/accounts/choquiz/`,
+          url: `${API_URL}/accounts/setscore/`,
           data: { username: this.user.username, followers: this.user.followers, cho_points: this.score },
           headers: {
             Authorization: `Bearer ${this.$store.state.accessToken}`,
@@ -320,25 +358,60 @@ export default {
         })
         .then((res) => {
           console.log(res)
-  
-          this.$store.dispatch('getuser')
+
+          // 유저가 게임을 참여한 후에 최신화 하기 위함
+          this.getUser()
+          this.getRank()
         })
         .catch((err) => {
           console.log(err)
         })
       }
-    }
-  },
+    },
 
+    getUser() {
+      this.$store.dispatch('getuser')
+      this.user = this.$store.state.user
+    },
+
+    getRank() {
+      axios({
+        method: 'get',
+        url: `${API_URL}/accounts/choquiz/getrank/`,
+        headers: {
+          Authorization: `Bearer ${this.$store.state.accessToken}`,
+        }
+      })
+      .then((res) => {
+        this.rankUser = res.data.filter(user => user.cho_points > 0);
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+
+
+    getImageSrc(base64String) {
+      return `data:image/png;base64, ${base64String}`; // Base64 데이터를 이미지 src 형식으로 변환
+    },
+
+  },
 
   computed: {
     selectedGenreTitle() {
       const selectedGenre = this.genereOptions.find(option => option.value === this.genreSelected);
       return selectedGenre ? selectedGenre.text : '';
     },
+
+    rank2users() {
+      return this.rankUser.slice(1);
+    }
   },
   created() {
-    this.filteredMovies()
+    this.filteredMovies(),
+    this.getUser(),
+    this.getRank()
   }
 }
 </script>
@@ -427,8 +500,8 @@ export default {
 
 .timer {
   position: absolute;
-  top: 31%;
-  right: 28%; /* 원하는 오른쪽 여백 조정 */
+  top: 34%;
+  right: 20%; /* 원하는 오른쪽 여백 조정 */
   transform: translate(0, -50%);
   font-size: 3rem;
   color: white;
@@ -436,8 +509,8 @@ export default {
 
 .score-text {
   position: absolute;
-  top: 34%;
-  right: 65%;
+  top: 36%;
+  right: 70%;
   transform: translate(0, -50%);
   font-size: 1rem;
   color: white;
@@ -489,4 +562,39 @@ export default {
 .back button {
   margin: 0;
 }
+
+
+body{
+    margin-top:20px;
+    background:#FAFAFA;
+}
+
+.profile-card{
+  background: linear-gradient(to bottom, rgba(39,170,225,.8), rgba(28,117,188,.8));
+  background-size: cover;
+  width: 100%;
+  min-height: 90px;
+  border-radius: 4px;
+  padding: 10px 20px;
+  color: #fff;
+}
+
+.profile-card img.profile-photo{
+  border: 7px solid #fff;
+  float: left;
+  margin-right: 20px;
+  position: relative;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+}
+
+.profile-card h5 a{
+  font-size: 15px;
+}
+
+.profile-card a{
+  font-size: 12px;
+}
+
 </style>

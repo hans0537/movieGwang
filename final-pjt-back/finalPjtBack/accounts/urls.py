@@ -17,5 +17,8 @@ urlpatterns = [
 
     path('<int:user_pk>/friends/', views.friends, name='follow'),
 
-    path('choquiz/', views.choscore),
+    path('setscore/', views.setscore),
+
+    path('choquiz/getrank/', views.getChoRank),
+    path('overview/getrank/', views.getOverviewRank)
 ]
