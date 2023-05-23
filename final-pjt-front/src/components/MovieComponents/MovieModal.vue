@@ -1,18 +1,25 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <div class="image-container">
+      <!-- <div class="image-container">
         <img :src="imgSrc" class="w-50 img-height" alt="img25">
+      </div> -->
+      <div style="text-align: start;">
+        <h3>{{ movie.title }}</h3>
+        <div style="display: flex; align-items: baseline;">
+          <h5 style="margin-right: 10px;">{{ movie.original_title }}</h5>
+          <h5>{{ movie.release_date }}</h5>
+        </div>
       </div>
-      <h2>{{ movie.title }}</h2>
+      <p>{{ movie.video }}</p>
       <p>{{ movie.overview }}</p>
-      <p>평점: {{ movie.vote_average }}</p>
       <!-- 추가적인 영화 정보를 표시하는 요소들을 추가합니다 -->
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'MovieModal',
   props: {
@@ -20,7 +27,7 @@ export default {
   },
   data() {
     return {
-      imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie.poster_path,
+      imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie.backdrop_path,
     }
   },
   mounted() {
@@ -58,8 +65,8 @@ export default {
 .modal-content {
   background-color: white;
   padding: 20px;
-  width: 1000px;
-  height:1100px;
+  width: 1200px;
+  height:900px;
   text-align: center;
 }
 </style>

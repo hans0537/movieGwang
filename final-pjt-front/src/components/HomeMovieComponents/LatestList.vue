@@ -49,7 +49,7 @@ export default {
       const tmp = this.$store.state.latestList
       let res = []
       let temp = []
-      for (let i = 1; i <= tmp.length; i++) {
+      for (let i = 1; i <= 19; i++) {
         temp.push(tmp[i - 1])
         if(i % 4 == 0) {
           res.push(temp)
@@ -58,7 +58,9 @@ export default {
       }
       return res
     }
-  }
+  },
+  
+
 }
 </script>
 
