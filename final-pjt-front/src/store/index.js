@@ -9,17 +9,24 @@ const TMDB_URL = 'https://api.themoviedb.org/3'
 
 Vue.use(Vuex)
 
+const persistedState = createPersistedState({
+  storage: window.localStorage,
+  reducer: state => ({
+    user: state.user,
+    accessToken: state.accessToken
+  })
+})
 export default new Vuex.Store({
   plugins: [
-    createPersistedState()
+    persistedState
   ],
   state: {
     articles: [],
     accessToken: null,
-    latestList: null,
-    upcomingList: null,
-    popularMovie: null,
-    allmovie: null,
+    latestList: [],
+    upcomingList: [],
+    popularMovie: [],
+    allmovie: [],
     user: null,
   },
   getters: {
@@ -102,16 +109,24 @@ export default new Vuex.Store({
     },
 
     getuser(context) {
-      axios({
-        url: 'http://127.0.0.1:8000/accounts/getUser/',
-        headers: {
-          Authorization: `Bearer ${context.state.accessToken}`,
-        }
-      })
-      .then((res) => {
-        context.commit('GET_USER', res.data)
-      })
-      .catch((err) => {console.log(err)})
+      // 로그인 되어있으면 그 사용자를 가져오고
+      // 아니면 빈 로그인 객체를 생성
+      if(context.getters.isLogin) {
+        axios({
+          url: 'http://127.0.0.1:8000/accounts/getUser/',
+          headers: {
+            Authorization: `Bearer ${context.state.accessToken}`,
+          }
+        })
+        .then((res) => {
+          context.commit('GET_USER', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      } else {
+        context.state.user =  {username: '', id: 0}
+      }
     },
 
     // 상영중인 최신 영화
@@ -181,9 +196,6 @@ export default new Vuex.Store({
       axios({
         method: 'get',
         url: 'http://127.0.0.1:8000/articles/',
-        headers: {
-          Authorization: `Bearer ${context.state.accessToken}`
-        }
       })
         .then((res) => {
           console.log(res.data, context)
