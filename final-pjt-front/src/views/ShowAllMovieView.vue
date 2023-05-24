@@ -12,7 +12,7 @@
       <!-- Use text in props -->
       <b-pagination
         v-model="currentPage"
-        :total-rows="filteredMovies.length"
+        :total-rows="filteredMovies?.length"
         :per-page="perPage"
         first-text="First"
         prev-text="Prev"
@@ -26,6 +26,8 @@
 
 <script>
 import AllMovieItems from '../components/MovieComponents/AllMovieItems.vue';
+const API_URL = 'http://127.0.0.1:8000'
+import axios from 'axios'
 
 export default {
   name: 'ShowAllMovieView.vue',
@@ -33,6 +35,7 @@ export default {
   data() {
     return {
       type: this.$route.params.type,
+      id: this.$route.params.id,
       rows: 100,
       perPage: 20,
       currentPage: 1,
@@ -43,23 +46,23 @@ export default {
 
   computed: {
     AverageMovie() {
-      const tmp1 = this.tmp.slice((this.currentPage - 1) * 20, this.currentPage * 20);
+      const tmp1 = this.tmp?.slice((this.currentPage - 1) * 20, this.currentPage * 20);
       let res = [];
       let temp = [];
       if (this.search_movie === null) {
-        for (let i = 1; i <= tmp1.length; i++) {
+        for (let i = 1; i <= tmp1?.length; i++) {
           temp.push(tmp1[i - 1]);
           if (i % 4 === 0) {
             res.push(temp);
             temp = [];
           }
         }
-        if (temp.length > 0) {
+        if (temp?.length > 0) {
           res.push(temp);
         }
       } else {
         const searchKeyword = this.search_movie;
-        for (let i = 1; i <= this.tmp.length; i++) {
+        for (let i = 1; i <= this.tmp?.length; i++) {
           
           if (this.tmp[i - 1].title.includes(searchKeyword)) {
             temp.push(this.tmp[i - 1]);
@@ -87,15 +90,40 @@ export default {
   methods: {
     getPagelen() {
       let movies = null
+      let thisUser = null
 
-      if (this.type == 'world') {
-        movies = this.$store.state.user.worldcup_movies
-      } else if (this.type == 'like') {
-        movies = this.$store.state.user.like_movies
+      if(this.id == "me") {
+        if (this.type == 'world') {
+          movies = this.$store.state.user.worldcup_movies
+        } else if (this.type == 'like') {
+          movies = this.$store.state.user.like_movies
+        }
+        this.tmp = movies.sort((a, b) => -(a.popularity - b.popularity));
+        this.rows = movies.length;
+      }else {
+        axios({ 
+          method: 'get',
+          url: `${API_URL}/accounts/profile/${parseInt(this.id)}/`,
+        })
+        .then((res) => {
+          thisUser = res.data
+          console.log(thisUser)
+
+          if (this.type == 'world') {
+            movies = thisUser.worldcup_movies
+          } else if (this.type == 'like') {
+            movies = thisUser.like_movies
+          }
+          console.log(movies)
+          this.tmp = movies.sort((a, b) => -(a.popularity - b.popularity));
+          this.rows = movies.length;
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       }
 
-      this.tmp = movies.sort((a, b) => -(a.popularity - b.popularity));
-      this.rows = movies.length;
+
     },
     searchmovie() {
       // 가장 가까운 form의 input 요소 찾기
@@ -111,7 +139,6 @@ export default {
     }
   },
   created() {
-    console.log(this.type)
     this.getPagelen();
   }
 };

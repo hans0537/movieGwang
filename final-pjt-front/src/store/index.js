@@ -86,7 +86,7 @@ export default new Vuex.Store({
       alert('로그아웃 되셨습니다.')
       // 중복 routing 오류 방지
       const currentRoute = router.currentRoute;
-      console.log(currentRoute)
+
       if (currentRoute.name != 'home') {
         router.push({ name: 'home' });
       }
@@ -183,7 +183,6 @@ export default new Vuex.Store({
         url: 'http://127.0.0.1:8000/articles/',
       })
         .then((res) => {
-          console.log(res.data, context)
           context.commit('GET_ARTICLES', res.data)
         })
         .catch((err) => {

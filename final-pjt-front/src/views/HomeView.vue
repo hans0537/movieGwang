@@ -1,15 +1,21 @@
 <template>
   <div class="home container">
-    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div id="carouselExampleAutoplaying" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-interval="3000">
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="@/assets/background.jpeg" class="d-block w-100" style="height:300px;" alt="...">
+        <div class="carousel-item active" style="overflow: hidden;">
+          <img src="../assets/homeimg2.png" class="d-block w-100" style="height:400px;" alt="...">
         </div>
-        <div class="carousel-item">
-          <img src="@/assets/logo.png" class="d-block w-100" style="height:300px;" alt="...">
+        <div class="carousel-item" style="overflow: hidden;">
+          <img src="../assets/homeimg1.gif" class="d-block w-100" style="height:400px;" alt="...">
         </div>
-        <div class="carousel-item">
-          <img src="@/assets/background.jpeg" class="d-block w-100" style="height:300px;" alt="...">
+        <div class="carousel-item" style="overflow: hidden;">
+          <img src="../assets/homeimg3.png" class="d-block w-100" style="height:400px;" alt="...">
+        </div>
+        <div class="carousel-item" style="overflow: hidden;">
+          <img src="../assets/homeimg4.gif" class="d-block w-100" style="height:400px;" alt="...">
+        </div>
+        <div class="carousel-item" style="overflow: hidden;">
+          <img src="../assets/homeimg5.png" class="d-block w-100" style="height:400px;" alt="...">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">

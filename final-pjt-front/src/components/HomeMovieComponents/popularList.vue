@@ -27,7 +27,7 @@
             <div class="carousel-item" v-for="(movies, index) in popularMovie" :key="index" :class="index===0 ? 'active' : ''">
               <div class="trend_2i row">
                 <popularListItem 
-                v-for="movie in movies" :key="movie.id" :movie="movie"/>
+                v-for="movie in movies" :key="movie?.id" :movie="movie"/>
               </div>
             </div>
           </div>

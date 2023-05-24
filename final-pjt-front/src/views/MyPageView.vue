@@ -62,7 +62,7 @@
 
                 <div class="d-flex justify-content-end text-center py-1">
                   <div>
-                    <p class="mb-1 h5">{{user?.like_movies.length + user?.worldcup_movies.length}}</p>
+                    <p class="mb-1 h5">{{user?.like_movies?.length + user?.worldcup_movies?.length}}</p>
                     <p class="small text-muted mb-0">My Movies</p>
                   </div>
                   <div class="px-3" @click="goToFriendList" style="cursor: pointer;">
@@ -80,8 +80,8 @@
                 <div class="mb-5">
                   <p class="lead fw-normal mb-1">활동 내용</p>
                   <div class="p-4 text-start" style="background-color: #f8f9fa;">
-                    <p class="font-italic mb-1"> - 등록한 게시글: {{user?.article.length }}개</p>
-                    <p class="font-italic mb-1"> - 나의 영화: {{user?.like_movies.length + user?.worldcup_movies.length}} 개</p>
+                    <p class="font-italic mb-1"> - 등록한 게시글: {{user?.articles?.length }}개</p>
+                    <p class="font-italic mb-1"> - 나의 영화: {{user?.like_movies.length + user?.worldcup_movies?.length}} 개</p>
                     <p class="font-italic mb-0"> - 초성 게임 등수: {{cho_rank}} 등</p>
                     <p class="font-italic mb-0"> - 줄거리 게임 등수: {{overview_rank}} 등</p>
                   </div>
@@ -120,7 +120,7 @@
                   <div class="text-muted" @click="showAll('world')" style="cursor: pointer;"><p class="mb-0 text-decoration-underline">Show all</p></div> 
                 </div>
 
-                <div v-if="displayWorld.length === 0">
+                <div v-if="displayWorld?.length === 0">
                   <h3>활동 내용이 없네여잉~</h3> 
                 </div>  
                 <div v-else>
@@ -138,7 +138,7 @@
                 </div>
                 
 
-                <div v-if="displayLikes.length === 0">
+                <div v-if="displayLikes?.length === 0">
                   <h3>활동 내용이 없네여잉~</h3> 
                 </div>  
                 <div v-else>
@@ -182,7 +182,6 @@ export default {
   },
   computed: {
     user() {
-      console.log(this.$store.state.user)
       return this.$store.state.user
     }
   },
@@ -246,7 +245,7 @@ export default {
     },
 
     showAll(type) {
-      this.$router.push({name: 'showallmovie', params: {type: type}})
+      this.$router.push({name: 'showallmovie', params: {type: type, id:'me'}})
     },
 
     getMyRank(game) {
@@ -296,10 +295,10 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('getuser'),
-    this.getMyRank('cho_points'),
+    this.$store.dispatch('getuser')
+    this.getMyRank('cho_points')
     this.getMyRank('overview_points')
-    this.getLikeMovies(),
+    this.getLikeMovies()
     this.getWorldCupMovies()
   }
 }

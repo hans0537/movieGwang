@@ -269,7 +269,7 @@ const routes = [
     component: UserProfileView
   },
   {
-    path: '/showallmovie/:type',
+    path: '/showallmovie/:type/:id',
     name: 'showallmovie',
     component: ShowAllMovieView
   },

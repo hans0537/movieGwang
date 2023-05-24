@@ -5,22 +5,22 @@
         <div class="col static">
           
           <h1>유저 랭킹!!</h1>
-          <div class="profile-card" v-if="!rankUser">
+          <div class="profile-card" v-if="rankUser?.length == 0">
             <a href="#" class="text-white fs-6">아직 등록된 랭커가 없습니다. <br>가장 먼저 등록해보세요!</a>
           </div>
-          <div class="profile-card" v-if="rankUser">
+          <div class="profile-card" v-if="rankUser?.length">
             <img v-if="rankUser[0]?.image_base64" :src="getImageSrc(rankUser[0]?.image_base64)" alt="user" class="profile-photo">
             <img v-else src="../../assets/baseProfile.png" alt="user" class="profile-photo">
             <h3>1등</h3>
             <a href="#" class="text-white fs-6" @click="goToProfile(rankUser[0])"><i class="fa-solid fa-crown fa-beat" style="color: #fff700;"></i> {{rankUser[0]?.cho_points}} 점 | {{rankUser[0]?.username}}</a>
           </div>
 
-          <ul class="nav-news-feed" v-if="rankUser">
+          <ul class="nav-news-feed" v-if="rank2users">
             <RankUserListView v-for="(user, index) in rank2users" :key="index"
               :user="user"
               :index="index"
               :quiztype="'cho'"
-              @click="goToProfile(user)"/>
+              @click="goToProfile(rankUser[0])"/>
           </ul>
 
         </div>
