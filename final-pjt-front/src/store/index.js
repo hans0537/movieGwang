@@ -110,7 +110,7 @@ export default new Vuex.Store({
     getuser(context) {
       // 로그인 되어있으면 그 사용자를 가져오고
       // 아니면 빈 로그인 객체를 생성
-      if(context.getters.isLogin) {
+      if(context.state.accessToken) {
         axios({
           url: 'http://127.0.0.1:8000/accounts/getUser/',
           headers: {
@@ -124,7 +124,7 @@ export default new Vuex.Store({
           console.log(err)
         })
       } else {
-        context.state.user =  {username: '', id: 0}
+        context.commit('GET_USER',  {username: '', id: 0})
       }
     },
 

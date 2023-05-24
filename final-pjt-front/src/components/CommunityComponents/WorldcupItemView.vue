@@ -60,9 +60,6 @@ export default {
         axios({
           method: 'get',
           url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
-          headers: {
-            Authorization: `Bearer ${this.$store.state.accessToken}`
-          }
         })
         .then((res) => {
           this.movie2 = res.data

@@ -61,18 +61,15 @@ export default {
       this.$router.push({ name: 'moviedetail' });
     },
     getReviewcount() {
-        axios({
-          method: 'get',
-          url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
-          headers: {
-            Authorization: `Bearer ${this.$store.state.accessToken}`
-          }
-        })
-        .then((res) => {
-          this.movie2 = res.data
-        })
-        .catch((err) => console.log(err))
-      },
+      axios({
+        method: 'get',
+        url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
+      })
+      .then((res) => {
+        this.movie2 = res.data
+      })
+      .catch((err) => console.log(err))
+    },
   },
   created() {
     this.getReviewcount()

@@ -7,9 +7,9 @@
             <a href="#">
               <img :src="imgSrc" class="w-100 img-height" alt="img25">
               <div class="image-details" v-if="showDetails" >
-                <h6 class="col_red">{{ movie.title }}</h6>
+                <h6 class="col_red">{{ movie?.title }}</h6>
                 <p class="mb-2">{{ overview }}</p>
-                <p>{{ movie.vote_average }}</p>
+                <p>{{ movie?.vote_average }}</p>
                 <span class="col_red">
                   <i v-for="index in 5" :key="index" class="fa" :class="['fa-star', index <= fullStarCount ? 'filled' : 'fa-regular', index === halfStarIndex ? 'fa-duotone fa-star-half-stroke' : '']" :style="index === halfStarIndex ? 'color: red' : ''"></i>
                 </span>
@@ -64,9 +64,6 @@ export default {
         axios({
           method: 'get',
           url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
-          headers: {
-            Authorization: `Bearer ${this.$store.state.accessToken}`
-          }
         })
         .then((res) => {
           this.movie2 = res.data

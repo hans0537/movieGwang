@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .serializers import MovieSerializer, ReviewSerializers,ReviewcreateSerializers, GenreSerializers
 from .models import Movie,Genre, Review, NowMovie, UpMovie, PopularMovie
 from rest_framework import status
@@ -113,7 +113,8 @@ def worldcuplike(request,movie_pk):
         return Response(serializer.data, status=status.HTTP_200_OK)
       
 @api_view(['POST','GET'])
-@permission_classes([IsAuthenticated])
+# 작성만 인증하기 가져오는건 인증 X
+@permission_classes([IsAuthenticatedOrReadOnly])
 def review_create_all(request,movie_pk):
     movie = Movie.objects.get(pk=movie_pk)
     user = request.user

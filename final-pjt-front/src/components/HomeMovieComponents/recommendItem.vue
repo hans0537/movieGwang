@@ -59,27 +59,24 @@ export default {
       this.$store.commit('setSelectedMovie', this.movie);
 
       this.$router.push({ name: 'moviedetail' });
-  },
-  getReviewcount() {
-        axios({
-          method: 'get',
-          url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
-          headers: {
-            Authorization: `Bearer ${this.$store.state.accessToken}`
-          }
-        })
-        .then((res) => {
-          this.movie2 = res.data
-        })
-        .catch((err) => {
-          if (err.response && err.response.status === 404) {
-            // 리뷰가 없는 경우
-            this.movie2 = { review_count: 0 };
-          } else {
-            console.log(err);
-          }
-        });
-      },
+    },
+    getReviewcount() {
+      axios({
+        method: 'get',
+        url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
+      })
+      .then((res) => {
+        this.movie2 = res.data
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 404) {
+          // 리뷰가 없는 경우
+          this.movie2 = { review_count: 0 };
+        } else {
+          console.log(err);
+        }
+      });
+    },
   },
   created() {
     this.getReviewcount()
