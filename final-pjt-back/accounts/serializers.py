@@ -16,7 +16,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     like_articles = serializers.PrimaryKeyRelatedField(many=True, read_only=True)    
-    like_movies = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    like_movies = MovieSerializer(many=True, read_only=True)
     followings = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     followers_cnt = serializers.IntegerField(source='followers.count', read_only=True)
