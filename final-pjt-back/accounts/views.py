@@ -123,9 +123,14 @@ def findPw(request):
         else:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
     elif request.method == "PUT":
-        user[0].set_password(request.data.get('password1'))
-        user[0].save()
-        return Response({'message': '비밀번호가 성공적으로 변경되었습니다.'}, status=status.HTTP_200_OK)
+        user = user[0]
+        # 비밀번호 변경
+        user.set_password(request.data.get('password1'))
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
