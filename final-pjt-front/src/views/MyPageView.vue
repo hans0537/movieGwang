@@ -6,25 +6,17 @@
           <div class="col col-lg-9 col-xl-7">
             <div class="card">
               <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
-                <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                <div class="ms-4 d-flex flex-column" style="width: 150px;">
 
-                  <div class="image-container" style="width: 150px; height: 180px;">
+                  <div class="image-container d-flex align-items-center" style="width: 150px; height: 180px;">
                     
                     <img v-if="user?.image_base64" :src="getImageSrc(user?.image_base64)"
-                      alt="프로필 이미지" class="img-fluid img-thumbnail mt-4 mb-2 py-3"
-                      style="max-width: 100%; max-height: 100%; z-index: 2;">
+                      alt="프로필 이미지" class="img-fluid img-thumbnail mt-4 mb-2 py-3" style="max-width: 100%; max-height: 100%">
                   
                     <img v-else src="../assets/baseProfile.png"
-                      alt="프로필 이미지" class="img-fluid img-thumbnail mt-4 mb-2 py-3"
-                      style="max-width: 100%; max-height: 100%; z-index: 1;">
+                      alt="프로필 이미지" class="img-fluid img-thumbnail mt-4 mb-2 py-3" style="max-width: 100%; max-height: 100%">
                   </div>
-                  
-                  <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
-                    @click="openModal"
-                    style="z-index: 1;">
-                    Edit profile
-                  </button>
-
+                
                   <!-- Edit Profile Modal -->
                   <div class="modal" tabindex="-1" role="dialog" id="editProfileModal">
                     <div class="modal-dialog" role="document">
@@ -60,11 +52,18 @@
                   <p>{{user?.email}}</p>
                 </div>
               </div>
-              <div class="p-4 text-black" style="background-color: #f8f9fa;">
+
+              <div class="p-4 text-black d-flex justify-content-between" style="background-color: #f8f9fa;">
+                <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                  @click="openModal"
+                  style="width: 150px;">
+                  Edit profile
+                </button>
+
                 <div class="d-flex justify-content-end text-center py-1">
                   <div>
                     <p class="mb-1 h5">253</p>
-                    <p class="small text-muted mb-0">Photos</p>
+                    <p class="small text-muted mb-0">My Movies</p>
                   </div>
                   <div class="px-3" @click="goToFriendList" style="cursor: pointer;">
                     <p class="mb-1 h5">{{user?.followers_cnt}}</p>
@@ -76,6 +75,7 @@
                   </div>
                 </div>
               </div>
+              
               <div class="card-body p-4 text-black">
                 <div class="mb-5">
                   <p class="lead fw-normal mb-1">About</p>
@@ -133,6 +133,10 @@ export default {
       uploadImg: null,
       uploadImgUrl: null,
       editProfileModal: null, 
+
+      like_movies: null,
+      worldcup_movies: null,
+
     }
   },
   computed: {
@@ -191,7 +195,8 @@ export default {
     goToFriendList(){
       console.log(this.user.id)
       this.$router.push({name : 'friendslist', params:{id: this.user.id}})
-    }
+    },
+
   }
 }
 </script>

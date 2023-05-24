@@ -30,7 +30,7 @@
                 <div class="d-flex justify-content-start text-center py-1">
                   <div>
                     <p class="mb-1 h5">253</p>
-                    <p class="small text-muted mb-0">Photos</p>
+                    <p class="small text-muted mb-0">My Movies</p>
                   </div>
                   <div class="px-3" @click="goToFriendList" style="cursor: pointer;">
                     <p class="mb-1 h5">{{thisUser?.followers_cnt}}</p>

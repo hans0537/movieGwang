@@ -87,8 +87,8 @@
                 </div>
                 <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                    class="img-fluid" alt="Sample image">
+                  <img src="../assets/signupImg.jpg"
+                    class="img-fluid" alt="Sample image" style="border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);">
 
                 </div>
               </div>

@@ -1,6 +1,7 @@
 <template>
-  <section id="header" class="container mt-5">
-    <nav class="navbar" style="background-color:azure;">
+<div class="container">
+  <section id="header" class="mt-5">
+    <nav class="navbar movie-nav">
       <div class="container">
         <router-link to="/movie/all" class="nav-link" :class="{ 'active': $route.path === '/movie/all' }"><h5 class="mt-1">전체</h5></router-link>
         <router-link to="/movie/genre/action" class="nav-link" :class="{ 'active': $route.path === '/movie/genre/action' }"><h5 class="mt-1">장르</h5></router-link>
@@ -9,8 +10,10 @@
         <router-link to="/movie/upcoming" class="nav-link" :class="{ 'active': $route.path === '/movie/upcoming' }"><h5 class="mt-1">상영 예정작</h5></router-link>
       </div>
     </nav>
-    <router-view/>
   </section>
+
+  <router-view/>
+</div>
 </template>
 
 <script>
@@ -26,8 +29,25 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+nav a {
+  font-weight: bold;
+  color: white;
+  padding: 0 50px;
+}
+
+nav a.router-link-exact-active {
+  color: #E309E8;
+}
+
 .selected {
   color: black;
+}
+
+.movie-nav{
+  background-color:black;
+  width: 98%;
+  margin: 0 auto;
+  border-radius: 10px;
 }
 </style>

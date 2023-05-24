@@ -12,7 +12,7 @@
             <img v-if="rankUser[0]?.image_base64" :src="getImageSrc(rankUser[0]?.image_base64)" alt="user" class="profile-photo">
             <img v-else src="../../assets/baseProfile.png" alt="user" class="profile-photo">
             <h3>1등</h3>
-            <a href="#" class="text-white fs-6"><i class="fa-solid fa-crown fa-beat" style="color: #fff700;"></i> {{rankUser[0]?.cho_points}} 점 | {{rankUser[0].username}}</a>
+            <a href="#" class="text-white fs-6"><i class="fa-solid fa-crown fa-beat" style="color: #fff700;"></i> {{rankUser[0]?.cho_points}} 점 | {{rankUser[0]?.username}}</a>
           </div>
 
           <ul class="nav-news-feed" v-if="rankUser">
@@ -61,7 +61,7 @@
                 <div class="answer-card-container" v-if="cardShow">
                   <div class="answer-card" :class="{ 'flipped': isFlipped }" @mouseenter="flipCard(true)" @mouseleave="flipCard(false)">
                     <div class="front">
-                      <h3 style="color: red;">GAME OVER</h3>
+                      <h3 style="color: red;">정답</h3>
                       <img :src="imgSrc" class="w-100 img-height" alt="img25">
                     </div>
                     <div class="back">
