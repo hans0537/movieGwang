@@ -26,6 +26,8 @@
     <UpComingList/>
 
     <popularList />
+
+    <!-- <recommendListVue /> -->
   </div>
 
 </template>
@@ -34,13 +36,15 @@
 import LatestList from '@/components/HomeMovieComponents/LatestList'
 import UpComingList from '@/components/HomeMovieComponents/UpComingList'
 import popularList from '@/components/HomeMovieComponents/popularList'
+// import recommendListVue from '../components/HomeMovieComponents/recommendList.vue'
 
 export default {
   name: 'HomeView',
   components: {
     LatestList,
     UpComingList,
-    popularList
+    popularList,
+    // recommendListVue
   },
   data() {
     return {
@@ -53,6 +57,7 @@ export default {
     this.getLatest();
     this.getUpComing();
     this.getPopular();
+    // this.getrecommend()
     this.dataLoaded = true;
   }
   },
@@ -68,7 +73,10 @@ export default {
     },
     getall() {
       this.$store.dispatch('getall')
-    }
+    },
+    // getrecommend() {
+    //   this.$store.dispatch('recommendmovie')
+    // }
 
   }
 }

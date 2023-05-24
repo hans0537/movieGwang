@@ -21,7 +21,7 @@ def get_movie_datas():
             "fields": fields
         }
         total_data.append(data)
-    # 1페이지부터 500페이지까지의 데이터를 가져옴.(popularmovie)
+    # 1페이지부터 180페이지까지의 데이터를 가져옴.(popularmovie)
     for i in range(1,180):
         request_url = "https://api.themoviedb.org/3/movie/top_rated?language=ko-kr&page=" + str(i) + "&region=kr"
         headers = {

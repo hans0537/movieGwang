@@ -72,7 +72,14 @@ export default {
         .then((res) => {
           this.movie2 = res.data
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          if (err.response && err.response.status === 404) {
+            // 리뷰가 없는 경우
+            this.movie2 = { review_count: 0 };
+          } else {
+            console.log(err);
+          }
+        });
       },
   },
   created() {

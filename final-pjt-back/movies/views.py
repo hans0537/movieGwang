@@ -46,6 +46,38 @@ def popularmovie(request):
         movie = PopularMovie.objects.all()
         serializer = MovieSerializer(movie,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+# 영화 추천
+@api_view(['GET'])
+def recommend(request):
+    if request.method == 'GET':
+        movie = Movie.objects.all()
+        serializer = MovieSerializer(movie, many=True)
+        movies = serializer.data
+        user = request.user
+        # 사용자가 선택한 like_users와 worldcup_users 가져오기
+        like_users = user.like_movies.all()
+        worldcup_users = user.worldcup_movies.all()
+        
+        # like_users와 worldcup_users의 영화 ID를 추출하여 중복 제거
+        liked_movie_ids = set()
+        for user1 in like_users:
+          print(user1)
+          liked_movie_ids.update(user1.values_list('id', flat=True))
+        for user1 in worldcup_users:
+          print(user1)
+          liked_movie_ids.update(user1.values_list('id', flat=True))
+        
+        # 중복된 영화 제외하고 추천 영화 20개 선택
+        recommended_movies = []
+        for movie in movies:
+            if movie['id'] not in liked_movie_ids:
+                recommended_movies.append(movie)
+                if len(recommended_movies) == 20:
+                    break
+        return Response(recommended_movies, status=status.HTTP_200_OK)
+
+
       
 @api_view(['GET'])
 def detail(request,movie_pk):
@@ -64,6 +96,19 @@ def movielike(request,movie_pk):
           movie.like_users.remove(user)
         else:
           movie.like_users.add(user)
+        serializer = MovieSerializer(movie)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def worldcuplike(request,movie_pk):
+    if request.method=='POST':
+        user = request.user
+        movie = Movie.objects.get(pk=movie_pk)
+        if movie.worldcup_users.filter(pk=user.pk).exists():
+          pass
+        else:
+          movie.worldcup_users.add(user)
         serializer = MovieSerializer(movie)
         return Response(serializer.data, status=status.HTTP_200_OK)
       

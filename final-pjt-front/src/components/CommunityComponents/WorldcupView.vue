@@ -106,7 +106,7 @@ export default {
       console.log(this.resultMovie.id)
       axios({
         method: 'post',
-        url: `http://127.0.0.1:8000/movies/${this.resultMovie.id}/like/`,
+        url: `http://127.0.0.1:8000/movies/${this.resultMovie.id}/worldcuplike/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }

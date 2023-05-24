@@ -45,6 +45,7 @@ class NowMovie(models.Model):
     poster_path = models.CharField(max_length=200)
     genre_ids = models.ManyToManyField(Genre)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_nowmovies')
+    worldcup_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='worldcup_nowmovies')
     
 class UpMovie(models.Model):
     adult = models.BooleanField(default=False)
@@ -61,6 +62,7 @@ class UpMovie(models.Model):
     poster_path = models.CharField(max_length=200)
     genre_ids = models.ManyToManyField(Genre)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_upmovies')
+    worldcup_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='worldcup_upmovies')
     
 class PopularMovie(models.Model):
     adult = models.BooleanField(default=False)
@@ -77,3 +79,4 @@ class PopularMovie(models.Model):
     poster_path = models.CharField(max_length=200)
     genre_ids = models.ManyToManyField(Genre)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_popularmovies')
+    worldcup_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='worldcup_popularmovies')

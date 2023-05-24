@@ -44,7 +44,6 @@ export default {
   name: 'popularList',
   data() {
     return {
-      popularList:null,
     }
   },
   components: {

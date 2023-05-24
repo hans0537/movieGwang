@@ -10,7 +10,7 @@
             <h5 style="margin-right: 10px;">{{ movie2?.original_title }}</h5>
           </div>
           <h5 style="margin-top: 10px;">
-            <p style="color: darkgray; display: inline; margin-right: 10px;">개봉:</p> {{ movie2?.release_date }}
+            <p style="color: darkgray; display: inline; margin-right: 10px;">개봉:</p> {{ movie?.release_date }}
           </h5>
           <h5 style="margin-top: 10px;">
             <p style="color: darkgray; display: inline; margin-right: 10px;">평점:</p> {{ movie2?.vote_average.toFixed(1) }}
