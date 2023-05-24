@@ -180,8 +180,9 @@ export default {
       })
       .then((res) => {
         this.movie = res.data
-        // 가져온 게시글 좋아요 목록에 회원이 있다면
-        this.likeCheck = res.data.like_users.some(user => user.username === this.checkUser.username)
+        // console.log(res.data)
+        // 가져온 영화 좋아요 목록에 회원이 있다면
+        this.likeCheck = res.data.like_users.some(user => user === this.checkUser.id)
       })
       .catch((err) => console.log(err))
     },

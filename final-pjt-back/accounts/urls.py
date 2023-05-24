@@ -20,5 +20,7 @@ urlpatterns = [
     path('setscore/', views.setscore),
 
     path('choquiz/getrank/', views.getChoRank),
-    path('overview/getrank/', views.getOverviewRank)
+    path('overview/getrank/', views.getOverviewRank),
+
+    path('<str:game>/getmyrank/', views.getmyrank)
 ]

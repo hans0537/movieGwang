@@ -12,14 +12,15 @@
             <img v-if="rankUser[0]?.image_base64" :src="getImageSrc(rankUser[0]?.image_base64)" alt="user" class="profile-photo">
             <img v-else src="../../assets/baseProfile.png" alt="user" class="profile-photo">
             <h3>1등</h3>
-            <a href="#" class="text-white fs-6"><i class="fa-solid fa-crown fa-beat" style="color: #fff700;"></i> {{rankUser[0]?.overview_points}} 점 | {{rankUser[0]?.username}}</a>
+            <a href="#" class="text-white fs-6" @click="goToProfile(rankUser[0])"><i class="fa-solid fa-crown fa-beat" style="color: #fff700;"></i> {{rankUser[0]?.overview_points}} 점 | {{rankUser[0]?.username}}</a>
           </div>
 
           <ul class="nav-news-feed" v-if="rank2users">
             <RankUserListView v-for="(user, index) in rank2users" :key="index"
               :user="user"
               :index="index"
-              :quiztype="'over'"/>
+              :quiztype="'over'"
+              @click="goToProfile(rankUser[0])"/>
           </ul>
 
         </div>
@@ -66,11 +67,12 @@
                 <div class="answer-card-container" v-if="cardShow">
                   <div class="answer-card" :class="{ 'flipped': isFlipped }" @mouseenter="flipCard(true)" @mouseleave="flipCard(false)">
                     <div class="front">
-                      <h3 style="color: red;">GAME OVER</h3>
+                      <h3 style="color: red;">정답</h3>
                       <img :src="imgSrc" class="w-100 img-height" alt="img25">
                     </div>
                     <div class="back">
-                      <button @click="closeCard">확인</button>
+                      <h3 style="color: black;">제목: {{currentQuiz.title}}</h3>
+                      <button class="btn btn-primary" @click="closeCard">닫기</button>
                     </div>
                   </div>
                 </div>
@@ -150,7 +152,7 @@ export default {
 
       startCheck: false,
       myAnswer: "",
-      timer: 10, // 초기 10초값
+      timer: 60, // 초기 10초값
       timerInterval: null, 
       gameOver: false,
       score: 0,
@@ -324,7 +326,7 @@ export default {
     },
 
     startTimer() {
-      this.timer = 10; // 타이머 초기화
+      this.timer = 60; // 타이머 초기화
 
       this.timerInterval = setInterval(() => {
         this.timer--; // 1초씩 감소
@@ -358,7 +360,7 @@ export default {
         axios({
           method: 'put',
           url: `${API_URL}/accounts/setscore/`,
-          data: { username: this.user.username, followers: this.user.followers, overview_points: this.score },
+          data: { username: this.user.username, followers: this.user.followers, followings: this.user.followings, overview_points: this.score },
           headers: {
             Authorization: `Bearer ${this.$store.state.accessToken}`,
           }
@@ -403,6 +405,13 @@ export default {
       return `data:image/png;base64, ${base64String}`; // Base64 데이터를 이미지 src 형식으로 변환
     },
 
+    goToProfile(user) {
+      if (this.user.id === user.id) {
+        this.$router.push({name: 'mypage'})
+      } else {
+        this.$router.push({name: 'userprofile', params: {id : user.id}})
+      }
+    }
   },
 
   computed: {
@@ -560,8 +569,9 @@ export default {
 
 .front,
 .back {
-  width: 100%;
-  height: 100%;
+  background-color: #eee;
+  width: 300px;
+  height: 440px;
   position: absolute;
   top: 0;
   left: 0;
@@ -577,7 +587,7 @@ export default {
 }
 
 .back button {
-  padding: 10px 20px;
+  font-size: 30px;
 }
 
 .front h2,

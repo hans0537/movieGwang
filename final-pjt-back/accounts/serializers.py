@@ -1,15 +1,32 @@
 from rest_framework import serializers
 from .models import User
+from movies.models import Movie
+from articles.models import Article
 import base64
+
+class MovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Movie
+        fields='__all__'
+
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
     like_articles = serializers.PrimaryKeyRelatedField(many=True, read_only=True)    
     like_movies = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    followings = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    article = ArticleSerializer(source='article_set', many=True, read_only=True)
+    like_movies = MovieSerializer(many=True, read_only=True)
+    # followings = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     followers_cnt = serializers.IntegerField(source='followers.count', read_only=True)
     followings_cnt = serializers.IntegerField(source='followings.count', read_only=True)
     
+    worldcup_movies = MovieSerializer(many=True, read_only=True)
+
     image_base64 = serializers.SerializerMethodField()
 
     def get_image_base64(self, user):
@@ -21,8 +38,8 @@ class UserSerializer(serializers.ModelSerializer):
     
 
     class Meta:
-      model=User
-      fields=('id','username','email','profile','background','cho_points','overview_points','groups','user_permissions','followings','followers', 'like_articles', 'like_movies', 'followers_cnt', 'followings_cnt', 'image_base64')
+        model=User
+        fields=('id','username','email','profile','background', 'article' ,'cho_points','overview_points','groups','user_permissions','followings','followers', 'like_articles', 'like_movies', 'worldcup_movies','followers_cnt', 'followings_cnt', 'image_base64')
 
 class FriendListSerializer(serializers.ModelSerializer):
     followers = serializers.SerializerMethodField()
