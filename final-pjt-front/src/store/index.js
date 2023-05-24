@@ -28,7 +28,8 @@ export default new Vuex.Store({
     allmovie: [],
     user: null,
     selectedmovie:null,
-    recommendmovie:null
+    recommendmovie:null,
+    dataload:false,
   },
   getters: {
     isLogin(state) {
@@ -36,9 +37,6 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    // GET_RECOMMEND(state, recommend) {
-    //   state.recommendmovie = recommend
-    // },
     GET_LATEST(state, latest) {
       state.latestList = latest
     },
@@ -90,11 +88,13 @@ export default new Vuex.Store({
       if (currentRoute.name != 'home') {
         router.push({ name: 'home' });
       }
+      location.reload()
 
     },
     setSelectedMovie(state,movie) {
       state.selectedmovie=movie
-    }
+    },
+
   },
   actions: {
     login(context, access) {
@@ -118,6 +118,7 @@ export default new Vuex.Store({
           }
         })
         .then((res) => {
+          console.log(res)
           context.commit('GET_USER', res.data)
         })
         .catch((err) => {
@@ -160,20 +161,6 @@ export default new Vuex.Store({
           context.commit('GET_POPULAR', res.data)
         })
     },
-    // 추천영화
-    // recommendmovie(context) {
-    //   axios({
-    //     method: 'get',
-    //     url: 'http://127.0.0.1:8000/movies/recommend/',
-    //     headers: {
-    //       Authorization: `Bearer ${context.state.accessToken}`,
-    //     }
-    //   })
-    //     .then(res => {
-    //       console.log(res)
-    //       context.commit('GET_RECOMMEND', res.data)
-    //     })
-    // },
 
 
     // 게시글 가져오기

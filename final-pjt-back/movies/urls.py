@@ -13,7 +13,6 @@ urlpatterns = [
     path('upcommovie/',views.upcommovie),
     # 영화 상세 조회시 정의된 id로 조회 해야 가능함
     path('<int:movie_pk>/',views.detail),
-    path('recommend/' ,views.recommend),
     path('<int:movie_pk>/like/',views.movielike),
     path('<int:movie_pk>/worldcuplike/',views.worldcuplike),
     path('<int:movie_pk>/review/', views.review_create_all),

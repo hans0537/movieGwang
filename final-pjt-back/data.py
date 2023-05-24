@@ -21,8 +21,8 @@ def get_movie_datas():
             "fields": fields
         }
         total_data.append(data)
-    # 1페이지부터 180페이지까지의 데이터를 가져옴.(popularmovie)
-    for i in range(1,180):
+    # 1페이지부터 201페이지까지의 데이터를 가져옴.(popularmovie)
+    for i in range(1,201):
         request_url = "https://api.themoviedb.org/3/movie/top_rated?language=ko-kr&page=" + str(i) + "&region=kr"
         headers = {
                     "accept": "application/json",
@@ -55,7 +55,7 @@ def get_movie_datas():
 
                 total_data.append(data)
     # 상영중인 최신영화
-    for i in range(1,5):
+    for i in range(1,6):
         request_url = "https://api.themoviedb.org/3/movie/now_playing?language=ko-kr&page=" + str(i) + "&region=kr"
         headers = {
                     "accept": "application/json",
@@ -88,7 +88,7 @@ def get_movie_datas():
 
                 total_data.append(data)
     # 개봉예정작
-    for i in range(1,2):
+    for i in range(1,3):
         request_url = "https://api.themoviedb.org/3/movie/upcoming?language=ko-kr&page=" + str(i) + "&region=kr"
         headers = {
                     "accept": "application/json",
@@ -143,8 +143,8 @@ def get_movie():
             "fields": fields
         }
         total_data.append(data)
-    # 1페이지부터 500페이지까지의 데이터를 가져옴.(popularmovie)
-    for i in range(1,180):
+    # 1페이지부터 201페이지까지의 데이터를 가져옴.(popularmovie)
+    for i in range(1,201):
         request_url = "https://api.themoviedb.org/3/movie/top_rated?language=ko-kr&page=" + str(i) + "&region=kr"
         headers = {
                     "accept": "application/json",
@@ -177,7 +177,7 @@ def get_movie():
 
                 total_data.append(data)
     # 상영중인 최신영화
-    for i in range(1,5):
+    for i in range(1,6):
         request_url = "https://api.themoviedb.org/3/movie/now_playing?language=ko-kr&page=" + str(i) + "&region=kr"
         headers = {
                     "accept": "application/json",
@@ -210,7 +210,7 @@ def get_movie():
 
                 total_data.append(data)
     # 개봉예정작
-    for i in range(1,2):
+    for i in range(1,3):
         request_url = "https://api.themoviedb.org/3/movie/upcoming?language=ko-kr&page=" + str(i) + "&region=kr"
         headers = {
                     "accept": "application/json",
@@ -240,7 +240,6 @@ def get_movie():
                     "model": "movies.UpMovie",
                     "fields": fields
                 }
-
                 total_data.append(data)
 
     with open("movies/fixtures/movie_detail_data.json", "w", encoding="utf-8") as w:
