@@ -62,7 +62,7 @@
 
                 <div class="d-flex justify-content-end text-center py-1">
                   <div>
-                    <p class="mb-1 h5">253</p>
+                    <p class="mb-1 h5">{{user?.like_movies.length + user?.worldcup_movies.length}}</p>
                     <p class="small text-muted mb-0">My Movies</p>
                   </div>
                   <div class="px-3" @click="goToFriendList" style="cursor: pointer;">
@@ -78,16 +78,20 @@
               
               <div class="card-body p-4 text-black">
                 <div class="mb-5">
-                  <p class="lead fw-normal mb-1">About</p>
-                  <div class="p-4" style="background-color: #f8f9fa;">
-                    <p class="font-italic mb-1">Web Developer</p>
-                    <p class="font-italic mb-1">Lives in New York</p>
-                    <p class="font-italic mb-0">Photographer</p>
+                  <p class="lead fw-normal mb-1">활동 내용</p>
+                  <div class="p-4 text-start" style="background-color: #f8f9fa;">
+                    <p class="font-italic mb-1"> - 등록한 게시글: {{user?.article.length }}개</p>
+                    <p class="font-italic mb-1"> - 나의 영화: {{user?.like_movies.length + user?.worldcup_movies.length}} 개</p>
+                    <p class="font-italic mb-0"> - 초성 게임 등수: {{cho_rank}} 등</p>
+                    <p class="font-italic mb-0"> - 줄거리 게임 등수: {{overview_rank}} 등</p>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                  <p class="lead fw-normal mb-0">Recent photos</p>
-                  <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
+
+
+
+                <div class="d-flex justify-content-between align-items-center my-4">
+                  <p class="lead fw-bold mb-0">{{user?.username}}님 추천 영화</p>
+                  <p class="mb-0"><a href="#" class="text-muted">Show all</a></p>
                 </div>
                 <div class="row g-2">
                   <div class="col mb-2">
@@ -109,14 +113,47 @@
                       alt="image 1" class="w-100 rounded-3">
                   </div>
                 </div>
+
+
+                <div class="d-flex justify-content-between align-items-center my-4 border-top pt-4">
+                  <p class="lead fw-bold mb-0">월드컵 1위 영화들</p>
+                  <div class="text-muted" @click="showAll('world')" style="cursor: pointer;"><p class="mb-0 text-decoration-underline">Show all</p></div> 
+                </div>
+
+                <div v-if="displayWorld.length === 0">
+                  <h3>활동 내용이 없네여잉~</h3> 
+                </div>  
+                <div v-else>
+                  <div class="row g-2">
+                    <div class="col mb-2" v-for="(movie, index) in displayWorld" :key="index">
+                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer;">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="d-flex justify-content-between align-items-center my-4 border-top pt-4">
+                  <p class="lead fw-bold mb-0">좋아요 한 영화들</p>
+                  <div class="text-muted" @click="showAll('like')" style="cursor: pointer;"><p class="mb-0 text-decoration-underline">Show all</p></div> 
+                </div>
+                
+
+                <div v-if="displayLikes.length === 0">
+                  <h3>활동 내용이 없네여잉~</h3> 
+                </div>  
+                <div v-else>
+                  <div class="row g-2">
+                    <div class="col mb-2" v-for="(movie, index) in displayLikes" :key="index">
+                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer;">
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-          alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
-          style="width: 150px; z-index: 1">
     </section>
   </div>
 </template>
@@ -134,13 +171,18 @@ export default {
       uploadImgUrl: null,
       editProfileModal: null, 
 
+      displayLikes: null,
+      displayWorld: null,
       like_movies: null,
       worldcup_movies: null,
 
+      cho_rank: null,
+      overview_rank: null,
     }
   },
   computed: {
     user() {
+      console.log(this.$store.state.user)
       return this.$store.state.user
     }
   },
@@ -197,6 +239,68 @@ export default {
       this.$router.push({name : 'friendslist', params:{id: this.user.id}})
     },
 
+    openDetail(movie) {
+      this.$store.commit('setSelectedMovie', movie);
+
+      this.$router.push({ name: 'moviedetail' });
+    },
+
+    showAll(type) {
+      this.$router.push({name: 'showallmovie', params: {type: type}})
+    },
+
+    getMyRank(game) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/accounts/${game}/getmyrank/`,
+        headers: {
+          Authorization: `Bearer ${this.$store.state.accessToken}`,
+        }
+      })
+      .then((res) => {
+        if (game === 'cho_points'){
+          this.cho_rank = res.data.rank
+        } else{
+          this.overview_rank = res.data.rank
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+
+    getLikeMovies() {
+      let m = this.user.like_movies
+      if (m.length <= 4) {
+        this.displayLikes = m
+      }else {
+        this.displayLikes = m.slice(0, 4)
+      }
+      this.like_movies = m
+    },
+
+    getWorldCupMovies() {
+      let m = this.user.worldcup_movies
+
+      if (m.length <= 4) {
+        console.log(m.length)
+        this.displayWorld = m
+      }else {
+        this.displayWorld = m.slice(0, 4)
+      }
+      this.worldcup_movies = m
+    },
+
+    getImgSrc(src) {
+      return "https://image.tmdb.org/t/p/w500" + src
+    }
+  },
+  created() {
+    this.$store.dispatch('getuser'),
+    this.getMyRank('cho_points'),
+    this.getMyRank('overview_points')
+    this.getLikeMovies(),
+    this.getWorldCupMovies()
   }
 }
 </script>

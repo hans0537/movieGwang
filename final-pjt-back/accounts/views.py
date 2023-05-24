@@ -118,3 +118,17 @@ def getOverviewRank(request):
     if request.method == 'GET':
         serializer = UserSerializer(overRank, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getmyrank(request, game):
+    user = request.user
+
+    if game == 'cho_points':
+        my_rank = User.objects.filter(cho_points__gt=user.cho_points).count() + 1
+    elif game == 'overview_points':
+        my_rank = User.objects.filter(overview_points__gt=user.overview_points).count() + 1
+    else:
+        return Response({"error": "Invalid game"}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({"rank": my_rank}, status=status.HTTP_200_OK)
