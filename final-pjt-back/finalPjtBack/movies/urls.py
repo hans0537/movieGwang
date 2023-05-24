@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # 전체영화 조회
     path('',views.index),
+    path('genre/',views.genre),
     # 현재 상영작 조회
     path('nowmovie/', views.nowmovie),
     # 인기영화 조회

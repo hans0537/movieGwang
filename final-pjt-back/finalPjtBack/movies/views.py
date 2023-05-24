@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import MovieSerializer, ReviewSerializers,ReviewcreateSerializers
+from .serializers import MovieSerializer, ReviewSerializers,ReviewcreateSerializers, GenreSerializers
 from .models import Movie,Genre, Review, NowMovie, UpMovie, PopularMovie
 from rest_framework import status
 
@@ -13,6 +13,14 @@ def index(request):
     if request.method=='GET':
         movie = Movie.objects.all()
         serializer = MovieSerializer(movie,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+# 장르 조회
+@api_view(['GET'])
+def genre(request):
+    if request.method=='GET':
+        genre = Genre.objects.all()
+        serializer = GenreSerializers(genre,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 # 현재 상영작 조회
@@ -40,7 +48,6 @@ def popularmovie(request):
         return Response(serializer.data, status=status.HTTP_200_OK)
       
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def detail(request,movie_pk):
     if request.method=='GET':
         movie = Movie.objects.get(pk=movie_pk)
