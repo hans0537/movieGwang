@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Movie,Review
+from .models import Movie,Review, Genre
 from django.contrib.auth import get_user_model
 import base64
 from accounts.serializers import UserSerializer
+
         
 class ReviewSerializers(serializers.ModelSerializer):
     class MoivetoReview(serializers.ModelSerializer):
@@ -31,4 +32,9 @@ class ReviewcreateSerializers(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Review
+        fields = '__all__'
+        
+class GenreSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
         fields = '__all__'
