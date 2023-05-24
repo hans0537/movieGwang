@@ -90,10 +90,27 @@
 
       getUser() {
         this.$store.dispatch('getuser')
-      }
+      },
+      getLatest() {
+      this.$store.dispatch('getLatest')
+      },
+      getUpComing() {
+        this.$store.dispatch('getUpComing')
+      },
+      getPopular() {
+        this.$store.dispatch('popularMovie')
+      },
+      getall() {
+        this.$store.dispatch('getall')
+      },
     },
     created() { 
       this.getUser()
+      this.getall();
+      this.getLatest();
+      this.getUpComing();
+      this.getPopular();
+      this.$store.state.dataLoaded = true;
     },
     // mounted() {
     //   this.isLogin = 

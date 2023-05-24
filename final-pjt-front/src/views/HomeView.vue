@@ -21,13 +21,22 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+
+    <div>
+      <template v-if="likeMovies && worldcupMovies">
+        <recommendListVue />
+      </template>
+      <template v-else>
+        <NorecommendList />
+      </template>
+    </div>
     <LatestList/>
 
     <UpComingList/>
 
     <popularList />
 
-    <!-- <recommendListVue /> -->
+
   </div>
 
 </template>
@@ -36,7 +45,8 @@
 import LatestList from '@/components/HomeMovieComponents/LatestList'
 import UpComingList from '@/components/HomeMovieComponents/UpComingList'
 import popularList from '@/components/HomeMovieComponents/popularList'
-// import recommendListVue from '../components/HomeMovieComponents/recommendList.vue'
+import recommendListVue from '../components/HomeMovieComponents/recommendList.vue'
+import NorecommendList from '@/components/HomeMovieComponents/NorecommendList.vue'
 
 export default {
   name: 'HomeView',
@@ -44,43 +54,29 @@ export default {
     LatestList,
     UpComingList,
     popularList,
-    // recommendListVue
+    recommendListVue,
+    NorecommendList
   },
   data() {
     return {
-      dataLoaded: false
+      // user: null,
     }
   },
+  computed: {
+    likeMovies() {
+      return this.$store.state.user?.like_movies?.length > 0;
+    },
+    worldcupMovies() {
+      return this.$store.state.user?.worldcup_movies?.length > 0;
+    },
+  },
   created() {
-    if (!this.dataLoaded) {
-    this.getall();
-    this.getLatest();
-    this.getUpComing();
-    this.getPopular();
-    // this.getrecommend()
-    this.dataLoaded = true;
-  }
   },
   methods: {
-    getLatest(){
-      this.$store.dispatch('getLatest')
-    },
-    getUpComing(){
-      this.$store.dispatch('getUpComing')
-    },
-    getPopular() {
-      this.$store.dispatch('popularMovie')
-    },
-    getall() {
-      this.$store.dispatch('getall')
-    },
-    // getrecommend() {
-    //   this.$store.dispatch('recommendmovie')
-    // }
-
   }
 }
 </script>
+
 
 <style scoped>
 

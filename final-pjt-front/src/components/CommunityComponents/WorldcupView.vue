@@ -17,6 +17,10 @@
           </div>
         </div>
       </div>
+      <div v-if="round === 1 && viewround === '최종선택'">
+        <button @click="handleRestartClick">다시하기</button>
+        <button @click="movieselect">상세보기</button>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +49,10 @@ export default {
     }
   },
   methods: {
+    movieselect() {
+      this.$store.state.selectedmovie = this.resultMovie
+      this.$router.push({name:'moviedetail'})
+    },
     GetMovieAndGenre() {
       this.movie = this.$store.state.allmovie
       axios({
@@ -63,6 +71,10 @@ export default {
         .catch((err) => {
           console.log(err)
         })
+    },
+    handleRestartClick() {
+      // 다시하기 버튼 클릭 시 처리 로직 추가
+      location.reload()
     },
     handleMovieSelected(movie) {
       this.selectedMovies.push(movie); // 선택된 영화를 배열에 추가
@@ -103,7 +115,6 @@ export default {
       }
     },
     like() {
-      console.log(this.resultMovie.id)
       axios({
         method: 'post',
         url: `http://127.0.0.1:8000/movies/${this.resultMovie.id}/worldcuplike/`,
@@ -117,7 +128,6 @@ export default {
           url: `http://127.0.0.1:8000/accounts/profile/${this.$store.state.user.id}/`
         })
         .then((res) => {
-          console.log(res)
           this.$store.state.user = res.data
         })
         .catch((err1) => {
