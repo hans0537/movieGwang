@@ -65,7 +65,7 @@ export default {
     getReviewcount() {
         axios({
           method: 'get',
-          url: `${this.API_URL}/movies/${this.movie.id}/`,
+          url: `${this.API_URL}/movies/${this.movie?.id}/`,
         })
         .then((res) => {
           this.movie2 = res.data

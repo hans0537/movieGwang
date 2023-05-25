@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 
 // import axios from 'axios';
+// AWS 연동된 도메인(cloud9 탄력적 아이피)
 // axios.defaults.baseURL = 'https://ithubproject.com';
 // axios.defaults.withCredentials = true;
 
