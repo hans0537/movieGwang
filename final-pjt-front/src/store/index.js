@@ -28,7 +28,7 @@ export default new Vuex.Store({
     allmovie: [],
     user: null,
     selectedmovie:null,
-    recommendmovie:null,
+    recommendmovie:[],
     dataload:false,
   },
   getters: {
@@ -37,6 +37,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setRecommendMovies(state, movies) {
+      state.recommendmovie = movies;
+    },
     GET_LATEST(state, latest) {
       state.latestList = latest
     },

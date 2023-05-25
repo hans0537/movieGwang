@@ -70,8 +70,9 @@
                       <h3 style="color: red;">정답</h3>
                       <img :src="imgSrc" class="w-100 img-height" alt="img25">
                     </div>
-                    <div class="back">
+                    <div class="back d-flex justify-content-evenly">
                       <h3 style="color: black;">제목: {{currentQuiz.title}}</h3>
+                      <button class="btn btn-primary mt-3" @click="moviedetail">자세히</button> 
                       <button class="btn btn-primary" @click="closeCard">닫기</button>
                     </div>
                   </div>
@@ -164,7 +165,12 @@ export default {
     }
   },
   methods: {
-    
+    // 자세히보기 클릭시 해당영화 상세보기 페이지로 이동
+    moviedetail() {
+      this.$store.commit('setSelectedMovie', this.currentQuiz);
+
+      this.$router.push({ name: 'moviedetail' });
+    },
     // 선택된 장르에 따른 영화 가져오기
     filteredMovies() {
       if (this.genreSelected === 0) {
