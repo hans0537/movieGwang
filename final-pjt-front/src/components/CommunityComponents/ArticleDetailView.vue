@@ -34,7 +34,9 @@
                 <hr v-if="article?.image_base64">
                 <p class="mt-1">{{article?.content}}</p>
               </div>
-
+              <div class="mb-3" style="display: flex; justify-content: end;">
+                <button class="btn btn-success" @click="goBack">이전 페이지</button>
+              </div>
               <div class="small d-flex justify-content-start fw-bold">
                 <div class="d-flex align-items-center me-3" @click="like" style="cursor: pointer;">
                   <i class="far fa-thumbs-up me-2" :class="{ 'fa-solid' : likeCheck }" style="color: blue;"></i>
@@ -130,6 +132,9 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      window.history.back();
+    },
     getArticle(){
       axios({
         method: 'get',

@@ -4,7 +4,7 @@
     <nav class="navbar movie-nav">
       <div class="container">
         <router-link to="/movie/all" class="nav-link" :class="{ 'active': $route.path === '/movie/all' }"><h5 class="mt-1">전체</h5></router-link>
-        <router-link to="/movie/genre/action" class="nav-link" :class="{ 'active': $route.path === '/movie/genre/action' }"><h5 class="mt-1">장르</h5></router-link>
+        <router-link to="/movie/genre/action" class="nav-link" :class="{ 'router-link-exact-active router-link-active active': moviegenre.includes($route.path)}"><h5 class="mt-1">장르</h5></router-link>
         <router-link to="/movie/average" class="nav-link" :class="{ 'active': $route.path === '/movie/average' }"><h5 class="mt-1">인기 영화</h5></router-link>
         <router-link to="/movie/now" class="nav-link" :class="{ 'active': $route.path === '/movie/now' }"><h5 class="mt-1">현재 상영작</h5></router-link>
         <router-link to="/movie/upcoming" class="nav-link" :class="{ 'active': $route.path === '/movie/upcoming' }"><h5 class="mt-1">상영 예정작</h5></router-link>
@@ -21,6 +21,9 @@ export default {
   name: "MovieView",
   data() {
     return {
+      moviegenre: ['/movie/genre/action','/movie/genre/adventure','/movie/genre/animation','/movie/genre/comedy','/movie/genre/crime','/movie/genre/documentary','/movie/genre/drama',
+      '/movie/genre/family','/movie/genre/fantasy','/movie/genre/history','/movie/genre/horror','/movie/genre/music','/movie/genre/mystery','/movie/genre/romance','/movie/genre/science',
+      '/movie/genre/tv','/movie/genre/thriller','/movie/genre/war','/movie/genre/western']
     };
   },
   methods: {

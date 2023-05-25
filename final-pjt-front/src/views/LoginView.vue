@@ -104,11 +104,29 @@ export default {
       }) 
     },
 
-    // kakaoLogin() {
-    //   const redirectUri = encodeURIComponent(redirect_uri);
-    //   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_API}&redirect_uri=${redirectUri}&response_type=code`;
+//     kakaoLogin() {
+//   const redirectUri = encodeURIComponent(redirect_uri);
+//   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_API}&redirect_uri=${redirectUri}&response_type=code`;
 
-    //   window.location.href = kakaoAuthUrl;
+//   // 클라이언트가 카카오 인증 서버로 리다이렉트
+//   window.location.href = kakaoAuthUrl;
+// },
+
+// // 인증 코드를 받았을 때 호출되는 함수
+// handleAuthCode() {
+//   // 현재 URL에서 인증 코드 추출
+//   const urlParams = new URLSearchParams(window.location.search);
+//   const authCode = urlParams.get('code');
+
+//   if (authCode) {
+//     // 서버에 인증 코드 전송하여 로그인 정보 요청
+//     axios.get(`http://127.0.0.1:8000/accounts/kakao/?code=${authCode}`)
+//       .then((res) => {
+//         // 카카오 로그인 성공
+//         const userData = res.data.user;
+//         // 로컬 스토리지에 사용자 정보 저장
+//         localStorage.setItem('user', JSON.stringify(userData));
+//         window.location.href = 'http://localhost:8080/';
 
     //   axios.get('http://127.0.0.1:8000/accounts/kakao/')
     //     .then((res) => {
@@ -124,15 +142,6 @@ export default {
     //     });
     // }
   },
-  created() {
-    // 로그인 컴포넌트가 생성될 때 로컬 스토리지에서 저장한 아이디를 가져와 설정
-    const rememberedID = localStorage.getItem('rememberID');
-    console.log(rememberedID)
-    if (rememberedID) {
-      this.username = rememberedID;
-      this.rememberID = true;
-    }
-  }
 }
 </script>
 

@@ -67,11 +67,15 @@
         </h4>
       </div>
     </div>
-
+    <div>
+    </div>
     <div style="margin-top:35rem">
       <div class="container mt-5 pt-5">
         <div class="row d-flex justify-content-center">
           <div>
+            <div class="mb-3" style="display: flex; justify-content: end;">
+              <button class="btn btn-success" @click="goBack">이전 페이지</button>
+            </div>
             <div class="card">
               <div class="card-body">
                 <div class="small d-flex justify-content-start fw-bold">
@@ -147,10 +151,12 @@ import axios from "axios"
 import _ from "lodash"
 import MovieCommentViewVue from './MovieCommentView.vue';
 import ActorViewVue from './ActorView.vue';
+
 const URL = "https://www.googleapis.com/youtube/v3/search"
 // const API_KEY = 'AIzaSyB4_Ve145IcMWtdgu865J-xRWXHBRdwau0' 
 const API_KEY = 'AIzaSyBJNMqfSCoTBI63Q8Bp-8Ai9O1vAkjraIE'
 const API_URL = this.$store.state.API_URL
+
 
 export default {
   name: 'MovieDetail',
@@ -176,6 +182,9 @@ export default {
     ActorViewVue
   },
   methods: {
+    goBack() {
+      window.history.back();
+    },
     getMovie() {
       axios({
         method: 'get',
@@ -353,21 +362,21 @@ export default {
   created() {
     this.movie = this.$store.state.selectedmovie
     this.getComments()
-     axios.get(URL, {
-       params:{
-         key:API_KEY,
-         type:'video',
-         part:'snippet',
-         q: this.movie.title + '예고편'
-       },
-      
-     }).then(res=>{
-       this.videos=res.data.items
-       this.selectedVideo=this.videos[0]
-     })
-     .catch(err => {
-       console.log(err)
-     })
+    axios.get(URL, {
+      params:{
+        key:API_KEY,
+        type:'video',
+        part:'snippet',
+        q: this.movie.title + '예고편'
+      },
+    
+    }).then(res=>{
+      this.videos=res.data.items
+      this.selectedVideo=this.videos[0]
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 };
 </script>
