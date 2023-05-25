@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="typewriter ps-2 mt-3">{{ recommendationMessage }}</div>
-    <div class="d-flex justify-content-end align-items-center pe-4">
+    <div v-if="user?.username" class="d-flex justify-content-end align-items-center pe-4">
       <i class="fa fa-light fa-hand-point-right fa-beat fa-2xxl pe-3" style="color: #e4ce3f; font-size: 30px;"></i>
       <router-link v-if="user !== null &&  user?.username !=='' " :to="{ name: 'worldcup' }" class="btn btn-success">월드컵 하러가기</router-link>
       <i class="fa fa-light fa-hand-point-left fa-beat fa-2xl ps-3" style="color: #e4ce3f; font-size: 30px;"></i>
@@ -79,7 +79,7 @@ export default {
     width: 0; 
   }
 	100% { 
-    width: 38.5ch; 
+    width: 55ch; 
   }
 }
 </style>

@@ -64,8 +64,7 @@ export default {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
       })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         this.$emit('get-friend');
       })
       .catch((err) => {

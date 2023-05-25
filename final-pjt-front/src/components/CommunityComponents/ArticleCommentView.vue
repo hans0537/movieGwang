@@ -152,8 +152,7 @@ export default {
             Authorization: `Bearer ${this.$store.state.accessToken}`
           }
         })
-        .then((res) => {
-          console.log(res)
+        .then(() => {
           // 삭제 후 목록 다시 불러오기
           this.$emit('get-comments');
         })
@@ -172,8 +171,7 @@ export default {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
       })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         this.newComment = ''
         this.updateShow = false
         // 수정 후 목록 다시 불러오기
@@ -197,8 +195,7 @@ export default {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
       })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         this.cocomment = ''
         this.cocommentShow = false
         this.$emit('get-comments')

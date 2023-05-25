@@ -179,6 +179,10 @@ export default {
           if(errData.non_field_errors){
             alert(errData.non_field_errors)
           }
+
+          if(errData.password1){
+            alert(errData.password1)
+          }
         }
       })
     }

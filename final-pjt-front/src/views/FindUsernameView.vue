@@ -52,7 +52,6 @@ export default {
     },
 
     findUsername() {
-      console.log(this.email)
       axios({
         method: 'get',
         url: `http://127.0.0.1:8000/accounts/findUsername/`,
@@ -61,7 +60,6 @@ export default {
         }
       })
       .then((res) => {
-        console.log(res)
         this.username = res.data.username
         // this.$store.dispatch('login', res.data.access)
       })

@@ -76,12 +76,6 @@ export default {
       return this.$store.state.user?.worldcup_movies?.length > 0;
     },
   },
-  mounted(){
-    console.log('home', this.$store.state.user)
-  },
-  created() {
-    console.log('home', this.$store.state.user)
-  },
   methods: {
   }
 }

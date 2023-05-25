@@ -190,14 +190,14 @@ export default {
       const quizMovies = this.quizMovies;
 
       if (quizMovies.length === 0) {
-        console.log('해당 장르 영화 정보가 없네요... 다른 장르 할래요?');
+        alert('해당 장르 영화 정보가 없네요... 다른 장르 할래요?');
         return;
       }
 
       // 이전에 출제된 문제를 비교후 미출제 영화들만 가져와 다시 저장 
       const unusedMovies = quizMovies.filter(movie => !this.usedQuizIndexes.includes(movie.id));
       if (unusedMovies.length === 0) {
-        console.log('해당 장르 영화 출제가 끝났어요~~ 다시 도전해보세요');
+        alert('해당 장르 영화 출제가 끝났어요~~ 다시 도전해보세요');
         return;
       }
       
@@ -211,7 +211,6 @@ export default {
       // 출제 되었다고 등록
       this.usedQuizIndexes.push(randomMovie.id);
 
-      console.log(this.currentQuiz.title)
       // 10초 타이머 시작
       this.startTimer(); 
     },
@@ -285,7 +284,6 @@ export default {
       const myAnswer = this.myAnswer.replace(/[^\wㄱ-ㅎㅏ-ㅣ가-힣]/g, '').toLowerCase();
 
       if (myAnswer === answer){
-        console.log('정답')
 
         this.answerCount++
         this.score += 10
@@ -299,7 +297,6 @@ export default {
         clearInterval(this.timerInterval); // 타이머 재시작
         this.pickRandomMovie(); // 다음 문제 출제
       }else {
-        console.log('오답')
         clearInterval(this.timerInterval); // 타이머 종료
 
         // 점수를 가장 먼저 등록
@@ -314,19 +311,6 @@ export default {
       this.myAnswer = ''
     },
 
-    // 줄거리 추출
-    overview_q(str) {
-      let result = this.currentQuiz.overview;
-
-      if (result.length > 20) {
-        result = result.substring(0, 20) + "...";
-      }
-
-      console.log(str);
-      console.log(result);
-      return result;
-    },
-
     toggleFullOverview() {
       this.showFullOverview = !this.showFullOverview;
     },
@@ -338,7 +322,7 @@ export default {
         this.timer--; // 1초씩 감소
         if (this.timer <= 0) {
           clearInterval(this.timerInterval); // 타이머 종료
-          console.log('시간 초과');
+          alert('시간 초과');
           // 시간초과 문제 종료!!
           // 점수를 가장 먼저 등록
           this.setScore()
@@ -371,9 +355,7 @@ export default {
             Authorization: `Bearer ${this.$store.state.accessToken}`,
           }
         })
-        .then((res) => {
-          console.log(res)
-
+        .then(() => {
           // 유저가 게임을 참여한 후에 최신화 하기 위함
           this.getUser()
           this.getRank()
@@ -399,7 +381,6 @@ export default {
       })
       .then((res) => {
         this.rankUser = res.data.filter(user => user.overview_points > 0);
-        console.log(this.rankUser)
       })
       .catch((err) => {
         console.log(err)

@@ -271,10 +271,16 @@ export default {
 
     getrecommendMovies() {
       let m = this.$store.state.recommendmovie
-      let a1 = [0,1,2,3,4]
-      let b1 = _.sampleSize(a1, 1)[0] // 배열에서 추출된 첫 번째 요소를 가져옴
-      this.displayrecommend = m[b1]
-      this.recommend_movies = m[b1]
+      if (m) {
+        let a1 = [0,1,2,3,4]
+        let b1 = _.sampleSize(a1, 1)[0] // 배열에서 추출된 첫 번째 요소를 가져옴
+        this.displayrecommend = m[b1]
+        this.recommend_movies = m[b1]
+      } else {
+        this.displayrecommend = []
+        this.recommend_movies = []
+      }
+
     },
 
     getWorldCupMovies() {

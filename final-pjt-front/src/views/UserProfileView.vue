@@ -56,30 +56,7 @@
                     <p class="font-italic mb-0"> - 줄거리 게임 등수: {{overview_rank}} 등</p>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                  <p class="lead fw-normal mb-0">Recent photos</p>
-                  <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
-                </div>
-                <div class="row g-2">
-                  <div class="col mb-2">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                      alt="image 1" class="w-100 rounded-3">
-                  </div>
-                  <div class="col mb-2">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                      alt="image 1" class="w-100 rounded-3">
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
-                      alt="image 1" class="w-100 rounded-3">
-                  </div>
-                  <div class="col">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
-                      alt="image 1" class="w-100 rounded-3">
-                  </div>
-                </div>
+                
 
                 <div class="d-flex justify-content-between align-items-center my-4 border-top pt-4">
                   <p class="lead fw-bold mb-0">월드컵 1위 영화들</p>
@@ -154,7 +131,6 @@ export default {
       })
       .then((res) => {
         this.thisUser = res.data
-        console.log(this.thisUser)
         // 이 회원이 내가 팔로우 했다면
         this.followCheck = this.thisUser.followers.some(userId => userId === this.me)
       })
@@ -175,8 +151,7 @@ export default {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
       })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         this.followCheck = !this.followCheck
         this.getThisUser()
       })
@@ -219,15 +194,13 @@ export default {
         this.displayLikes = m.slice(0, 4)
       }
       this.like_movies = m
-      console.log(this.displayLikes)
     },
 
     getWorldCupMovies() {
       let m = this.thisUser.worldcup_movies
-      console.log('월드컵',m)
 
       if (m.length <= 4) {
-        console.log(m.length)
+
         this.displayWorld = m
       }else {
         this.displayWorld = m.slice(0, 4)

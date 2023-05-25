@@ -188,14 +188,14 @@ export default {
       const quizMovies = this.quizMovies;
 
       if (quizMovies.length === 0) {
-        console.log('해당 장르 영화 정보가 없네요... 다른 장르 할래요?');
+        alert('해당 장르 영화 정보가 없네요... 다른 장르 할래요?');
         return;
       }
 
       // 이전에 출제된 문제를 비교후 미출제 영화들만 가져와 다시 저장 
       const unusedMovies = quizMovies.filter(movie => !this.usedQuizIndexes.includes(movie.id));
       if (unusedMovies.length === 0) {
-        console.log('해당 장르 영화 출제가 끝났어요~~ 다시 도전해보세요');
+        alert('해당 장르 영화 출제가 끝났어요~~ 다시 도전해보세요');
         return;
       }
       
@@ -282,7 +282,6 @@ export default {
       const myAnswer = this.myAnswer.replace(/[^\wㄱ-ㅎㅏ-ㅣ가-힣]/g, '').toLowerCase();
 
       if (myAnswer === answer){
-        console.log('정답')
 
         this.answerCount++
         this.score += 10
@@ -295,7 +294,6 @@ export default {
         clearInterval(this.timerInterval); // 타이머 재시작
         this.pickRandomMovie(); // 다음 문제 출제
       }else {
-        console.log('오답')
         clearInterval(this.timerInterval); // 타이머 종료
 
         // 점수를 가장 먼저 등록
@@ -322,8 +320,6 @@ export default {
         if(code>-1 && code<11172) result += cho[Math.floor(code/588)];
         else result += str.charAt(i);
       }
-      console.log(str)
-      console.log(result)
       return result;
     },
 
@@ -334,7 +330,7 @@ export default {
         this.timer--; // 1초씩 감소
         if (this.timer <= 0) {
           clearInterval(this.timerInterval); // 타이머 종료
-          console.log('시간 초과');
+          alert('시간 초과!!');
           // 시간초과 문제 종료!!
           // 점수를 가장 먼저 등록
           this.setScore()
@@ -361,9 +357,7 @@ export default {
 
     // 점수 서버에 등록 => 계속 업데이트 해줄거니까 put
     setScore() {
-      console.log('점수 등록1')
       if(this.user.cho_points < this.score){
-        console.log('점수 등록2')
         axios({
           method: 'put',
           url: `${API_URL}/accounts/setscore/`,
@@ -372,11 +366,7 @@ export default {
             Authorization: `Bearer ${this.$store.state.accessToken}`,
           }
         })
-        .then((res) => {
-          console.log('점수 등록3')
-          console.log(res)
-
-
+        .then(() => {
         })
         .catch((err) => {
           console.log(err)
@@ -399,7 +389,6 @@ export default {
       })
       .then((res) => {
         this.rankUser = res.data.filter(user => user.cho_points > 0);
-
       })
       .catch((err) => {
         console.log(err)

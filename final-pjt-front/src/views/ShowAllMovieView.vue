@@ -117,14 +117,12 @@ export default {
         })
         .then((res) => {
           thisUser = res.data
-          console.log(thisUser)
 
           if (this.type == 'world') {
             movies = thisUser.worldcup_movies
           } else if (this.type == 'like') {
             movies = thisUser.like_movies
           }
-          console.log(movies)
           this.tmp = movies.sort((a, b) => -(a.popularity - b.popularity));
           this.rows = movies.length;
         })

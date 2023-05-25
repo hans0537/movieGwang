@@ -151,7 +151,6 @@ export default {
         }
       })
       .then((res) => {
-        console.log(res.data)
         this.commentsList = res.data
       })
       .catch((err) => console.log(err))
@@ -175,8 +174,7 @@ export default {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
       })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         this.likeCheck = !this.likeCheck
         this.getArticle()
       })
@@ -197,8 +195,7 @@ export default {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
       })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         this.comment = ''
         this.commentShow = false
         this.getComments()

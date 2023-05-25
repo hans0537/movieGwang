@@ -54,7 +54,6 @@ export default {
         }
       })
       .then((res) => {
-        console.log(res)
         this.followersList = res.data.followers
         this.followingsList = res.data.followings
       })
