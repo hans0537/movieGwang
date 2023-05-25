@@ -30,10 +30,10 @@ export default new Vuex.Store({
     selectedmovie:null,
     recommendmovie:[],
     dataload:false,
-
+    // 로컬용
     API_URL: 'http://127.0.0.1:8000',
     // 서버용
-    // API_URL: '',
+    // API_URL: 'http://3.37.55.212:8000',
   },
   getters: {
     isLogin(state) {

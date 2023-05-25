@@ -29,7 +29,7 @@
 </template>
 
 <script>
-const API_URL = this.$store.state.API_URL
+
 import axios from 'axios'
 export default {
   name: "LatestListItem",
@@ -37,11 +37,12 @@ export default {
     movie: Object,
   },
   components: {
-
   },
   data() {
     return {
-      imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie.poster_path,
+      API_URL: this.$store.state.API_URL,
+
+      imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie?.poster_path,
       overview: this.movie.overview.slice(0, 20) + "...",
       showDetails: false,
       movie2:null,
@@ -64,7 +65,7 @@ export default {
     getReviewcount() {
         axios({
           method: 'get',
-          url: `${API_URL}/movies/${this.movie.id}/`,
+          url: `${this.API_URL}/movies/${this.movie.id}/`,
         })
         .then((res) => {
           this.movie2 = res.data

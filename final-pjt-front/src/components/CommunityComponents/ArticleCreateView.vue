@@ -50,12 +50,13 @@
 
 <script>
 import axios from 'axios'
-const API_URL = this.$store.state.API_URL
 
 export default {
   name: 'CreateView',
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       title: null,
       content: null,
       uploadImg: null,
@@ -88,7 +89,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: `${API_URL}/articles/`,
+        url: `${this.API_URL}/articles/`,
         data: { title, content, image: this.uploadImg, hit },
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`,

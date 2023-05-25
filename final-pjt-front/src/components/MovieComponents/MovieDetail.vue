@@ -155,13 +155,14 @@ import ActorViewVue from './ActorView.vue';
 const URL = "https://www.googleapis.com/youtube/v3/search"
 // const API_KEY = 'AIzaSyB4_Ve145IcMWtdgu865J-xRWXHBRdwau0' 
 const API_KEY = 'AIzaSyBJNMqfSCoTBI63Q8Bp-8Ai9O1vAkjraIE'
-const API_URL = this.$store.state.API_URL
 
 
 export default {
   name: 'MovieDetail',
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       id: parseInt(this.$route.params.id),
       videos:[],
       selectedVideo:{},
@@ -188,7 +189,7 @@ export default {
     getMovie() {
       axios({
         method: 'get',
-        url: `${API_URL}/movies/${this.movie.id}/`,
+        url: `${this.API_URL}/movies/${this.movie.id}/`,
       })
       .then((res) => {
         this.movie = res.data
@@ -249,7 +250,7 @@ export default {
     getComments() {
       axios({
         method: 'get',
-        url: `${API_URL}/movies/${this.movie.id}/review/`,
+        url: `${this.API_URL}/movies/${this.movie.id}/review/`,
       })
       .then((res) => {
         const clst = []
@@ -265,7 +266,7 @@ export default {
     createComment() {
       axios({
         method: 'post',
-        url: `${API_URL}/movies/${this.movie.id}/review/`,
+        url: `${this.API_URL}/movies/${this.movie.id}/review/`,
         data: {
           content: this.comment
         },
@@ -289,7 +290,7 @@ export default {
     like() {
       axios({
         method: 'post',
-        url: `${API_URL}/movies/${this.movie.id}/like/`,
+        url: `${this.API_URL}/movies/${this.movie.id}/like/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }

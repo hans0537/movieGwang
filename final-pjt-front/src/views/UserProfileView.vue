@@ -103,13 +103,14 @@
 
 <script>
 import axios from 'axios'
-const API_URL = this.$store.state.API_URL
 // import bootstrap from 'bootstrap/dist/js/bootstrap.js';
 
 export default {
   name: 'UserProfileView',
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       thisUserId: this.$route.params.id,
       thisUser: null,
       followCheck: false,
@@ -127,7 +128,7 @@ export default {
     getThisUser() {
       axios({ 
         method: 'get',
-        url: `${API_URL}/accounts/profile/${this.thisUserId}/`,
+        url: `${this.API_URL}/accounts/profile/${this.thisUserId}/`,
       })
       .then((res) => {
         this.thisUser = res.data
@@ -146,7 +147,7 @@ export default {
     follow() {
       axios({
         method: 'post',
-        url: `${API_URL}/accounts/${this.thisUserId}/follow/`,
+        url: `${this.API_URL}/accounts/${this.thisUserId}/follow/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
@@ -172,7 +173,7 @@ export default {
     getRank(game) {
       axios({
         method: 'get',
-        url: `${API_URL}/accounts/${game}/getrank/${this.thisUserId}/`,
+        url: `${this.API_URL}/accounts/${game}/getrank/${this.thisUserId}/`,
       })
       .then((res) => {
         if (game === 'cho_points'){

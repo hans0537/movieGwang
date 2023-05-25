@@ -93,7 +93,6 @@
 <script>
 import axios from 'axios'
 import ArticleCoCommentView from '@/components/CommunityComponents/ArticleCoCommentView'
-const API_URL = this.$store.state.API_URL
 
 export default {
   name: 'ArticleCommentView',
@@ -102,6 +101,8 @@ export default {
   },
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       cocommentShow: false,
       cocomment: '',
 
@@ -148,7 +149,7 @@ export default {
       } else {
         axios({
           method: 'delete',
-          url: `${API_URL}/articles/${this.articleId}/comments/${this.comment.id}/`,
+          url: `${this.API_URL}/articles/${this.articleId}/comments/${this.comment.id}/`,
           headers: {
             Authorization: `Bearer ${this.$store.state.accessToken}`
           }
@@ -164,7 +165,7 @@ export default {
     updateComment() {
       axios({
         method: 'put',
-        url: `${API_URL}/articles/${this.articleId}/comments/${this.comment.id}/`,
+        url: `${this.API_URL}/articles/${this.articleId}/comments/${this.comment.id}/`,
         data: {
           content: this.newComment
         },
@@ -188,7 +189,7 @@ export default {
     createCoComment() {
       axios({
         method: 'post',
-        url: `${API_URL}/articles/${this.articleId}/cocomments/${this.comment.id}/`,
+        url: `${this.API_URL}/articles/${this.articleId}/cocomments/${this.comment.id}/`,
         data: {
           content: this.cocomment
         },

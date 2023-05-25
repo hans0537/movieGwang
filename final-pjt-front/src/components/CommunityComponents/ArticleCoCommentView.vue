@@ -53,12 +53,13 @@
 
 <script>
 import axios from 'axios'
-const API_URL = this.$store.state.API_URL
 
 export default {
   name: 'ArticleCoCommentView',
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       upHere1: false,
       upHere2: false,
 
@@ -102,7 +103,7 @@ export default {
       } else {
         axios({
           method: 'delete',
-          url: `${API_URL}/articles/${this.articleId}/cocomments/${this.comment.id}/${this.cocomment.id}/`,
+          url: `${this.API_URL}/articles/${this.articleId}/cocomments/${this.comment.id}/${this.cocomment.id}/`,
           headers: {
             Authorization: `Bearer ${this.$store.state.accessToken}`
           }
@@ -118,7 +119,7 @@ export default {
     updateCoComment() {
       axios({
         method: 'put',
-        url: `${API_URL}/articles/${this.articleId}/cocomments/${this.comment.id}/${this.cocomment.id}/`,
+        url: `${this.API_URL}/articles/${this.articleId}/cocomments/${this.comment.id}/${this.cocomment.id}/`,
         data: {
           content: this.newCoComment
         },

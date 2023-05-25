@@ -60,7 +60,6 @@
 
 <script>
 import axios from 'axios'
-const API_URL = this.$store.state.API_URL
 
 // const redirect_uri = 'http://127.0.0.1:8000/accounts/kakao'
 // const kakao_API = '7d4a55845458a5954269e348d1f652b1'
@@ -70,6 +69,8 @@ export default {
   name: "LoginView",
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       username: '',
       password: '',
       rememberID: false,
@@ -83,7 +84,7 @@ export default {
     login() {
       axios({
         method: 'post',
-        url: `${API_URL}/auth/login/`,
+        url: `${this.API_URL}/auth/login/`,
         data: {
           username: this.username,
           password: this.password

@@ -103,12 +103,13 @@
 
 <script>
 import axios from 'axios'
-const API_URL = this.$store.state.API_URL
 
 export default {
   name: "SignupView",
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       username: '',
       email:'',
       password1: '',
@@ -158,7 +159,7 @@ export default {
 
       axios({
         method: 'post',
-        url: `${API_URL}/auth/signup/`,
+        url: `${this.API_URL}/auth/signup/`,
         data: {
           username: this.username,
           email: this.email,

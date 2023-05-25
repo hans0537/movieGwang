@@ -37,12 +37,13 @@
 
 <script>
 import axios from 'axios'
-const API_URL = this.$store.state.API_URL
 
 export default {
   name: 'ArticlesListView',
   data(){
     return {
+      API_URL: this.$store.state.API_URL,
+
       upHere1: false,
       upHere2: false,
     }
@@ -71,7 +72,7 @@ export default {
       // 조회수 증가
       axios({
         method: 'put',
-        url: `${API_URL}/articles/hit/${this.article.id}/`,
+        url: `${this.API_URL}/articles/hit/${this.article.id}/`,
         data: {
           title: this.article.title,
           content: this.article.content,
@@ -96,7 +97,7 @@ export default {
       } else {
         axios({
           method: 'delete',
-          url: `${API_URL}/articles/${this.article.id}/`,
+          url: `${this.API_URL}/articles/${this.article.id}/`,
           headers: {
             Authorization: `Bearer ${this.$store.state.accessToken}`
           }

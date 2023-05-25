@@ -102,7 +102,6 @@
 
 <script>
 import axios from 'axios'
-const API_URL = this.$store.state.API_URL
 
 import RankUserListView from './RankUserListView.vue'
 
@@ -113,6 +112,8 @@ export default {
   },
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       user: null,
       rankUser: null,
 
@@ -355,7 +356,7 @@ export default {
       if(this.user.overview_points < this.score){
         axios({
           method: 'put',
-          url: `${API_URL}/accounts/setscore/`,
+          url: `${this.API_URL}/accounts/setscore/`,
           data: { username: this.user.username, followers: this.user.followers, followings: this.user.followings, overview_points: this.score },
           headers: {
             Authorization: `Bearer ${this.$store.state.accessToken}`,
@@ -380,7 +381,7 @@ export default {
     getRank() {
       axios({
         method: 'get',
-        url: `${API_URL}/accounts/overview/getrank/`,
+        url: `${this.API_URL}/accounts/overview/getrank/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`,
         }

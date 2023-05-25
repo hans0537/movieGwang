@@ -111,7 +111,6 @@
 <script>
 import axios from 'axios'
 import ArticleCommentView from '@/components/CommunityComponents/ArticleCommentView'
-const API_URL = this.$store.state.API_URL
 
 export default {
   name: 'ArticleDetailView',
@@ -120,6 +119,8 @@ export default {
   },
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       id: parseInt(this.$route.params.id),
       commentShow: false,
       article: null,
@@ -138,7 +139,7 @@ export default {
     getArticle(){
       axios({
         method: 'get',
-        url: `${API_URL}/articles/${this.id}/`,
+        url: `${this.API_URL}/articles/${this.id}/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
@@ -154,7 +155,7 @@ export default {
     getComments() {
       axios({
         method: 'get',
-        url: `${API_URL}/articles/${this.id}/comments/create_all/`,
+        url: `${this.API_URL}/articles/${this.id}/comments/create_all/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
@@ -178,7 +179,7 @@ export default {
     like() {
       axios({
         method: 'post',
-        url: `${API_URL}/articles/${this.id}/like/`,
+        url: `${this.API_URL}/articles/${this.id}/like/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
@@ -196,7 +197,7 @@ export default {
     createComment() {
       axios({
         method: 'post',
-        url: `${API_URL}/articles/${this.id}/comments/create_all/`,
+        url: `${this.API_URL}/articles/${this.id}/comments/create_all/`,
         data: {
           content: this.comment
         },

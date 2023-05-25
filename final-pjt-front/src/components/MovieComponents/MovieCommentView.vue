@@ -83,7 +83,6 @@
   
 <script>
   import axios from 'axios'
-  const API_URL = this.$store.state.API_URL
   
   export default {
     name: 'MovieCommentView',
@@ -92,6 +91,8 @@
     },
     data() {
       return {
+        API_URL: this.$store.state.API_URL,
+
         cocommentShow: false,
         cocomment: '',
   
@@ -138,7 +139,7 @@
         } else {
           axios({
             method: 'delete',
-            url: `${API_URL}/movies/${this.movieId}/review/${this.comment.id}/`,
+            url: `${this.API_URL}/movies/${this.movieId}/review/${this.comment.id}/`,
             headers: {
               Authorization: `Bearer ${this.$store.state.accessToken}`
             }
@@ -154,7 +155,7 @@
       updateComment() {
         axios({
           method: 'put',
-          url: `${API_URL}/movies/${this.movieId}/review/${this.comment.id}/`,
+          url: `${this.API_URL}/movies/${this.movieId}/review/${this.comment.id}/`,
           data: {
             content: this.newComment
           },

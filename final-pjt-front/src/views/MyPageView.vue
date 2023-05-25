@@ -150,13 +150,14 @@
 
 <script>
 import axios from 'axios'
-const API_URL = this.$store.state.API_URL
 import bootstrap from 'bootstrap/dist/js/bootstrap.js';
 import _ from 'lodash'
 export default {
   name: 'MyPageView',
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       uploadImg: null,
       uploadImgUrl: null,
       editProfileModal: null, 
@@ -204,7 +205,7 @@ export default {
     profileUpload() {
       axios({
         method: 'put',
-        url: `${API_URL}/accounts/update/`,
+        url: `${this.API_URL}/accounts/update/`,
         data: { username: this.user.username, followings: this.user.followings, profile: this.uploadImg },
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`,
@@ -242,7 +243,7 @@ export default {
     getMyRank(game) {
       axios({
         method: 'get',
-        url: `${API_URL}/accounts/${game}/getmyrank/`,
+        url: `${this.API_URL}/accounts/${game}/getmyrank/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`,
         }

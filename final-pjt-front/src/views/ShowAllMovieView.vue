@@ -26,7 +26,6 @@
 
 <script>
 import AllMovieItems from '../components/MovieComponents/AllMovieItems.vue';
-const API_URL = this.$store.state.API_URL
 import axios from 'axios'
 
 export default {
@@ -34,6 +33,8 @@ export default {
   components: { AllMovieItems },
   data() {
     return {
+      API_URL: this.$store.state.API_URL,
+
       type: this.$route.params.type,
       id: this.$route.params.id,
       rows: 100,
@@ -113,7 +114,7 @@ export default {
       }else {
         axios({ 
           method: 'get',
-          url: `${API_URL}/accounts/profile/${parseInt(this.id)}/`,
+          url: `${this.API_URL}/accounts/profile/${parseInt(this.id)}/`,
         })
         .then((res) => {
           thisUser = res.data
