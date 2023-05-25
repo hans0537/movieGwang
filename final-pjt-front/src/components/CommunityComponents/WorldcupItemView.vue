@@ -5,7 +5,8 @@
         <div class="grid">
           <figure class="effect-jazz mb-0">
             <a href="#">
-              <img :src="imgSrc" class="w-100 img-height" alt="img25">
+              <img :src="imgSrc" class="w-100 img-height " alt="img25">
+
               <div class="image-details" v-if="showDetails">
                 <h6 class="col_red">{{ movie.title }}</h6>
                 <p class="mb-2">{{ movie.overview.slice(0, 20) + "..." }}</p>
@@ -76,6 +77,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

@@ -4,7 +4,9 @@
       <div class="row trend_1" style="display:flex; justify-content: space-between;">
         <div class="hr-line"></div>
         <div class="col-md-6 col-6">
+          <i class="fa fa-solid fa-stars fa-spin" style="color: #fbff00;"></i>
           <h4 class="trend_1l" style="text-align:left;"> {{ user?.username }}님의 추천<span class="col_red"> 영화</span></h4>
+          <i class="fa fa-solid fa-stars fa-spin" style="color: #fbff00;"></i>
         </div>
         <div class="col-md-6 col-6 text-end">
           <h6 class="mb-0">
@@ -27,7 +29,7 @@
             <div class="carousel-item" v-for="(movies, index) in popularMovie" :key="index" :class="index===0 ? 'active' : ''">
               <div class="trend_2i row">
                 <recommendItem 
-                v-for="movie in movies" :key="movie.id" :movie="movie"/>
+                v-for="movie in movies" :key="movie?.id" :movie="movie"/>
               </div>
             </div>
           </div>
@@ -138,6 +140,9 @@ export default {
       }
       return res;
     }
+  },
+  mounted(){
+    this.user = this.$store.state.user;
   },
   created() {
     this.user = this.$store.state.user;

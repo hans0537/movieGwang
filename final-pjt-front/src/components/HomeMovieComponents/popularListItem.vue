@@ -40,18 +40,18 @@ export default {
   },
   data() {
     return {
-      imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie.poster_path,
-      overview: this.movie.overview.slice(0, 20) + "...",
+      imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie?.poster_path,
+      overview: this.movie?.overview.slice(0, 20) + "...",
       showDetails: false,
       movie2:null,
     }
   },
   computed: {
     fullStarCount() {
-      return Math.floor(this.movie.vote_average / 2);
+      return Math.floor(this.movie?.vote_average / 2);
     },
     halfStarIndex() {
-      return Math.ceil(this.movie.vote_average / 2);
+      return Math.ceil(this.movie?.vote_average / 2);
     },
   },
   methods: {
@@ -63,7 +63,7 @@ export default {
     getReviewcount() {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
+        url: `http://127.0.0.1:8000/movies/${this.movie?.id}/`,
       })
       .then((res) => {
         this.movie2 = res.data

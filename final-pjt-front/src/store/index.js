@@ -63,7 +63,12 @@ export default new Vuex.Store({
 
     SAVE_SIGNUP_TOKEN(state, access) {
       state.accessToken = access
-      router.push({name: 'home'})
+      
+      this.dispatch('getuser');
+
+      setTimeout(() => {
+        router.push({name: 'home'})
+      }, 1000);
     },
     SAVE_LOGIN_TOKEN(state, access) {
       state.accessToken = access
@@ -76,6 +81,8 @@ export default new Vuex.Store({
       }
     },
     GET_USER(state, user) {
+      console.log('GET_USER')
+
       state.user = user
     },
     LOGOUT(state) {
@@ -108,6 +115,7 @@ export default new Vuex.Store({
     },
 
     getuser(context) {
+      console.log('나 호출')
       // 로그인 되어있으면 그 사용자를 가져오고
       // 아니면 빈 로그인 객체를 생성
       if(context.state.accessToken) {
