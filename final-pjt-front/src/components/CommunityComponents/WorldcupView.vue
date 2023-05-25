@@ -18,8 +18,9 @@
         </div>
       </div>
       <div v-if="round === 1 && viewround === '최종선택'">
-        <button @click="handleRestartClick">다시하기</button>
-        <button @click="movieselect">상세보기</button>
+        <br>
+        <button class="btn btn-primary" @click="handleRestartClick" style="margin-right: 20px;">다시하기</button>
+        <button class="btn btn-primary" @click="movieselect">상세보기</button>
       </div>
     </div>
   </div>
@@ -109,6 +110,8 @@ export default {
         this.round = 1; 
         this.viewround = '최종선택';
         this.currentPairIndex = 0; // 새로운 쌍의 인덱스를 초기화
+      } else if(this.round === 1) {
+        this.movieselect()
       } else {
         // 다음 쌍의 영화를 보여줌
         this.currentPairIndex += 1;

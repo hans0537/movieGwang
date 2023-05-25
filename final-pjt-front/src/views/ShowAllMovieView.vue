@@ -89,14 +89,24 @@ export default {
   },
   methods: {
     getPagelen() {
-      let movies = null
+      let movies = []
       let thisUser = null
+      let recomovies = null
 
       if(this.id == "me") {
         if (this.type == 'world') {
           movies = this.$store.state.user.worldcup_movies
         } else if (this.type == 'like') {
           movies = this.$store.state.user.like_movies
+        } else if (this.type == 'recommend') {
+          recomovies = this.$store.state.recommendmovie
+          if (movies.length===0) {
+            for (let i=0; i<5; i++) {
+              for (let j=0; j<4; j++) {
+                movies.push(recomovies[i][j])
+              }
+            }
+          }
         }
         this.tmp = movies.sort((a, b) => -(a.popularity - b.popularity));
         this.rows = movies.length;

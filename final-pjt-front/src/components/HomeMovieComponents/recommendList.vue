@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-6 col-6 text-end">
           <h6 class="mb-0">
-            <router-link to="/movie/average" class="btn btn-primary" style="text-decoration: none;">전체보기</router-link>
+            <div class="btn btn-primary" @click="showAll('recommend')" style="text-decoration: none;">View all</div> 
           </h6>
         </div>
       </div>
@@ -43,6 +43,7 @@
 <script>
 import recommendItem from './recommendItem.vue'
 import _ from 'lodash'
+import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'recommendList',
   data() {
@@ -54,6 +55,8 @@ export default {
     recommendItem,
   },
   computed: {
+    ...mapState(['recommendMovies']), // Vuex 스토어의 recommendMovies를 computed 속성으로 추가
+
     popularMovie() {
       const movie1 = this.$store.state.allmovie;
       const genre_id = [];
@@ -141,11 +144,15 @@ export default {
       return res;
     }
   },
-  mounted(){
-    this.user = this.$store.state.user;
+  methods: {
+    ...mapMutations(['setRecommendMovies']), // Vuex 스토어의 setRecommendMovies를 methods 속성으로 추가
+    showAll(type) {
+      this.$router.push({name: 'showallmovie', params: {type: type, id:'me'}})
+    },
   },
   created() {
     this.user = this.$store.state.user;
+    this.setRecommendMovies(this.popularMovie); // Vuex 스토어의 recommendMovies에 popularMovie 데이터 저장
   }
 }
 </script>

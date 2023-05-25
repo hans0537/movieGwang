@@ -91,26 +91,16 @@
 
                 <div class="d-flex justify-content-between align-items-center my-4">
                   <p class="lead fw-bold mb-0">{{user?.username}}님 추천 영화</p>
-                  <p class="mb-0"><a href="#" class="text-muted">Show all</a></p>
+                  <div class="text-muted" @click="showAll('recommend')" style="cursor: pointer;"><p class="mb-0 text-decoration-underline">Show all</p></div> 
                 </div>
-                <div class="row g-2">
-                  <div class="col mb-2">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                      alt="image 1" class="w-100 rounded-3">
-                  </div>
-                  <div class="col mb-2">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                      alt="image 1" class="w-100 rounded-3">
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
-                      alt="image 1" class="w-100 rounded-3">
-                  </div>
-                  <div class="col">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
-                      alt="image 1" class="w-100 rounded-3">
+                <div v-if="displayrecommend?.length === 0">
+                  <h3>활동 내용이 없네여잉~</h3> 
+                </div>  
+                <div v-else>
+                  <div class="row g-2">
+                    <div class="col mb-2" v-for="(movie, index) in displayrecommend" :key="index">
+                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer;">
+                    </div>
                   </div>
                 </div>
 
@@ -162,7 +152,7 @@
 import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000'
 import bootstrap from 'bootstrap/dist/js/bootstrap.js';
-
+import _ from 'lodash'
 export default {
   name: 'MyPageView',
   data() {
@@ -173,11 +163,14 @@ export default {
 
       displayLikes: null,
       displayWorld: null,
+      displayrecommend: null,
       like_movies: null,
       worldcup_movies: null,
+      recommend_movies: null,
 
       cho_rank: null,
       overview_rank: null,
+
     }
   },
   computed: {
@@ -218,8 +211,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         this.editProfileModal.hide();
 
         this.$store.dispatch('getuser')
@@ -234,7 +226,6 @@ export default {
     },
 
     goToFriendList(){
-      console.log(this.user.id)
       this.$router.push({name : 'friendslist', params:{id: this.user.id}})
     },
 
@@ -278,11 +269,18 @@ export default {
       this.like_movies = m
     },
 
+    getrecommendMovies() {
+      let m = this.$store.state.recommendmovie
+      let a1 = [0,1,2,3,4]
+      let b1 = _.sampleSize(a1, 1)[0] // 배열에서 추출된 첫 번째 요소를 가져옴
+      this.displayrecommend = m[b1]
+      this.recommend_movies = m[b1]
+    },
+
     getWorldCupMovies() {
       let m = this.user.worldcup_movies
 
       if (m.length <= 4) {
-        console.log(m.length)
         this.displayWorld = m
       }else {
         this.displayWorld = m.slice(0, 4)
@@ -300,6 +298,7 @@ export default {
     this.getMyRank('overview_points')
     this.getLikeMovies()
     this.getWorldCupMovies()
+    this.getrecommendMovies()
   }
 }
 </script>
