@@ -18,11 +18,11 @@
       <div class="row trend_2 mt-1">
         <div id="carouselExampleCaptions4" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="0" class="active bg-danger" aria-label="슬라이드 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="1" class="bg-danger" aria-label="슬라이드 2" aria-current="true"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="2" class="bg-danger" aria-label="슬라이드 3" aria-current="true"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="3" class="bg-danger" aria-label="슬라이드 4" aria-current="true"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="4" class="bg-danger" aria-label="슬라이드 5" aria-current="true"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="0" class="active indigo" aria-label="슬라이드 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="1" class="indigo" aria-label="슬라이드 2" aria-current="true"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="2" class="indigo" aria-label="슬라이드 3" aria-current="true"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="3" class="indigo" aria-label="슬라이드 4" aria-current="true"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="4" class="indigo" aria-label="슬라이드 5" aria-current="true"></button>
           </div>
           
           <div class="carousel-inner"> 
@@ -158,4 +158,7 @@ export default {
 </script>
 
 <style>
+.indigo {
+  background-color: rgb(126, 99, 247) !important;
+}
 </style>
