@@ -4,7 +4,7 @@
       <h1>{{ viewround }}</h1>  
       <h1 v-if="viewround !== '결승' && viewround !== '최종선택'">- {{ currentPairIndex+1 }} 라운드</h1>
     </div>
-    <div class="container" >
+    <div class="container">
       <div v-for="(movies, index) in selectMovie" :key="index" >
         <div >
           <div class="row" style="display: flex; justify-content: center;">
@@ -19,8 +19,8 @@
       </div>
       <div v-if="round === 1 && viewround === '최종선택'">
         <br>
-        <button class="btn btn-primary" @click="handleRestartClick" style="margin-right: 20px;">다시하기</button>
-        <button class="btn btn-primary" @click="movieselect">상세보기</button>
+        <button class="btn btn-primary mb-5" @click="handleRestartClick" style="margin-right: 20px;">다시하기</button>
+        <button class="btn btn-primary mb-5" @click="movieselect">상세보기</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <section id="trend" class="pt-4 pb-5 mt-5" >
+  <section id="trend" class="pt-4 mt-5" >
     <div class="container">
       <div class="row trend_1" style="display:flex; justify-content: space-between;">
         <div class="hr-line"></div>
@@ -15,7 +15,7 @@
         </div>
       </div>
   
-      <div class="row trend_2 mt-4">
+      <div class="row trend_2 mt-1">
         <div id="carouselExampleCaptions4" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleCaptions4" data-bs-slide-to="0" class="active bg-danger" aria-label="슬라이드 1"></button>

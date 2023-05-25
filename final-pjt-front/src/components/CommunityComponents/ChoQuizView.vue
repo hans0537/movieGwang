@@ -1,10 +1,11 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-3 d-flex align-items-center">
+      <div class="col-lg-3 d-flex align-items-center mb-4">
         <div class="col static">
           
-          <h1>유저 랭킹!!</h1>
+          <h2>유저 랭킹</h2>
+          <br>
           <div class="profile-card" v-if="rankUser?.length == 0">
             <a href="#" class="text-white fs-6">아직 등록된 랭커가 없습니다. <br>가장 먼저 등록해보세요!</a>
           </div>
@@ -12,7 +13,7 @@
             <img v-if="rankUser[0]?.image_base64" :src="getImageSrc(rankUser[0]?.image_base64)" alt="user" class="profile-photo">
             <img v-else src="../../assets/baseProfile.png" alt="user" class="profile-photo">
             <h3>1등</h3>
-            <a href="#" class="text-white fs-6" @click="goToProfile(rankUser[0])"><i class="fa-solid fa-crown fa-beat" style="color: #fff700;"></i> {{rankUser[0]?.cho_points}} 점 | {{rankUser[0]?.username}}</a>
+            <a href="#" class="text-white fs-6" @click="goToProfile(rankUser[0])"><i class="fa-solid fa-crown fa-beat" style="color: #fff700;"></i> {{rankUser[0]?.cho_points}} 점 | {{truncateUsername(rankUser[0]?.username,5)}}</a>
           </div>
 
           <ul class="nav-news-feed" v-if="rank2users">
@@ -84,9 +85,9 @@
             </div>
 
             <div class="text-center d-flex justify-content-center">
-              <h4 class="card-subtitle mb-4">정답: </h4>
-              <input type="text" v-model="myAnswer" class="form-control" @keyup.enter="submitAnswer">
-              <button class="btn btn-primary mt-3" @click="submitAnswer">확인</button> 
+              <h4 class="card-subtitle mt-3 me-4">정답: </h4>
+              <input type="text" v-model="myAnswer" class="form-control" @keyup.enter="submitAnswer" style="width:80%">
+              <button class="btn btn-primary mt-3 mb-3 ms-4" @click="submitAnswer">확인</button> 
             </div>
 
             <!-- <div v-if="showResult">
@@ -96,6 +97,8 @@
           </div>
         </div>
       </div>
+
+      
     </div>
   </div>
 </template>
@@ -163,6 +166,12 @@ export default {
     }
   },
   methods: {
+    truncateUsername(username, maxLength) {
+      if (username && username.length > maxLength) {
+        return username.substring(0, maxLength) + "..";
+      }
+      return username;
+    },
     // 자세히보기 클릭시 해당영화 상세보기 페이지로 이동
     moviedetail() {
       this.$store.commit('setSelectedMovie', this.currentQuiz);

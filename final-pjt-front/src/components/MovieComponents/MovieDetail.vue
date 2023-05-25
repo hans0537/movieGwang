@@ -315,7 +315,7 @@ export default {
     },
     genreList() {
       if (this.movie2 && this.movie2.genres) {
-        return this.movie2.genres.map(genre => genre.name).join('/');
+        return this.movie2.genres.map(genre => genre.name).join(' / ');
       }
       return '';
     },

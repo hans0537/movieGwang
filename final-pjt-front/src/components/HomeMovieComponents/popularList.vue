@@ -1,5 +1,5 @@
 <template>
-  <section id="trend" class="pt-4 pb-5 mt-5" >
+  <section id="trend" class="pt-4 mt-5" >
     <div class="container">
       <div class="row trend_1" style="display:flex; justify-content: space-between;">
         <div class="hr-line"></div>

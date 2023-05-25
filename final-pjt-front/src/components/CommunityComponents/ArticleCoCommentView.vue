@@ -4,11 +4,11 @@
 
       <img v-if="cocomment.user.image_base64" class="rounded-circle shadow-1-strong"
         :src="getImageSrc(cocomment.user.image_base64)" alt="avatar"
-        width="65" height="65" />
+        width="40" height="40" />
 
       <img v-else class="rounded-circle shadow-1-strong"
         src="../../assets/baseProfile.png" alt="avatar"
-        width="65" height="65" />
+        width="40" height="40" />
     </a>
     <div class="flex-grow-1 flex-shrink-1">
       <div>
