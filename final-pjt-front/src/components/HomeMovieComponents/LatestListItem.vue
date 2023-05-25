@@ -43,17 +43,17 @@ export default {
       API_URL: this.$store.state.API_URL,
 
       imgSrc: "https://image.tmdb.org/t/p/w500" + this.movie?.poster_path,
-      overview: this.movie.overview.slice(0, 20) + "...",
+      overview: this.movie?.overview.slice(0, 20) + "...",
       showDetails: false,
       movie2:null,
     }
   },
   computed: {
     fullStarCount() {
-      return Math.floor(this.movie.vote_average / 2);
+      return Math.floor(this.movie?.vote_average / 2);
     },
     halfStarIndex() {
-      return Math.ceil(this.movie.vote_average / 2);
+      return Math.ceil(this.movie?.vote_average / 2);
     },
   },
   methods: {
