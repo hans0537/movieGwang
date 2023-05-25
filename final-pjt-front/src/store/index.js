@@ -33,7 +33,7 @@ export default new Vuex.Store({
     // 로컬용
     API_URL: 'http://127.0.0.1:8000',
     // 서버용
-    // API_URL: 'http://3.35.8.25:8000',
+    // API_URL: 'https://ithubproject.com',
   },
   getters: {
     isLogin(state) {
