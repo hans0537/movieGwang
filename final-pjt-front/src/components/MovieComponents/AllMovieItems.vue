@@ -31,6 +31,7 @@
 
 <script>
 import axios from 'axios'
+const API_URL = this.$store.state.API_URL
 export default {
   name:'AllMovieItems',
   props: {
@@ -64,7 +65,7 @@ export default {
     getReviewcount() {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
+        url: `${API_URL}/movies/${this.movie.id}/`,
       })
       .then((res) => {
         this.movie2 = res.data

@@ -60,6 +60,7 @@
 
 <script>
 import axios from 'axios'
+const API_URL = this.$store.state.API_URL
 
 // const redirect_uri = 'http://127.0.0.1:8000/accounts/kakao'
 // const kakao_API = '7d4a55845458a5954269e348d1f652b1'
@@ -77,14 +78,12 @@ export default {
 
     }
   },
-  computed: {
-  },
   methods: {
     // ...mapActions(['login']),
     login() {
       axios({
         method: 'post',
-        url: 'http://127.0.0.1:8000/auth/login/',
+        url: `${API_URL}/auth/login/`,
         data: {
           username: this.username,
           password: this.password
@@ -92,6 +91,12 @@ export default {
       })
       .then((res) => {
         this.$store.dispatch('login', res.data.access)
+
+        if(this.rememberID) {
+          localStorage.setItem('rememberID', this.username)
+        }else {
+          localStorage.removeItem('rememberID')
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -123,17 +128,20 @@ export default {
 //         localStorage.setItem('user', JSON.stringify(userData));
 //         window.location.href = 'http://localhost:8080/';
 
-//         // 홈 화면으로 이동
-//         this.$router.push('/home');
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         // 요청 실패
-//         // 에러 처리 로직 작성
-//       });
-//   }
-// }
-  }
+    //   axios.get('http://127.0.0.1:8000/accounts/kakao/')
+    //     .then((res) => {
+    //     // 로그인 성공한 경우 서버에서 반환한 데이터를 사용해 로그인 처리
+    //       // 홈 화면으로 이동
+    //       console.log(res)
+    //       this.$router.push('/home');
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       // 요청 실패
+    //       // 에러 처리 로직 작성
+    //     });
+    // }
+  },
 }
 </script>
 

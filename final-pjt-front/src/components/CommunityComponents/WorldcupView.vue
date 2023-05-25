@@ -30,6 +30,7 @@
 import _ from 'lodash'
 import axios from 'axios'
 import WorldcupItemView from './WorldcupItemView.vue'
+const API_URL = this.$store.state.API_URL
 
 export default {
   name: 'WorldcupView',
@@ -58,7 +59,7 @@ export default {
       this.movie = this.$store.state.allmovie
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/genre'
+        url: `${API_URL}/movies/genre`
       })
         .then((res) => {
           this.genre = res.data.map(item => ({ id: item.id, name: item.name }))
@@ -120,7 +121,7 @@ export default {
     like() {
       axios({
         method: 'post',
-        url: `http://127.0.0.1:8000/movies/${this.resultMovie.id}/worldcuplike/`,
+        url: `${API_URL}/movies/${this.resultMovie.id}/worldcuplike/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
@@ -128,7 +129,7 @@ export default {
       .then(() => {
         axios({
           method: 'get',
-          url: `http://127.0.0.1:8000/accounts/profile/${this.$store.state.user.id}/`
+          url: `${API_URL}/accounts/profile/${this.$store.state.user.id}/`
         })
         .then((res) => {
           this.$store.state.user = res.data

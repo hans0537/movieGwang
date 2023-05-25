@@ -31,6 +31,7 @@
 
 <script>
 import axios from 'axios'
+const API_URL = this.$store.state.API_URL
 
 export default {
   name: "FindUsernameView",
@@ -54,7 +55,7 @@ export default {
     findUsername() {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/accounts/findUsername/`,
+        url: `${API_URL}/accounts/findUsername/`,
         params: {
           email: this.email
         }

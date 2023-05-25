@@ -73,6 +73,7 @@
                       <b-form-checkbox
                         id="checkSignUp"
                         name="checkSignUp"
+                        v-model="isChecked"
                       >
                       </b-form-checkbox>
                       <label class="form-check-label" for="checkSignUp"> I agree all statements in <a href="#!">Terms of service</a> </label>
@@ -102,6 +103,7 @@
 
 <script>
 import axios from 'axios'
+const API_URL = this.$store.state.API_URL
 
 export default {
   name: "SignupView",
@@ -111,6 +113,7 @@ export default {
       email:'',
       password1: '',
       password2: '',
+      isChecked: false,
     }
   },
   computed: {
@@ -148,11 +151,14 @@ export default {
       } else if (this.password1 !== this.password2){
         alert("비밀번호가 일치하지 않습니다")
         return
+      } else if (!this.isChecked){
+        alert('동의에 체크해주세요!')
+        return
       }
 
       axios({
         method: 'post',
-        url: 'http://127.0.0.1:8000/auth/signup/',
+        url: `${API_URL}/auth/signup/`,
         data: {
           username: this.username,
           email: this.email,

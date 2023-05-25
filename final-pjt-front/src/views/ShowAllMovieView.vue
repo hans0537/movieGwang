@@ -26,7 +26,7 @@
 
 <script>
 import AllMovieItems from '../components/MovieComponents/AllMovieItems.vue';
-const API_URL = 'http://127.0.0.1:8000'
+const API_URL = this.$store.state.API_URL
 import axios from 'axios'
 
 export default {

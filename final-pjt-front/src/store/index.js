@@ -30,6 +30,10 @@ export default new Vuex.Store({
     selectedmovie:null,
     recommendmovie:[],
     dataload:false,
+
+    API_URL: 'http://127.0.0.1:8000',
+    // 서버용
+    // API_URL: '',
   },
   getters: {
     isLogin(state) {
@@ -91,6 +95,7 @@ export default new Vuex.Store({
     GET_USER(state, user) {
       state.user = user
     },
+
     LOGOUT(state) {
       state.accessToken = null
       state.user = null
@@ -101,7 +106,6 @@ export default new Vuex.Store({
       if (currentRoute.name != 'home') {
         router.push({ name: 'home' });
       }
-      location.reload()
 
     },
     setSelectedMovie(state,movie) {
@@ -125,7 +129,7 @@ export default new Vuex.Store({
       // 아니면 빈 로그인 객체를 생성
       if(context.state.accessToken) {
         axios({
-          url: 'http://127.0.0.1:8000/accounts/getUser/',
+          url: `${context.state.API_URL}/accounts/getUser/`,
           headers: {
             Authorization: `Bearer ${context.state.accessToken}`,
           }
@@ -145,7 +149,7 @@ export default new Vuex.Store({
     getLatest(context) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/nowmovie/',
+        url: `${context.state.API_URL}/movies/nowmovie/`,
       })
         .then(res => {
           context.commit('GET_LATEST', res.data)
@@ -156,7 +160,7 @@ export default new Vuex.Store({
     getUpComing(context) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/upcommovie/',
+        url: `${context.state.API_URL}/movies/upcommovie/`,
       })
         .then(res => {
           context.commit('GET_UPCOMING', res.data)
@@ -167,7 +171,7 @@ export default new Vuex.Store({
     popularMovie(context) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/popularmovie/',
+        url: `${context.state.API_URL}/movies/popularmovie/`,
       })
         .then(res => {
           context.commit('GET_POPULAR', res.data)
@@ -179,7 +183,7 @@ export default new Vuex.Store({
     getArticles(context) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/articles/',
+        url: `${context.state.API_URL}/articles/`,
       })
         .then((res) => {
           context.commit('GET_ARTICLES', res.data)
@@ -193,7 +197,7 @@ export default new Vuex.Store({
     searchArticles(context, obj) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/articles/search/',
+        url: `${context.state.API_URL}/articles/search/`,
         params: {
           'searchValue': obj.searchValue,
           'searchSelected': obj.searchSelected
@@ -211,7 +215,7 @@ export default new Vuex.Store({
     getall(context) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/',
+        url: `${context.state.API_URL}/movies/`,
       })
         .then(res => {
           context.commit('GET_ALL', res.data)

@@ -105,7 +105,7 @@
 
 <script>
 import axios from 'axios'
-const API_URL = 'http://127.0.0.1:8000'
+const API_URL = this.$store.state.API_URL
 
 import RankUserListView from './RankUserListView.vue'
 
@@ -237,6 +237,9 @@ export default {
       this.showStart = true;
       this.showCountdown = -1;
       this.gameOver = false;
+
+      this.cardShow = false;
+      this.isFlipped = false;
 
       const delay = (duration) => {
         return new Promise((resolve) => {
