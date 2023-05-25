@@ -29,6 +29,7 @@
 </template>
 
 <script>
+const API_URL = this.$store.state.API_URL
 import axios from 'axios'
 export default {
   name: "LatestListItem",
@@ -63,7 +64,7 @@ export default {
     getReviewcount() {
         axios({
           method: 'get',
-          url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
+          url: `${API_URL}/movies/${this.movie.id}/`,
         })
         .then((res) => {
           this.movie2 = res.data

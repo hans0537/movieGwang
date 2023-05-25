@@ -148,7 +148,9 @@ import _ from "lodash"
 import MovieCommentViewVue from './MovieCommentView.vue';
 import ActorViewVue from './ActorView.vue';
 const URL = "https://www.googleapis.com/youtube/v3/search"
-const API_KEY = 'AIzaSyB4_Ve145IcMWtdgu865J-xRWXHBRdwau0'
+// const API_KEY = 'AIzaSyB4_Ve145IcMWtdgu865J-xRWXHBRdwau0' 
+const API_KEY = 'AIzaSyBJNMqfSCoTBI63Q8Bp-8Ai9O1vAkjraIE'
+const API_URL = this.$store.state.API_URL
 
 export default {
   name: 'MovieDetail',
@@ -177,7 +179,7 @@ export default {
     getMovie() {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/movies/${this.movie.id}/`,
+        url: `${API_URL}/movies/${this.movie.id}/`,
       })
       .then((res) => {
         this.movie = res.data
@@ -238,7 +240,7 @@ export default {
     getComments() {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/movies/${this.movie.id}/review/`,
+        url: `${API_URL}/movies/${this.movie.id}/review/`,
       })
       .then((res) => {
         const clst = []
@@ -254,7 +256,7 @@ export default {
     createComment() {
       axios({
         method: 'post',
-        url: `http://127.0.0.1:8000/movies/${this.movie.id}/review/`,
+        url: `${API_URL}/movies/${this.movie.id}/review/`,
         data: {
           content: this.comment
         },
@@ -278,7 +280,7 @@ export default {
     like() {
       axios({
         method: 'post',
-        url: `http://127.0.0.1:8000/movies/${this.movie.id}/like/`,
+        url: `${API_URL}/movies/${this.movie.id}/like/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }

@@ -37,6 +37,8 @@
 
 <script>
 import axios from 'axios'
+const API_URL = this.$store.state.API_URL
+
 export default {
   name: 'ArticlesListView',
   data(){
@@ -69,7 +71,7 @@ export default {
       // 조회수 증가
       axios({
         method: 'put',
-        url: `http://127.0.0.1:8000/articles/hit/${this.article.id}/`,
+        url: `${API_URL}/articles/hit/${this.article.id}/`,
         data: {
           title: this.article.title,
           content: this.article.content,
@@ -94,7 +96,7 @@ export default {
       } else {
         axios({
           method: 'delete',
-          url: `http://127.0.0.1:8000/articles/${this.article.id}/`,
+          url: `${API_URL}/articles/${this.article.id}/`,
           headers: {
             Authorization: `Bearer ${this.$store.state.accessToken}`
           }

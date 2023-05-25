@@ -48,6 +48,7 @@
 
 <script>
 import axios from 'axios'
+const API_URL = this.$store.state.API_URL
 
 export default {
   name: "FindPwView",
@@ -85,7 +86,7 @@ export default {
 
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/accounts/findPw/`,
+        url: `${API_URL}/accounts/findPw/`,
         params: {
           email: this.email,
           username: this.username,
@@ -111,7 +112,7 @@ export default {
 
       axios({
         method: 'put',
-        url: `http://127.0.0.1:8000/accounts/findPw/`,
+        url: `${API_URL}/accounts/findPw/`,
         data: {
           username: this.username,
           followers: [],

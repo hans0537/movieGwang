@@ -109,6 +109,8 @@
 <script>
 import axios from 'axios'
 import ArticleCommentView from '@/components/CommunityComponents/ArticleCommentView'
+const API_URL = this.$store.state.API_URL
+
 export default {
   name: 'ArticleDetailView',
   components: {
@@ -131,7 +133,7 @@ export default {
     getArticle(){
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/articles/${this.id}/`,
+        url: `${API_URL}/articles/${this.id}/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
@@ -147,7 +149,7 @@ export default {
     getComments() {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/articles/${this.id}/comments/create_all/`,
+        url: `${API_URL}/articles/${this.id}/comments/create_all/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
@@ -171,7 +173,7 @@ export default {
     like() {
       axios({
         method: 'post',
-        url: `http://127.0.0.1:8000/articles/${this.id}/like/`,
+        url: `${API_URL}/articles/${this.id}/like/`,
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`
         }
@@ -189,7 +191,7 @@ export default {
     createComment() {
       axios({
         method: 'post',
-        url: `http://127.0.0.1:8000/articles/${this.id}/comments/create_all/`,
+        url: `${API_URL}/articles/${this.id}/comments/create_all/`,
         data: {
           content: this.comment
         },

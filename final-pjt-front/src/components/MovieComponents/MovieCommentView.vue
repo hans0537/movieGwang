@@ -79,10 +79,11 @@
   
     </div>
   </div>
-  </template>
+</template>
   
-  <script>
+<script>
   import axios from 'axios'
+  const API_URL = this.$store.state.API_URL
   
   export default {
     name: 'MovieCommentView',
@@ -137,7 +138,7 @@
         } else {
           axios({
             method: 'delete',
-            url: `http://127.0.0.1:8000/movies/${this.movieId}/review/${this.comment.id}/`,
+            url: `${API_URL}/movies/${this.movieId}/review/${this.comment.id}/`,
             headers: {
               Authorization: `Bearer ${this.$store.state.accessToken}`
             }
@@ -153,7 +154,7 @@
       updateComment() {
         axios({
           method: 'put',
-          url: `http://127.0.0.1:8000/movies/${this.movieId}/review/${this.comment.id}/`,
+          url: `${API_URL}/movies/${this.movieId}/review/${this.comment.id}/`,
           data: {
             content: this.newComment
           },

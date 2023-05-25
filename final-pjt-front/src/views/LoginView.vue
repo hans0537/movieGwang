@@ -60,6 +60,7 @@
 
 <script>
 import axios from 'axios'
+const API_URL = this.$store.state.API_URL
 
 // const redirect_uri = 'http://127.0.0.1:8000/accounts/kakao'
 // const kakao_API = '7d4a55845458a5954269e348d1f652b1'
@@ -77,14 +78,12 @@ export default {
 
     }
   },
-  computed: {
-  },
   methods: {
     // ...mapActions(['login']),
     login() {
       axios({
         method: 'post',
-        url: 'http://127.0.0.1:8000/auth/login/',
+        url: `${API_URL}/auth/login/`,
         data: {
           username: this.username,
           password: this.password
@@ -92,6 +91,12 @@ export default {
       })
       .then((res) => {
         this.$store.dispatch('login', res.data.access)
+
+        if(this.rememberID) {
+          localStorage.setItem('rememberID', this.username)
+        }else {
+          localStorage.removeItem('rememberID')
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -119,6 +124,15 @@ export default {
     //     });
     // }
   },
+  created() {
+    // 로그인 컴포넌트가 생성될 때 로컬 스토리지에서 저장한 아이디를 가져와 설정
+    const rememberedID = localStorage.getItem('rememberID');
+    console.log(rememberedID)
+    if (rememberedID) {
+      this.username = rememberedID;
+      this.rememberID = true;
+    }
+  }
 }
 </script>
 
