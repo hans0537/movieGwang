@@ -4,7 +4,7 @@
       <div class="trend_2im1 clearfix">
         <div class="grid">
           <figure class="effect-jazz mb-0">
-            <a href="#">
+            <a>
               <img :src="imgSrc" class="w-100 img-height" alt="img25">
               <div class="image-details" v-if="showDetails">
                 <h6 class="col_red">{{ movie.title }}</h6>
@@ -21,7 +21,7 @@
       </div>
       <div class="trend_2im2 clearfix text-center position-absolute w-100 top-0">
         <span class="fs-1">
-          <a class="col_red" href="#"><i class="fa"></i></a>
+          <a class="col_red"><i class="fa"></i></a>
         </span>
       </div>
     </div>

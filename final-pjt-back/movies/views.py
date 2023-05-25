@@ -11,9 +11,9 @@ from rest_framework import status
 @api_view(['GET'])
 def index(request):
     if request.method=='GET':
-        movie = Movie.objects.all()
-        serializer = MovieSerializer(movie,many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+      movie = Movie.objects.all()
+      serializer = MovieSerializer(movie,many=True)
+      return Response(serializer.data, status=status.HTTP_200_OK)
     
 # 장르 조회
 @api_view(['GET'])
