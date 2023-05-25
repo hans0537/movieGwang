@@ -98,8 +98,8 @@
                 </div>  
                 <div v-else>
                   <div class="row g-2">
-                    <div class="col mb-2" v-for="(movie, index) in displayrecommend" :key="index">
-                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer;">
+                    <div class="col-3" v-for="(movie, index) in displayrecommend" :key="index">
+                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer; height:200px;">
                     </div>
                   </div>
                 </div>
@@ -115,8 +115,8 @@
                 </div>  
                 <div v-else>
                   <div class="row g-2">
-                    <div class="col mb-2" v-for="(movie, index) in displayWorld" :key="index">
-                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer;">
+                    <div class="col-3" v-for="(movie, index) in displayWorld" :key="index">
+                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer; height:200px;">
                     </div>
                   </div>
                 </div>
@@ -133,8 +133,8 @@
                 </div>  
                 <div v-else>
                   <div class="row g-2">
-                    <div class="col mb-2" v-for="(movie, index) in displayLikes" :key="index">
-                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer;">
+                    <div class="col-3" v-for="(movie, index) in displayLikes" :key="index">
+                      <img :src="getImgSrc(movie.poster_path)" alt="image 1" class="w-100 rounded-3" @click="openDetail(movie)" style="cursor: pointer; height:200px;">
                     </div>
                   </div>
                 </div>
@@ -271,7 +271,12 @@ export default {
     },
 
     getrecommendMovies() {
-      let m = this.$store.state.recommendmovie
+      let m = null
+      if (this.user?.like_movies.length===0 || this.user?.worldcup_movies.length === 0) {
+        m = null
+      } else {
+        m = this.$store.state.recommendmovie
+      }
       if (m) {
         let a1 = [0,1,2,3,4]
         let b1 = _.sampleSize(a1, 1)[0] // 배열에서 추출된 첫 번째 요소를 가져옴
@@ -281,7 +286,6 @@ export default {
         this.displayrecommend = []
         this.recommend_movies = []
       }
-
     },
 
     getWorldCupMovies() {
