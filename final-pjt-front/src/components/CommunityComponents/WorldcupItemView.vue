@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-3 col-6">
+  <div class="col-md-3 col-6 me-4 ms-4 mb-5">
     <div class="trend_2im clearfix position-relative" @mouseover="showDetails = true" @mouseleave="showDetails = false" @click="selectmovie">
       <div class="trend_2im1 clearfix">
         <div class="grid">

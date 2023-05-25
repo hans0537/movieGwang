@@ -1,33 +1,35 @@
 <template>
   <section style="background-color: #eee;">
-    <div class="container mt-5 pt-5">
+    <div class="container mt-1 pt-1">
       <div class="row d-flex justify-content-center">
-        <div class="col-md-12 col-lg-10 col-xl-8">
+        <div class="col-md-12 col-lg-12 col-xl-12">
           <div class="card">
             <div class="card-body">
-              <h3 class="border rounded fw-bold">{{article?.title}}</h3>
+              <h3 class="fw-bold mb-4">{{article?.title}}</h3>
               <div class="d-flex flex-start align-items-center">
 
                 <img v-if="article?.user.image_base64" class="rounded-circle shadow-1-strong me-3"
-                  :src="getImageSrc(article?.user.image_base64)" alt="avatar" width="60"
-                  height="60" />
+                  :src="getImageSrc(article?.user.image_base64)" alt="avatar" width="40"
+                  height="40" />
                 
                 <img v-else class="rounded-circle shadow-1-strong me-3"
-                  src="../../assets/baseProfile.png" alt="avatar" width="60"
-                  height="60" />
+                  src="../../assets/baseProfile.png" alt="avatar" width="40"
+                  height="40" />
 
                 
 
-                <div class="text-start">
-                  <h6 class="fw-bold text-primary mb-1">{{article?.user.username}}</h6>
-                  <p class="text-muted small mb-0">
-                    {{ formatDate(article?.created_at) }}
-                  </p>
-                  <p class="text-muted small mb-0"> 조회수 : {{article?.hit}} </p>
-                </div>
+                  <div style="width:100%">
+                    <div class="text-start">
+                      <h6 class="fw-bold text-primary me-3" style="display: inline;">{{article?.user.username}}</h6>
+                      <p class="text-muted small" style="display: inline;">{{formatDate(article?.created_at)}}</p>
+                    </div>
+                    <div class="text-end">
+                      <p class="text-muted small mb-0" style="margin-left: auto;">조회수: {{article?.hit}}</p>
+                    </div>
+                  </div>
               </div>
 
-              <div class="mt-3 mb-4 pb-2 border border-primary border-opacity-25 rounded text-start ps-3" style="margin-left: 70px; width: 80%">
+              <div class="mt-3 mb-4 pb-2 text-start ps-3" style="margin-left: 70px; width: 80%">
                 <img style="width: 100%;" class="my-3" v-if="article?.image_base64" :src="getImageSrc(article?.image_base64)" alt="Article Image">
                 <hr v-if="article?.image_base64">
                 <p class="mt-1">{{article?.content}}</p>
@@ -83,10 +85,10 @@
     <!-- 댓글/ 대댓글 부분 -->
     <div class="container">
       <div class="row d-flex justify-content-center">
-        <div class="col-md-12 col-lg-10 col-xl-8">
+        <div class="col-md-12 col-lg-12 col-xl-12">
           <div class="card">
             <div class="card-body p-4">
-              <h4 class="text-center mb-4 pb-2 border rounded fw-bold">댓글 목록</h4>
+              <h4 class="text-start mb-4 pb-2 fw-bold">댓글 목록</h4>
               <div class="row">
                 <div class="col">
                   <ArticleCommentView 
