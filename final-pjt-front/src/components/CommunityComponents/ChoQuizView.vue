@@ -92,7 +92,7 @@
               </div>
             </div>
             
-            <button v-if="hintBtn">힌트 보기</button>
+            <!-- <button v-if="hintBtn">힌트 보기</button> -->
             <div class="text-center d-flex justify-content-center align-items-center">
               <h4 class="card-subtitle pe-4">정답: </h4>
               <input type="text" v-model="myAnswer" class="form-control" @keyup.enter="submitAnswer" style="width:70%">
